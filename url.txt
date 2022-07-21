@@ -1,0 +1,14 @@
+"http://www.t-nani.co.kr/"
+"http://www.t-nani.co.kr/index.html",
+"http://www.t-nani.co.kr/shop/shopbrand.html?type=P&xcode=005",
+"http://www.t-nani.co.kr/shop/bestseller.html?xcode=BEST",
+"http://www.t-nani.co.kr/shop/shopbrand.html?type=Y&xcode=007",
+"http://www.t-nani.co.kr/shop/shopbrand.html?type=X&xcode=030",
+"http://www.t-nani.co.kr/shop/shopbrand.html?type=X&xcode=004",
+"http://www.t-nani.co.kr/shop/shopbrand.html?type=X&xcode=027",
+"http://www.t-nani.co.kr/shop/shopbrand.html?xcode=016&type=P",
+"http://www.t-nani.co.kr/shop/shopbrand.html?type=X&xcode=010",
+"http://www.t-nani.co.kr/shop/shopbrand.html?type=X&xcode=011",
+"http://www.t-nani.co.kr/shop/shopbrand.html?type=P&xcode=034",
+
+
