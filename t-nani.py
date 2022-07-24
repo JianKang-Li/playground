@@ -21,15 +21,16 @@ def getTime():
         + str(strs.tm_mday)
         + str(strs.tm_hour)
         + str(strs.tm_min)
-        + str(strs.tm_sec)
     )
 
 
 # 爬取网址
 # url="http://www.t-nani.co.kr/index.html"
 baseUrl = "http://www.t-nani.co.kr/"
+
+times = getTime()
 # 图片保存位置
-path = "F:\\python\\test\\img"
+path = "F:\\python\\test\\img\\" + times
 
 # 移除js、css
 def remove_js_css(content):
@@ -66,7 +67,6 @@ def getImgList(html):
 
 # 获取图片
 def getImg(imglist):
-    times = getTime()
     length = str(len(imglist))
     if not os.path.isdir(path):
         os.makedirs(path)
@@ -78,7 +78,7 @@ def getImg(imglist):
         imgurl = imgurl.replace('"', "")
         url = baseUrl + imgurl
         print(url + " " + str(x) + "/" + length)
-        f = open(paths + times + "_" + str(x) + ".jpg", "wb")
+        f = open(paths + str(x) + ".jpg", "wb")
         f.write((urllib.request.urlopen(url)).read())
         x = x + 1
     print("Done all!")

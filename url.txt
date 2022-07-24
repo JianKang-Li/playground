@@ -1,3 +1,5 @@
+//仅用于保存网址，不用于读取网址
+
 "http://www.t-nani.co.kr/"
 "http://www.t-nani.co.kr/index.html",
 "http://www.t-nani.co.kr/shop/shopbrand.html?type=P&xcode=005",
