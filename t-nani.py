@@ -58,15 +58,15 @@ def remove_any_tag(s):
     return s.strip()
 
 
-def getImgList(html):
-    reg = r'src=".*\.jpe?g.*"'
+def getImgList(html, type):
+    reg = r'src=".*\.' + type + '.*"'
     imgre = re.compile(reg)
     imglist = re.findall(imgre, html)
     return imglist
 
 
 # 获取图片
-def getImg(imglist):
+def getImg(imglist, type):
     length = str(len(imglist))
     if not os.path.isdir(path):
         os.makedirs(path)
@@ -76,9 +76,12 @@ def getImg(imglist):
     for imgurl in imglist:
         imgurl = imgurl.replace('src="', "")
         imgurl = imgurl.replace('"', "")
-        url = baseUrl + imgurl
+        if imgurl.find(baseUrl) != -1:
+            url = imgurl
+        else:
+            url = baseUrl + imgurl
         print(url + " " + str(x) + "/" + length)
-        f = open(paths + str(x) + ".jpg", "wb")
+        f = open(paths + str(x) + "." + type, "wb")
         f.write((urllib.request.urlopen(url)).read())
         x = x + 1
     print("Done all!")
@@ -113,11 +116,17 @@ urlList = [
     "http://www.t-nani.co.kr/shop/shopbrand.html?type=P&xcode=034",
 ]
 
+# 图片格式
+type = "jpg"
+
+# 图片地址列表
 img = []
+
 for i in urlList:
     html = getHtml(i)
-    imglist = getImgList(html)
+    imglist = getImgList(html, type)
     img.extend(imglist)
     img = set(img)
     img = list(img)
-getImg(img)
+print(img)
+getImg(img, type)
