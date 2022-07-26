@@ -14,3 +14,19 @@
 "http://www.t-nani.co.kr/shop/shopbrand.html?type=P&xcode=034",
 
 
+//新网站
+"https://www.fiki.com.tw/"
+"https://www.fiki.com.tw/Shop/itemList.aspx?m=15",
+"https://www.fiki.com.tw/Shop/itemList.aspx?m=15&o=5&sa=1&smfp=2&",
+"https://www.fiki.com.tw/Shop/itemList.aspx?m=15&o=5&sa=1&smfp=3&",
+"https://www.fiki.com.tw/Shop/itemList.aspx?m=15&o=5&sa=1&smfp=4&",
+"https://www.fiki.com.tw/Shop/itemList.aspx?m=15&o=5&sa=1&smfp=5&",
+"https://www.fiki.com.tw/Shop/itemList.aspx?m=15&o=5&sa=1&smfp=6&",
+"https://www.fiki.com.tw/Shop/itemList.aspx?m=15&o=5&sa=1&smfp=7&",
+"https://www.fiki.com.tw/Shop/itemList.aspx?m=15&o=5&sa=1&smfp=8&",
+"https://www.fiki.com.tw/Shop/itemList.aspx?m=15&o=5&sa=1&smfp=9&",
+"https://www.fiki.com.tw/Shop/itemList.aspx?m=15&o=5&sa=1&smfp=10&",
+"https://www.fiki.com.tw/Shop/itemList.aspx?m=15&o=5&sa=1&smfp=11&",
+"https://www.fiki.com.tw/Shop/itemList.aspx?m=15&o=5&sa=1&smfp=12&",
+"https://www.fiki.com.tw/Shop/itemList.aspx?m=15&o=5&sa=1&smfp=13&",
+"https://www.fiki.com.tw/Shop/itemList.aspx?m=15&o=5&sa=1&smfp=14&",

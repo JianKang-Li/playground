@@ -1,7 +1,6 @@
 # coding=utf-8
 # 导包
 # 发送请求
-import urllib
 import requests
 import re
 import os
@@ -11,6 +10,10 @@ from bs4 import BeautifulSoup
 
 # 时间
 import time
+
+headers = {
+    "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36"
+}
 
 
 def getTime():
@@ -26,7 +29,8 @@ def getTime():
 
 # 爬取网址
 # url="http://www.t-nani.co.kr/index.html"
-baseUrl = "http://www.t-nani.co.kr/"
+# baseUrl = "http://www.t-nani.co.kr/"
+baseUrl = "https://www.fiki.com.tw/"
 
 times = getTime()
 # 图片保存位置
@@ -52,14 +56,8 @@ def remove_empty_line(content):
     return s
 
 
-def remove_any_tag(s):
-    s = re.sub(r"""<[^>]+>""", "", s)
-    s.replace(" ", "")
-    return s.strip()
-
-
 def getImgList(html, type):
-    reg = r'src=".*\.' + type + '.*"'
+    reg = r'src="[^>]*\.' + type + '.*?"'
     imgre = re.compile(reg)
     imglist = re.findall(imgre, html)
     return imglist
@@ -76,13 +74,15 @@ def getImg(imglist, type):
     for imgurl in imglist:
         imgurl = imgurl.replace('src="', "")
         imgurl = imgurl.replace('"', "")
-        if imgurl.find(baseUrl) != -1:
+        if imgurl.find("http") != -1:
             url = imgurl
         else:
             url = baseUrl + imgurl
         print(url + " " + str(x) + "/" + length)
         f = open(paths + str(x) + "." + type, "wb")
-        f.write((urllib.request.urlopen(url)).read())
+        img = requests.get(url, headers=headers).content
+        f.write(img)
+        f.close()
         x = x + 1
     print("Done all!")
 
@@ -103,17 +103,20 @@ def getHtml(url):
 
 
 urlList = [
-    "http://www.t-nani.co.kr/index.html",
-    "http://www.t-nani.co.kr/shop/shopbrand.html?type=P&xcode=005",
-    "http://www.t-nani.co.kr/shop/bestseller.html?xcode=BEST",
-    "http://www.t-nani.co.kr/shop/shopbrand.html?type=Y&xcode=007",
-    "http://www.t-nani.co.kr/shop/shopbrand.html?type=X&xcode=030",
-    "http://www.t-nani.co.kr/shop/shopbrand.html?type=X&xcode=004",
-    "http://www.t-nani.co.kr/shop/shopbrand.html?type=X&xcode=027",
-    "http://www.t-nani.co.kr/shop/shopbrand.html?xcode=016&type=P",
-    "http://www.t-nani.co.kr/shop/shopbrand.html?type=X&xcode=010",
-    "http://www.t-nani.co.kr/shop/shopbrand.html?type=X&xcode=011",
-    "http://www.t-nani.co.kr/shop/shopbrand.html?type=P&xcode=034",
+    "https://www.fiki.com.tw/Shop/itemList.aspx?m=15",
+    "https://www.fiki.com.tw/Shop/itemList.aspx?m=15&o=5&sa=1&smfp=2&",
+    "https://www.fiki.com.tw/Shop/itemList.aspx?m=15&o=5&sa=1&smfp=3&",
+    "https://www.fiki.com.tw/Shop/itemList.aspx?m=15&o=5&sa=1&smfp=4&",
+    "https://www.fiki.com.tw/Shop/itemList.aspx?m=15&o=5&sa=1&smfp=5&",
+    "https://www.fiki.com.tw/Shop/itemList.aspx?m=15&o=5&sa=1&smfp=6&",
+    "https://www.fiki.com.tw/Shop/itemList.aspx?m=15&o=5&sa=1&smfp=7&",
+    "https://www.fiki.com.tw/Shop/itemList.aspx?m=15&o=5&sa=1&smfp=8&",
+    "https://www.fiki.com.tw/Shop/itemList.aspx?m=15&o=5&sa=1&smfp=9&",
+    "https://www.fiki.com.tw/Shop/itemList.aspx?m=15&o=5&sa=1&smfp=10&",
+    "https://www.fiki.com.tw/Shop/itemList.aspx?m=15&o=5&sa=1&smfp=11&",
+    "https://www.fiki.com.tw/Shop/itemList.aspx?m=15&o=5&sa=1&smfp=12&",
+    "https://www.fiki.com.tw/Shop/itemList.aspx?m=15&o=5&sa=1&smfp=13&",
+    "https://www.fiki.com.tw/Shop/itemList.aspx?m=15&o=5&sa=1&smfp=14&",
 ]
 
 # 图片格式
