@@ -30,7 +30,8 @@ def getTime():
 # 爬取网址
 # url="http://www.t-nani.co.kr/index.html"
 # baseUrl = "http://www.t-nani.co.kr/"
-baseUrl = "https://www.fiki.com.tw/"
+# baseUrl = "https://www.fiki.com.tw/"
+baseUrl = "http:"
 
 times = getTime()
 # 图片保存位置
@@ -79,17 +80,20 @@ def getImg(imglist, type):
         else:
             url = baseUrl + imgurl
         print(url + " " + str(x) + "/" + length)
-        f = open(paths + str(x) + "." + type, "wb")
-        img = requests.get(url, headers=headers).content
-        f.write(img)
-        f.close()
+        try:
+            f = open(paths + str(x) + "." + type, "wb")
+            img = requests.get(url, headers=headers).content
+            f.write(img)
+            f.close()
+        except Exception as e:
+            print(e)
         x = x + 1
     print("Done all!")
 
 
 # 获取html源码
 def getHtml(url):
-    res = requests.get(url)
+    res = requests.get(url, headers=headers)
     if res.status_code == 200:
         html = res.content
         soup = BeautifulSoup(html, "html.parser")
@@ -103,20 +107,34 @@ def getHtml(url):
 
 
 urlList = [
-    "https://www.fiki.com.tw/Shop/itemList.aspx?m=15",
-    "https://www.fiki.com.tw/Shop/itemList.aspx?m=15&o=5&sa=1&smfp=2&",
-    "https://www.fiki.com.tw/Shop/itemList.aspx?m=15&o=5&sa=1&smfp=3&",
-    "https://www.fiki.com.tw/Shop/itemList.aspx?m=15&o=5&sa=1&smfp=4&",
-    "https://www.fiki.com.tw/Shop/itemList.aspx?m=15&o=5&sa=1&smfp=5&",
-    "https://www.fiki.com.tw/Shop/itemList.aspx?m=15&o=5&sa=1&smfp=6&",
-    "https://www.fiki.com.tw/Shop/itemList.aspx?m=15&o=5&sa=1&smfp=7&",
-    "https://www.fiki.com.tw/Shop/itemList.aspx?m=15&o=5&sa=1&smfp=8&",
-    "https://www.fiki.com.tw/Shop/itemList.aspx?m=15&o=5&sa=1&smfp=9&",
-    "https://www.fiki.com.tw/Shop/itemList.aspx?m=15&o=5&sa=1&smfp=10&",
-    "https://www.fiki.com.tw/Shop/itemList.aspx?m=15&o=5&sa=1&smfp=11&",
-    "https://www.fiki.com.tw/Shop/itemList.aspx?m=15&o=5&sa=1&smfp=12&",
-    "https://www.fiki.com.tw/Shop/itemList.aspx?m=15&o=5&sa=1&smfp=13&",
-    "https://www.fiki.com.tw/Shop/itemList.aspx?m=15&o=5&sa=1&smfp=14&",
+    "http://milkylady.com/product/list.html?cate_no=140",
+    "http://milkylady.com/product/list.html?cate_no=140&page=2",
+    "http://milkylady.com/product/list.html?cate_no=140&page=3",
+    "http://milkylady.com/product/list.html?cate_no=140&page=4",
+    "http://milkylady.com/product/list.html?cate_no=140&page=5",
+    "http://milkylady.com/product/list.html?cate_no=140&page=6",
+    "http://milkylady.com/product/list.html?cate_no=140&page=7",
+    "http://milkylady.com/product/list.html?cate_no=140&page=8",
+    "http://milkylady.com/product/list.html?cate_no=140&page=9",
+    "http://milkylady.com/product/list.html?cate_no=140&page=10",
+    "http://milkylady.com/product/list.html?cate_no=140&page=11",
+    "http://milkylady.com/product/list.html?cate_no=140&page=12",
+    "http://milkylady.com/product/list.html?cate_no=140&page=13",
+    "http://milkylady.com/product/list.html?cate_no=140&page=14"
+    "http://milkylady.com/product/list.html?cate_no=140&page=15",
+    "http://milkylady.com/product/list.html?cate_no=140&page=16",
+    "http://milkylady.com/product/list.html?cate_no=140&page=17",
+    "http://milkylady.com/product/list.html?cate_no=140&page=18",
+    "http://milkylady.com/product/list.html?cate_no=140&page=19",
+    "http://milkylady.com/product/list.html?cate_no=140&page=20",
+    "http://milkylady.com/product/list.html?cate_no=140&page=21",
+    "http://milkylady.com/product/list.html?cate_no=140&page=22",
+    "http://milkylady.com/product/list.html?cate_no=140&page=23",
+    "http://milkylady.com/product/list.html?cate_no=140&page=24",
+    "http://milkylady.com/product/list.html?cate_no=140&page=25",
+    "http://milkylady.com/product/list.html?cate_no=140&page=26",
+    "http://milkylady.com/product/list.html?cate_no=140&page=27",
+    "http://milkylady.com/product/list.html?cate_no=140&page=28",
 ]
 
 # 图片格式
