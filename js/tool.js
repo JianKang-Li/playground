@@ -2,8 +2,11 @@
   // 自定义方法库
 
   // 使用fetch发送请求
-  async function http(obj) {
+  async function http(obj, headers) {
     let { method, url, param, data } = obj
+    headers === null ? {
+      "Content-Type": "application/json"
+    } : headers
     let res;
     // param处理
     if (param) {
@@ -12,13 +15,21 @@
     }
     // data处理
     if (data) {
+      let _data = undefined;
+      if (headers["Content-Type"] === "application/json") {
+        _data = JSON.stringify(data)
+      } else {
+        _data = new FormData()
+        let keys = Object.keys(data)
+        for (let i of keys) {
+          _data.append(i, data[i])
+        }
+      }
       res = await fetch(url,
         {
           method: method,
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify(data)
+          headers,
+          body: _data
         })
     } else {
       res = await fetch(url)

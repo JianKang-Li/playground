@@ -15,7 +15,17 @@
 
   <script src="./tool.js"></script>
   <script>
-    console.log(tool.CDate())
+    let obj = {
+      method: "post",
+      url: "http://127.0.0.1:3000/api",
+      data: {
+        "name": "ljk"
+      }
+    }
+    headers = {
+      "Content-Type": "multipart/form-data"
+    }
+    let s = tool.http(obj, headers)
   </script>
 </body>
 
