@@ -6,26 +6,19 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="https://jiankang-li.github.io/Style-library/css/LK.css">
+  <script src="https://jiankang-li.github.io/Style-library/js/LK.js"></script>
   <title>Document</title>
 </head>
 
 <body>
+  <button class="btn">Tip</button>
   <input type="text" name="" id="" class="LK-input">
-
+  <input type="text" name="" id="ljk" class="LK-input">
 
   <script src="./tool.js"></script>
   <script>
-    let obj = {
-      method: "post",
-      url: "http://127.0.0.1:3000/api",
-      data: {
-        "name": "ljk"
-      }
-    }
-    headers = {
-      "Content-Type": "multipart/form-data"
-    }
-    let s = tool.http(obj, headers)
+    let input = tool.get("#ljk")
+    console.log(input)
   </script>
 </body>
 

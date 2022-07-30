@@ -1,6 +1,17 @@
 (function (window) {
   // 自定义方法库
 
+
+  // 获取dom元素,通过css选择器选择
+  function get(option) {
+    let doms = document.querySelectorAll(option)
+    if (doms.length === 1) {
+      return doms[0]
+    } else {
+      return doms
+    }
+  }
+
   // 使用fetch发送请求
   async function http(obj, headers) {
     let { method, url, param, data } = obj
@@ -128,6 +139,7 @@
     Ctime,
     dpClone,
     CDate,
+    get,
   }
 
   window.tool = tool
