@@ -1,0 +1,9 @@
+{
+  "type": "object",
+  "properties": {
+    "outputPath": {
+      "type": "string"
+    }
+  },
+  "additionalProperties": false
+}
