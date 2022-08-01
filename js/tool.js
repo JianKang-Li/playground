@@ -130,6 +130,35 @@
     return Array.from(set)
   }
 
+  /* 
+  节流: n 秒内只运行一次，若在 n 秒内重复触发，只有一次生效
+  防抖: n 秒后在执行该事件，若在 n 秒内被重复触发，则重新计时
+  */
+
+  // 防抖
+  function debounce(handle, delay) {
+    var timer = null;
+    return function () {
+      var _self = this, _args = arguments;
+      clearTimeout(timer);
+      timer = setTimeout(function () {
+        handle.apply(_self, _args)
+      }, delay)
+    }
+  }
+
+  // 节流
+  function throttle(handle, wait) {
+    var lasetTime = 0;
+    return function () {
+      var nowTime = new Data().getTime();
+      if (nowTime - lasetTime > wait) {
+        handle.apply(this, arguments);
+        lasetTime = nowTime
+      }
+    }
+  }
+
   let tool = {
     unique,
     http,
@@ -140,6 +169,8 @@
     dpClone,
     CDate,
     get,
+    debounce,
+    throttle,
   }
 
   window.tool = tool
