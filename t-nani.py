@@ -29,9 +29,9 @@ def getTime():
 
 # 爬取网址
 # url="http://www.t-nani.co.kr/index.html"
-# baseUrl = "http://www.t-nani.co.kr/"
+baseUrl = "http://www.t-nani.co.kr/"
 # baseUrl = "https://www.fiki.com.tw/"
-baseUrl = "http:"
+# baseUrl = "http:"
 
 times = getTime()
 # 图片保存位置
@@ -107,34 +107,17 @@ def getHtml(url):
 
 
 urlList = [
-    "http://milkylady.com/product/list.html?cate_no=140",
-    "http://milkylady.com/product/list.html?cate_no=140&page=2",
-    "http://milkylady.com/product/list.html?cate_no=140&page=3",
-    "http://milkylady.com/product/list.html?cate_no=140&page=4",
-    "http://milkylady.com/product/list.html?cate_no=140&page=5",
-    "http://milkylady.com/product/list.html?cate_no=140&page=6",
-    "http://milkylady.com/product/list.html?cate_no=140&page=7",
-    "http://milkylady.com/product/list.html?cate_no=140&page=8",
-    "http://milkylady.com/product/list.html?cate_no=140&page=9",
-    "http://milkylady.com/product/list.html?cate_no=140&page=10",
-    "http://milkylady.com/product/list.html?cate_no=140&page=11",
-    "http://milkylady.com/product/list.html?cate_no=140&page=12",
-    "http://milkylady.com/product/list.html?cate_no=140&page=13",
-    "http://milkylady.com/product/list.html?cate_no=140&page=14"
-    "http://milkylady.com/product/list.html?cate_no=140&page=15",
-    "http://milkylady.com/product/list.html?cate_no=140&page=16",
-    "http://milkylady.com/product/list.html?cate_no=140&page=17",
-    "http://milkylady.com/product/list.html?cate_no=140&page=18",
-    "http://milkylady.com/product/list.html?cate_no=140&page=19",
-    "http://milkylady.com/product/list.html?cate_no=140&page=20",
-    "http://milkylady.com/product/list.html?cate_no=140&page=21",
-    "http://milkylady.com/product/list.html?cate_no=140&page=22",
-    "http://milkylady.com/product/list.html?cate_no=140&page=23",
-    "http://milkylady.com/product/list.html?cate_no=140&page=24",
-    "http://milkylady.com/product/list.html?cate_no=140&page=25",
-    "http://milkylady.com/product/list.html?cate_no=140&page=26",
-    "http://milkylady.com/product/list.html?cate_no=140&page=27",
-    "http://milkylady.com/product/list.html?cate_no=140&page=28",
+    "http://www.t-nani.co.kr/index.html",
+    "http://www.t-nani.co.kr/shop/shopbrand.html?type=P&xcode=005",
+    "http://www.t-nani.co.kr/shop/bestseller.html?xcode=BEST",
+    "http://www.t-nani.co.kr/shop/shopbrand.html?type=Y&xcode=007",
+    "http://www.t-nani.co.kr/shop/shopbrand.html?type=X&xcode=030",
+    "http://www.t-nani.co.kr/shop/shopbrand.html?type=X&xcode=004",
+    "http://www.t-nani.co.kr/shop/shopbrand.html?type=X&xcode=027",
+    "http://www.t-nani.co.kr/shop/shopbrand.html?xcode=016&type=P",
+    "http://www.t-nani.co.kr/shop/shopbrand.html?type=X&xcode=010",
+    "http://www.t-nani.co.kr/shop/shopbrand.html?type=X&xcode=011",
+    "http://www.t-nani.co.kr/shop/shopbrand.html?type=P&xcode=034",
 ]
 
 # 图片格式
