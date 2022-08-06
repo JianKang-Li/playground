@@ -1,7 +1,6 @@
 (function (window) {
   // 自定义方法库
-
-
+  "use strict"
   // 获取dom元素,通过css选择器选择
   function get(option) {
     let doms = document.querySelectorAll(option)
@@ -118,7 +117,7 @@
     map.set(target, newObj);
     for (let key in target) {
       if (target.hasOwnProperty(key)) {
-        newObj[key] = _completeDeepClone(target[key], map);
+        newObj[key] = dp(target[key], map);
       }
     }
     return newObj;
