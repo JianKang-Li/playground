@@ -4,11 +4,24 @@
   // 获取dom元素,通过css选择器选择
   function get(option) {
     let doms = document.querySelectorAll(option)
-    if (doms.length === 1) {
+    if (doms.length <= 1) {
       return doms[0]
     } else {
       return doms
     }
+  }
+
+  class Dom {
+    constructor(dom) {
+      this.dom = dom
+    }
+    addClass(className) {
+      this.dom.classList.add(className)
+    }
+    removeClass(className) {
+      this.dom.classList.remove(className)
+    }
+    
   }
 
   // 使用fetch发送请求
@@ -212,6 +225,7 @@
     Sreverse,
     type,
     quickSort,
+    Dom,
   }
 
   window.tool = tool
