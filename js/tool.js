@@ -158,6 +158,27 @@
     }
   }
 
+  // 字符串反转
+  function Sreverse(str) {
+    return str.split("").reverse().join("")
+  }
+
+  // 获取数据类型
+  function type(obj) {
+    let type = typeof obj
+    if (type != "object") {
+      return type
+    } else {
+      if (obj instanceof Array) {
+        return "array"
+      } else if (obj === null) {
+        return "null"
+      } else {
+        return "object"
+      }
+    }
+  }
+
   let tool = {
     unique,
     http,
@@ -170,6 +191,8 @@
     get,
     debounce,
     throttle,
+    Sreverse,
+    type
   }
 
   window.tool = tool
