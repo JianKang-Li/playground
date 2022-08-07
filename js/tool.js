@@ -11,6 +11,7 @@
     }
   }
 
+  // 自定义Dom类操作dom元素类或其他属性
   class Dom {
     constructor(dom) {
       this.dom = dom
@@ -21,7 +22,6 @@
     removeClass(className) {
       this.dom.classList.remove(className)
     }
-    
   }
 
   // 使用fetch发送请求
@@ -210,6 +210,89 @@
     return [...quickSort(left), numValue, ...quickSort(right)];
   }
 
+  // 获取cookie
+  class Cookie {
+    constructor() {
+      this.cookies = document.cookie
+      let _cookie = this.cookies.split(";")
+      this.cookiesObj = {}
+      _cookie.forEach(item => {
+        let key = item.split("=")[0].trim()
+        let value = item.split("=")[1].trim()
+        this.cookiesObj[key] = value
+      })
+    }
+    getCookies() {
+      return this.cookiesObj
+    }
+
+    getCookie(key) {
+      return this.cookiesObj[key]
+    }
+  }
+
+  // localStorage
+  class Local {
+    constructor() {
+      this.local = localStorage
+    }
+    getAll() {
+      return this.local
+    }
+    find(key) {
+      return this.local[key]
+    }
+    set(key, value) {
+      if (typeof key != "string") {
+        throw new Error("The key must be String")
+      }
+      localStorage.setItem(key, value)
+      this.Update()
+    }
+    Update() {
+      this.local = localStorage
+    }
+    del(key) {
+      localStorage.removeItem(key)
+      this.Update()
+    }
+    clear() {
+      localStorage.clear()
+      this.Update()
+    }
+  }
+
+  // sessionStorage
+  class Session {
+    constructor() {
+      this.session = sessionStorage
+    }
+    getAll() {
+      return this.session
+    }
+    find(key) {
+      return this.session[key]
+    }
+    set(key, value) {
+      if (typeof key != "string") {
+        throw new Error("The key must be String")
+      }
+      sessionStorage.setItem(key, value)
+      this.Update()
+    }
+    Update() {
+      this.session = sessionStorage
+    }
+    del(key) {
+      sessionStorage.removeItem(key)
+      this.Update()
+    }
+    clear() {
+      sessionStorage.clear()
+      this.Update()
+    }
+  }
+
   let tool = {
     unique,
     http,
@@ -226,6 +309,9 @@
     type,
     quickSort,
     Dom,
+    Cookie,
+    Local,
+    Session,
   }
 
   window.tool = tool
