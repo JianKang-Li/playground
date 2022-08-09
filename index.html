@@ -87,11 +87,9 @@
       width: 80%;
     }
 
-
-
-    @media screen and (max-width<800px) {
-      textarea {
-        height: 5rem;
+    @media screen and (max-height:700px) {
+      .container textarea {
+        height: 6.5rem;
       }
     }
   </style>
@@ -112,9 +110,6 @@
     <textarea id="show" disabled placeholder="运行结果"></textarea>
   </div>
 
-
-
-
   <script>
     let show = document.querySelector("#show")
     let codes = document.querySelector("#code")
@@ -124,8 +119,12 @@
     function runCode() {
       show.innerHTML = ""
       const console = {}
-      console.log = function () {
-        show.innerHTML += "> " + [...arguments].toString()
+      console.log = function (...args) {
+        show.innerHTML += "> "
+        for (let i = 0; i < args.length; i++) {
+          show.innerHTML += args[i]
+          show.innerHTML += " "
+        }
         show.innerHTML += "\n"
       }
       try {
