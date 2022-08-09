@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JavaScript Run</title>
+  <style>
+    body {
+      width: 100%;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: url("https://api.dujin.org/bing/1920.php");
+      overflow: hidden;
+    }
+
+    .container {
+      width: 80%;
+      height: 40%;
+    }
+
+    .head {
+      color: #fff;
+      font-size: 1.5rem;
+    }
+
+    .btn {
+      border: none;
+      width: fit-content;
+      padding: 0.5rem 0.8rem;
+      border-radius: 10px;
+      background-color: #48c5eb;
+      color: #fff;
+      float: right;
+    }
+
+    .runbtn {
+      margin-right: 10px;
+      float: right;
+      border: none;
+      width: fit-content;
+      padding: 0.5rem 0.8rem;
+      border-radius: 10px;
+      color: #fff;
+      background-color: #3bb76d;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    button:focus {
+      outline: none;
+    }
+
+    textarea {
+      margin-top: 1rem;
+      resize: none;
+      padding: 0.5rem 0.8rem;
+      width: 95%;
+      height: 10rem;
+      overflow: scroll;
+      font-size: 1.3rem;
+    }
+
+    textarea::-webkit-scrollbar {
+      width: 0;
+    }
+
+    textarea {
+      overflow: -moz-scrollbars-none;
+    }
+
+    textarea:focus {
+      outline: none;
+    }
+
+    #show {
+      background-color: #fff;
+    }
+
+    .tool {
+      width: 80%;
+    }
+
+
+
+    @media screen and (max-width<800px) {
+      textarea {
+        height: 5rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+    <div class="head">
+      <span>请输入JS代码</span>
+      <button id="clean" class="btn">清空</button>
+      <button id="run" class="runbtn">运行代码</button>
+    </div>
+    <textarea id="code" placeholder="请输入js代码"></textarea>
+  </div>
+
+  <div class="container">
+    <textarea id="show" disabled placeholder="运行结果"></textarea>
+  </div>
+
+
+
+
+  <script>
+    let show = document.querySelector("#show")
+    let codes = document.querySelector("#code")
+    let run = document.querySelector("#run")
+    let cleanbtn = document.querySelector("#clean")
+
+    function runCode() {
+      show.innerHTML = ""
+      const console = {}
+      console.log = function () {
+        show.innerHTML += "> " + [...arguments].toString()
+        show.innerHTML += "\n"
+      }
+      try {
+        eval(codes.value)
+      } catch (e) {
+        console.log(e)
+      }
+    }
+
+    function clean() {
+      show.innerHTML = "";
+      codes.value = "";
+    }
+
+    cleanbtn.addEventListener("click", () => {
+      clean()
+    })
+    run.addEventListener("click", () => {
+      runCode()
+    })
+  </script>
+
+</body>
+
+</html>
