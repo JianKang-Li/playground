@@ -8,14 +8,18 @@
   <title>JavaScript Run</title>
   <style>
     body {
-      width: 100%;
+      width: 100vw;
       height: 100vh;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
+      margin: 0;
+      padding: 0;
       background: url("https://api.dujin.org/bing/1920.php");
-      overflow: hidden;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
     }
 
     .container {
@@ -87,6 +91,10 @@
       width: 80%;
     }
 
+    .error {
+      color: red;
+    }
+
     @media screen and (max-height:700px) {
       .container textarea {
         height: 6.5rem;
@@ -103,7 +111,7 @@
       <button id="clean" class="btn">清空</button>
       <button id="run" class="runbtn">运行代码</button>
     </div>
-    <textarea id="code" placeholder="请输入js代码"></textarea>
+    <textarea id="code" placeholder="js代码..."></textarea>
   </div>
 
   <div class="container">
@@ -122,7 +130,11 @@
       console.log = function (...args) {
         show.innerHTML += "> "
         for (let i = 0; i < args.length; i++) {
-          show.innerHTML += args[i]
+          if (args[i] instanceof Array) {
+            show.innerHTML += `[${args[i]}]`
+          } else {
+            show.innerHTML += args[i]
+          }
           show.innerHTML += " "
         }
         show.innerHTML += "\n"
