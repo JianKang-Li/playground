@@ -19,23 +19,25 @@ headers = {
 def getTime():
     strs = time.localtime()
     return (
-        str(strs.tm_year)
-        + str(strs.tm_mon)
-        + str(strs.tm_mday)
-        + str(strs.tm_hour)
-        + str(strs.tm_min)
+            str(strs.tm_year)
+            + str(strs.tm_mon)
+            + str(strs.tm_mday)
+            + str(strs.tm_hour)
+            + str(strs.tm_min)
     )
 
 
 # 爬取网址
 # url="http://www.t-nani.co.kr/index.html"
-baseUrl = "http://www.t-nani.co.kr/"
+# baseUrl = "http://www.t-nani.co.kr/"
 # baseUrl = "https://www.fiki.com.tw/"
 # baseUrl = "http:"
+baseUrl="http://www.roer.co.kr"
 
 times = getTime()
 # 图片保存位置
 path = "F:\\python\\test\\img\\" + times
+
 
 # 移除js、css
 def remove_js_css(content):
@@ -107,17 +109,49 @@ def getHtml(url):
 
 
 urlList = [
-    "http://www.t-nani.co.kr/index.html",
-    "http://www.t-nani.co.kr/shop/shopbrand.html?type=P&xcode=005",
-    "http://www.t-nani.co.kr/shop/bestseller.html?xcode=BEST",
-    "http://www.t-nani.co.kr/shop/shopbrand.html?type=Y&xcode=007",
-    "http://www.t-nani.co.kr/shop/shopbrand.html?type=X&xcode=030",
-    "http://www.t-nani.co.kr/shop/shopbrand.html?type=X&xcode=004",
-    "http://www.t-nani.co.kr/shop/shopbrand.html?type=X&xcode=027",
-    "http://www.t-nani.co.kr/shop/shopbrand.html?xcode=016&type=P",
-    "http://www.t-nani.co.kr/shop/shopbrand.html?type=X&xcode=010",
-    "http://www.t-nani.co.kr/shop/shopbrand.html?type=X&xcode=011",
-    "http://www.t-nani.co.kr/shop/shopbrand.html?type=P&xcode=034",
+    "http://www.roer.co.kr/shop/bestseller.html?xcode=BEST",
+    "http://www.roer.co.kr/shop/shopbrand.html?xcode=014&type=P",
+    "http://www.roer.co.kr/shop/shopbrand.html?xcode=021&type=Y",
+    "http://www.roer.co.kr/shop/shopbrand.html?type=Y&xcode=021&sort=&page=2",
+    "http://www.roer.co.kr/shop/shopbrand.html?type=Y&xcode=021&sort=&page=3",
+    "http://www.roer.co.kr/shop/shopbrand.html?type=Y&xcode=021&sort=&page=4",
+    "http://www.roer.co.kr/shop/shopbrand.html?type=Y&xcode=021&sort=&page=5",
+    "http://www.roer.co.kr/shop/shopbrand.html?xcode=013&type=P",
+    "http://www.roer.co.kr/shop/shopbrand.html?type=P&xcode=013&sort=&page=2",
+    "http://www.roer.co.kr/shop/shopbrand.html?type=P&xcode=013&sort=&page=3",
+    "http://www.roer.co.kr/shop/shopbrand.html?type=P&xcode=013&sort=&page=4",
+    "http://www.roer.co.kr/shop/shopbrand.html?xcode=003&type=X",
+    "http://www.roer.co.kr/shop/shopbrand.html?xcode=004&type=X",
+    "http://www.roer.co.kr/shop/shopbrand.html?type=X&xcode=004&sort=&page=2",
+    "http://www.roer.co.kr/shop/shopbrand.html?type=X&xcode=004&sort=&page=3",
+    "http://www.roer.co.kr/shop/shopbrand.html?type=X&xcode=004&sort=&page=4",
+    "http://www.roer.co.kr/shop/shopbrand.html?type=X&xcode=004&sort=&page=5",
+    "http://www.roer.co.kr/shop/shopbrand.html?type=X&xcode=004&sort=&page=6",
+    "http://www.roer.co.kr/shop/shopbrand.html?type=X&xcode=004&sort=&page=7",
+    "http://www.roer.co.kr/shop/shopbrand.html?xcode=016&type=X",
+    "http://www.roer.co.kr/shop/shopbrand.html?type=X&xcode=016&sort=&page=2",
+    "http://www.roer.co.kr/shop/shopbrand.html?type=X&xcode=016&sort=&page=3",
+    "http://www.roer.co.kr/shop/shopbrand.html?type=X&xcode=016&sort=&page=4",
+    "http://www.roer.co.kr/shop/shopbrand.html?type=X&xcode=016&sort=&page=5",
+    "http://www.roer.co.kr/shop/shopbrand.html?type=X&xcode=016&sort=&page=6",
+    "http://www.roer.co.kr/shop/shopbrand.html?xcode=016&type=X&mcode=003",
+    "http://www.roer.co.kr/shop/shopbrand.html?xcode=016&type=X&mcode=002",
+    "http://www.roer.co.kr/shop/shopbrand.html?xcode=006&type=X&mcode=001",
+    "http://www.roer.co.kr/shop/shopbrand.html?type=X&xcode=006&mcode=001&sort=&page=2",
+    "http://www.roer.co.kr/shop/shopbrand.html?type=X&xcode=006&mcode=001&sort=&page=3",
+    "http://www.roer.co.kr/shop/shopbrand.html?type=X&xcode=006&mcode=001&sort=&page=4",
+    "http://www.roer.co.kr/shop/shopbrand.html?type=X&xcode=006&mcode=001&sort=&page=5",
+    "http://www.roer.co.kr/shop/shopbrand.html?type=X&xcode=006&mcode=001&sort=&page=6",
+    "http://www.roer.co.kr/shop/shopbrand.html?type=X&xcode=006&mcode=001&sort=&page=7",
+    "http://www.roer.co.kr/shop/shopbrand.html?type=X&xcode=006&mcode=001&sort=&page=8",
+    "http://www.roer.co.kr/shop/shopbrand.html?xcode=006&type=X&mcode=003",
+    "http://www.roer.co.kr/shop/shopbrand.html?xcode=006&type=X&mcode=004",
+    "http://www.roer.co.kr/shop/shopbrand.html?xcode=007&type=O",
+    "http://www.roer.co.kr/shop/shopbrand.html?type=O&xcode=007&sort=&page=2",
+    "http://www.roer.co.kr/shop/shopbrand.html?type=O&xcode=007&sort=&page=3",
+    "http://www.roer.co.kr/shop/shopbrand.html?type=O&xcode=007&sort=&page=4",
+    "http://www.roer.co.kr/shop/shopbrand.html?type=O&xcode=007&sort=&page=5",
+    "http://www.roer.co.kr/shop/shopbrand.html?type=O&xcode=007&sort=&page=6",
 ]
 
 # 图片格式
