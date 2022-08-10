@@ -293,6 +293,10 @@
     }
   }
 
+  function float(args) {
+    return parseFloat((args).toFixed(15))
+  }
+
   let tool = {
     unique,
     http,
@@ -312,6 +316,7 @@
     Cookie,
     Local,
     Session,
+    float
   }
 
   window.tool = tool
