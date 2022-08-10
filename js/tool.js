@@ -294,7 +294,7 @@
   }
 
   function float(args) {
-    return parseFloat((args).toFixed(15))
+    return parseFloat((args).toFixed(10))
   }
 
   let tool = {
