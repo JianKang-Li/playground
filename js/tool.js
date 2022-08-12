@@ -90,14 +90,14 @@
   //获取当前时间并格式化为（hh:mm:ss）
   function Ctime() {
     let date = new Date();
-    let time =
-      date.getHours().toString().padStart(2, 0) +
-      ":" +
-      date.getMinutes().toString().padStart(2, 0) +
-      ":" +
-      date.getSeconds().toString().padStart(2, 0);
+    let time = date.toTimeString().slice(0, 8)
     return time;
   };
+
+  // 时间格式化
+  function timeFromDate(date) {
+    date.toTimeString().slice(0, 8)
+  }
 
   //获取当前日期并格式化为（YYYY-MM-DD）
   function CDate() {
@@ -298,6 +298,7 @@
     return parseFloat((args).toFixed(10))
   }
 
+  // 比较两个日期之间差的天数
   function dayDif(date1, date2) {
     return Math.ceil(Math.abs(date1.getTime() - date2.getTime()) / 86400000)
   }
@@ -323,6 +324,7 @@
     Session,
     float,
     dayDif,
+    timeFromDate,
   }
 
   window.tool = tool
