@@ -298,6 +298,10 @@
     return parseFloat((args).toFixed(10))
   }
 
+  function dayDif(date1, date2) {
+    return Math.ceil(Math.abs(date1.getTime() - date2.getTime()) / 86400000)
+  }
+
   let tool = {
     unique,
     http,
@@ -317,7 +321,8 @@
     Cookie,
     Local,
     Session,
-    float
+    float,
+    dayDif,
   }
 
   window.tool = tool
