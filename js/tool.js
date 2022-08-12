@@ -298,6 +298,11 @@
     return parseFloat((args).toFixed(10))
   }
 
+  // rgb 转 hex
+  function rgbToHex(r, g, b) {
+    return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
+  }
+
   // 比较两个日期之间差的天数
   function dayDif(date1, date2) {
     return Math.ceil(Math.abs(date1.getTime() - date2.getTime()) / 86400000)
@@ -325,6 +330,7 @@
     float,
     dayDif,
     timeFromDate,
+    rgbToHex
   }
 
   window.tool = tool
