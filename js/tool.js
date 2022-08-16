@@ -25,40 +25,69 @@
   }
 
   // 使用fetch发送请求
-  async function http(obj, headers) {
-    let { method, url, param, data } = obj
-    headers === null ? {
-      "Content-Type": "application/json"
-    } : headers
-    let res;
-    // param处理
-    if (param) {
-      let str = new URLSearchParams(param).toString()
-      url += "?" + str
+  class Http {
+    constructor() {
+      this.controller = new AbortController()
+      this.signal = this.controller.signal
     }
-    // data处理
-    if (data) {
-      let _data = undefined;
-      if (headers["Content-Type"] === "application/json") {
-        _data = JSON.stringify(data)
+
+    async get({ url, headers, param }) {
+      let res;
+      if (param) {
+        let str = new URLSearchParams(param).toString()
+        url += "?" + str
+      }
+      if (headers === undefined) {
+        res = await fetch(url, { signal: this.signal }).then(async (res) => {
+          let result = await res.json()
+          return result
+        }).catch(function (e) {
+          throw new Error(`error: ${e.message}`);
+        })
       } else {
-        _data = new FormData()
-        let keys = Object.keys(data)
-        for (let i of keys) {
-          _data.append(i, data[i])
+        res = await fetch(url, { headers, signal: this.signal }).then(async (res) => {
+          let result = await res.json()
+          return result
+        }).catch(function (e) {
+          throw new Error(`error: ${e.message}`);
+        })
+      }
+
+    }
+
+    async post({ url, headers, data }) {
+      let res;
+      if (headers === undefined) {
+        headers = {
+          "Content-Type": "application/json"
         }
       }
-      res = await fetch(url,
-        {
-          method: method,
-          headers,
-          body: _data
-        })
-    } else {
-      res = await fetch(url)
+      if (data) {
+        let _data = undefined;
+        if (headers["Content-Type"] === "application/json") {
+          _data = JSON.stringify(data)
+        } else {
+          _data = new FormData()
+          let keys = Object.keys(data)
+          for (let i of keys) {
+            _data.append(i, data[i])
+          }
+        }
+        res = await fetch(url,
+          {
+            method: "POST",
+            headers,
+            body: _data,
+            signal: this.signal
+          })
+      }
+      let result = await res.json()
+      return result
     }
-    // 处理返回结果
-    return res.json()
+
+    httpAbort() {
+      this.controller.abort()
+    }
   }
 
   // 创建随机数字数组
@@ -360,7 +389,6 @@
 
   let tool = {
     unique,
-    http,
     CNumber,
     CNumbers,
     CString,
@@ -378,6 +406,7 @@
     Local,
     Session,
     Bus,
+    Http,
     float,
     dayDif,
     timeFromDate,
