@@ -24,65 +24,119 @@
     }
   }
 
+  // 原始XHR发送请求
+  class XHR {
+    constructor() {
+    }
+
+    get({ url, param }) {
+      this.xhr = new XMLHttpRequest();
+      return new Promise((resolve, reject) => {
+        let _url = url
+        if (param) {
+          let str = new URLSearchParams(param).toString()
+          _url += "?" + str
+        }
+        this.xhr.open("GET", _url)
+        this.xhr.send();
+        this.xhr.onreadystatechange = function () {
+          if (this.readyState === 4 && this.status === 200) {
+            resolve(this.responseText)
+          } else if (this.status >= 400) {
+            reject(this.statusText)
+          }
+        }
+      }
+      )
+    }
+
+    post({ url, data, headers }) {
+      this.xhr = new XMLHttpRequest();
+      return new Promise((resolve, reject) => {
+        this.xhr.open('POST', url)
+        if (heads) {
+          this.setHeaders(headers)
+        }
+        this.xhr.send(data)
+        this.xhr.onreadystatechange = function () {
+          if (this.readyState === 4 && this.status === 200) {
+            resolve(this.responseText);
+          } else if (this.status >= 400) {
+            reject(this.statusText)
+          }
+        }
+      })
+    }
+
+    setHeaders(headers) {
+      for (let head in headers) {
+        this.xhr.setRequestHeader(head, headers[head])
+      }
+    }
+
+    abort() {
+      this.xhr.abort()
+      if (this.xhr.status === 0) {
+        return "Abort"
+      } else {
+        throw new Error(this.xhr.status)
+      }
+    }
+  }
+
   // 使用fetch发送请求
   class Http {
     constructor() {
-      this.controller = new AbortController()
-      this.signal = this.controller.signal
     }
 
-    async get({ url, headers, param }) {
-      let res;
-      if (param) {
-        let str = new URLSearchParams(param).toString()
-        url += "?" + str
-      }
-      if (headers === undefined) {
+    get({ url, param }) {
+      return new Promise(async (resolve, reject) => {
+        this.controller = new AbortController()
+        this.signal = this.controller.signal
+        let res;
+        if (param) {
+          let str = new URLSearchParams(param).toString()
+          url += "?" + str
+        }
         res = await fetch(url, { signal: this.signal }).then(async (res) => {
           let result = await res.json()
-          return result
+          resolve(result)
         }).catch(function (e) {
-          throw new Error(`error: ${e.message}`);
+          reject(e.message)
         })
-      } else {
-        res = await fetch(url, { headers, signal: this.signal }).then(async (res) => {
-          let result = await res.json()
-          return result
-        }).catch(function (e) {
-          throw new Error(`error: ${e.message}`);
-        })
-      }
-
+      })
     }
 
     async post({ url, headers, data }) {
-      let res;
-      if (headers === undefined) {
-        headers = {
-          "Content-Type": "application/json"
-        }
-      }
-      if (data) {
-        let _data = undefined;
-        if (headers["Content-Type"] === "application/json") {
-          _data = JSON.stringify(data)
-        } else {
-          _data = new FormData()
-          let keys = Object.keys(data)
-          for (let i of keys) {
-            _data.append(i, data[i])
+      return new Promise(async (resolve, reject) => {
+        this.controller = new AbortController()
+        this.signal = this.controller.signal
+        let res;
+        if (headers === undefined) {
+          headers = {
+            "Content-Type": "application/json"
           }
         }
-        res = await fetch(url,
-          {
-            method: "POST",
-            headers,
-            body: _data,
-            signal: this.signal
-          })
-      }
-      let result = await res.json()
-      return result
+        if (data) {
+          let _data;
+          if (headers["Content-Type"] === "application/json") {
+            _data = JSON.stringify(data)
+          }
+          try {
+            res = await fetch(url,
+              {
+                method: "POST",
+                headers,
+                body: _data,
+                signal: this.signal
+              })
+            let result = await res.json()
+            resolve(result)
+          } catch (e) {
+            reject(e.message)
+          }
+        }
+      })
     }
 
     httpAbort() {
@@ -407,6 +461,7 @@
     Session,
     Bus,
     Http,
+    XHR,
     float,
     dayDif,
     timeFromDate,
