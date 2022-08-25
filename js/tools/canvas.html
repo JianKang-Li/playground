@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://jiankang-li.github.io/Style-library/dist/static/css/index.css">
+  <script src="https://jiankang-li.github.io/Style-library/dist/static/js/index.js" defer></script>
+  <title>Canvas</title>
+  <style>
+    :root {
+      font-size: 13px;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      display: flex;
+      /* justify-content: center; */
+      align-items: center;
+    }
+
+    canvas {
+      border: 1px solid var(--border);
+      border-radius: 1rem;
+    }
+
+    .card {
+      display: flex;
+      flex-direction: row;
+      width: fit-content;
+      height: fit-content;
+      margin-right: 1rem;
+    }
+
+    .LK-codes {
+      font-size: 16px;
+    }
+
+    .LK-input {
+      width: 5rem;
+    }
+
+
+    @media screen and (max-width:1100px) {
+      body {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .card {
+        margin-bottom: 1rem;
+        margin-right: 0;
+      }
+    }
+
+    .choice {
+      display: flex;
+      flex-direction: column;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="card">
+    <canvas width="600" height="700">
+      浏览器不支持Canvas
+    </canvas>
+    <div class="choice">
+      <div>
+        <label for="" class="LK-lable">全局：</label>
+      </div>
+      <div>
+        <label for="" class="LK-lable">开始坐标X:</label>
+        <input type="number" name="" id="X" class="LK-number" value="300" min="0">
+      </div>
+      <div>
+        <label for="" class="LK-lable">开始坐标Y:</label>
+        <input type="number" name="" id="Y" class="LK-number" value="300" min="0">
+      </div>
+      <div>
+        <label for="" class="LK-lable">线条宽度</label>
+        <input type="number" name="" id="lineW" class="LK-number" value="1" min="1">
+      </div>
+      <div>
+        <label for="" class="LK-lable">颜色</label>
+        <input type="color" name="" id="color">
+      </div>
+      <div>
+        <label for="" class="LK-lable">图形类型</label>
+        <select name="" id="select" class="LK-select">
+          <option value="rect">rect</option>
+          <option value="arc">arc</option>
+          <option value="ellipse">ellipse</option>
+          <option value="text">text</option>
+        </select>
+      </div>
+      <div>
+        <label for="" class="LK-lable">矩形：</label>
+      </div>
+      <div>
+        <label for="" class="LK-lable">长：</label>
+        <input type="number" class="LK-number" min="1" value="200" id="Rlength">
+      </div>
+      <div>
+        <label for="" class="LK-lable">宽：</label>
+        <input type="number" class="LK-number" min="1" value="200" id="Rwidth">
+      </div>
+      <div>
+        <label for="" class="LK-lable">弧形：</label>
+      </div>
+      <div>
+        <label for="" class="LK-lable">半径：</label>
+        <input type="number" class="LK-number" min="1" value="100" id="Aradius">
+      </div>
+      <div>
+        <label for="" class="LK-lable">开始角度：</label>
+        <input type="number" class="LK-number" min="0" value="0" id="Astart">
+      </div>
+      <div>
+        <label for="" class="LK-lable">结束角度：</label>
+        <input type="number" class="LK-number" min="1" value="180" id="Aend">
+      </div>
+      <div>
+        <label for="" class="LK-lable">椭圆：</label>
+      </div>
+      <div>
+        <label for="" class="LK-lable">水平半径：</label>
+        <input type="number" class="LK-number" min="1" value="180" id="EXradius">
+      </div>
+      <div>
+        <label for="" class="LK-lable">垂直半径：</label>
+        <input type="number" class="LK-number" min="1" value="90" id="EYradius">
+      </div>
+      <div>
+        <label for="" class="LK-lable">旋转角度：</label>
+        <input type="number" class="LK-number" value="0" id="ERotate">
+      </div>
+      <div>
+        <label for="" class="LK-lable">起始角度：</label>
+        <input type="number" class="LK-number" min="0" value="0" id="Estart">
+      </div>
+      <div>
+        <label for="" class="LK-lable">终止角度：</label>
+        <input type="number" class="LK-number" min="0" value="360" id="Eend">
+      </div>
+      <div>
+        <label for="" class="LK-lable">文本：</label>
+      </div>
+      <div>
+        <label for="" class="LK-lable">文字:</label>
+        <input type="text" id="text" class="LK-input" value="Hello Word!">
+      </div>
+      <div>
+        <label for="" class="LK-lable">文字样式:</label>
+        <input type="text" id="textS" class="LK-input" value="40px 宋体">
+      </div>
+      <div>
+        <label for="" class="LK-lable">maxWidth:</label>
+        <input type="number" id="textM" class="LK-number" value="200">
+      </div>
+      <div>
+        <label for="" class="LK-lable">文字位置:</label>
+        <select name="" id="textP" class="LK-select">
+          <option value="center">
+            center
+          </option>
+          <option value="left">
+            left
+          </option>
+          <option value="start">
+            start
+          </option>
+          <option value="right">
+            right
+          </option>
+          <option value="end">
+            end
+          </option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <div class="LK-codes" style="margin-bottom: 100px;">
+    <code id="code"></code>
+  </div>
+</body>
+
+<script>
+
+
+  window.addEventListener("load", () => {
+    const deg = Math.PI / 180
+    const canvas = document.querySelector("canvas")
+    const context = canvas.getContext("2d")
+
+    // 控件
+    const colorV = document.querySelector("#color")
+    const typeV = document.querySelector("#select")
+    const code = document.querySelector("#code")
+    const Astart = document.querySelector("#Astart")
+    const Aend = document.querySelector("#Aend")
+    const Aradius = document.querySelector("#Aradius")
+    const Rlength = document.querySelector("#Rlength")
+    const Rwidth = document.querySelector("#Rwidth")
+    const lineW = document.querySelector("#lineW")
+    const CoordinateX = document.querySelector("#X")
+    const CoordinateY = document.querySelector("#Y")
+    const EXradius = document.querySelector("#EXradius")
+    const EYradius = document.querySelector("#EYradius")
+    const ERotate = document.querySelector("#ERotate")
+    const Estart = document.querySelector("#Estart")
+    const Eend = document.querySelector("#Eend")
+    const textP = document.querySelector("#textP")
+    const textS = document.querySelector("#textS")
+    const textM = document.querySelector("#textM")
+    const text = document.querySelector("#text")
+
+
+    const Controls = [textM, textS, textP, text, colorV, typeV, Aend, Astart, Aradius, Rlength, Rwidth, lineW, CoordinateX, CoordinateY, EXradius, EYradius, ERotate, Estart, Eend]
+
+    Controls.forEach((item) => {
+      item.addEventListener("change", update)
+    })
+    drawRect(300, 300, 200, 200)
+    function update() {
+      cleanCanvas()
+      context.strokeStyle = colorV.value;
+      context.lineWidth = lineW.value
+      let type = typeV.value
+      if (type === "arc") {
+        let x = CoordinateX.value
+        let y = CoordinateY.value
+        let radius = Aradius.value
+        let start = Astart.value
+        let end = Aend.value
+        drawArc(x, y, radius, start, end)
+      }
+      else if (type === "rect") {
+        let x = CoordinateX.value
+        let y = CoordinateY.value
+        let width = Rwidth.value
+        let height = Rlength.value
+        drawRect(x, y, width, height)
+      }
+      else if (type === "ellipse") {
+        let x = CoordinateX.value
+        let y = CoordinateY.value
+        let Xradius = EXradius.value
+        let Yradius = EYradius.value
+        let rotates = ERotate.value
+        let start = Estart.value
+        let end = Eend.value
+        drawEllipse(x, y, Xradius, Yradius, rotates, start, end)
+      }
+      else if (type === "text") {
+        let texts = text.value
+        let x = CoordinateX.value
+        let y = CoordinateY.value
+        let maxWidth = textM.value
+        drawText(texts, x, y, maxWidth)
+      }
+    }
+
+
+    function drawText(text, x, y, maxWidth) {
+      context.font = textS.value;
+      context.textAlign = textP.value;
+      context.strokeText(text, x, y, maxWidth);
+      getCodes(`
+      context.font = ${textS.value};<br>
+      context.textAlign = ${textP.value};<br>
+      context.strokeText(${text}, ${x}, ${y}, ${maxWidth});`)
+    }
+
+
+    function drawRect(x, y, width, height) {
+      context.rect(x, y, width, height);
+      context.stroke();
+      getCodes(`context.rect(${x},${y},${width},${height})`)
+    }
+
+    function drawArc(x, y, radius, start, end, reversal = false) {
+      context.arc(x, y, radius, Math.PI / 180 * start, Math.PI / 180 * end, reversal);
+      context.stroke();
+      getCodes(`context.arc(${x},${y}, ${radius}, Math.PI / 180 * ${start}, Math.PI / 180 * ${end}, ${reversal});`)
+    }
+
+
+    function drawEllipse(x, y, Xradius, Yradius, rotates, start, end, reversal = false) {
+      context.ellipse(x, y, Xradius, Yradius, rotates * deg, start, end * Math.PI / 180, reversal)
+      context.stroke();
+      getCodes(`context.ellipse(${x}, ${y}, ${Xradius}, ${Yradius}, ${rotates} * Math.PI / 180, ${start}, ${end} * Math.PI / 180, ${reversal})`)
+    }
+
+    function cleanCanvas() {
+      canvas.width = 600
+      canvas.height = 700
+    }
+
+    function getCodes(ach) {
+      let codes = `const context = document.querySelector("canvas")<br>
+    context.strokeStyle = ${colorV.value};<br>
+    context.lineWidth = ${lineW.value};<br>
+    ${ach}<br>
+    context.stroke();<br>
+    `
+      code.innerHTML = codes
+    }
+  })
+</script>
+
+</html>
