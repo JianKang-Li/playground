@@ -145,7 +145,7 @@
   }
 
   // 创建随机数字数组
-  function CNumbers(n, min, max) {
+  function CNumbers(n = 5, min = 0, max = 100) {
     let a = [];
     for (let i = 0; i < n; i++) {
       a[i] = Math.floor(Math.random() * (max - min)) + min;
@@ -154,7 +154,7 @@
   };
 
   //创建指定长度的字符串
-  function CString(n) {
+  function CString(n = 5) {
     let str = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
     let result = "";
     for (let j = 0; j < n; j++) {
@@ -164,7 +164,7 @@
   };
 
   //创建指定范围内的随机数字
-  function CNumber(min, max) {
+  function CNumber(min = 0, max = 100) {
     let a;
     a = Math.floor(Math.random() * (max - min)) + min;
     return a;
@@ -231,7 +231,7 @@
   */
 
   // 防抖
-  function debounce(handle, delay) {
+  function debounce(handle, delay = 1000) {
     var timer = null;
     return function () {
       var _self = this, _args = arguments;
@@ -243,7 +243,7 @@
   }
 
   // 节流
-  function throttle(handle, wait) {
+  function throttle(handle, wait = 1000) {
     var lasetTime = 0;
     return function () {
       var nowTime = new Data().getTime();
