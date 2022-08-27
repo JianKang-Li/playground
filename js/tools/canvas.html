@@ -302,7 +302,9 @@
     }
 
     function getCodes(ach) {
-      let codes = `const context = document.querySelector("canvas")<br>
+      let codes = `
+    const canvas = document.querySelector("canvas");<br>
+    const context = canvas.getContext("2d")<br>
     context.strokeStyle = ${colorV.value};<br>
     context.lineWidth = ${lineW.value};<br>
     ${ach}<br>
