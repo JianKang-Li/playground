@@ -111,7 +111,7 @@
       <button id="clean" class="btn">清空</button>
       <button id="run" class="runbtn">运行代码</button>
     </div>
-    <textarea id="code" placeholder="js代码..."></textarea>
+    <textarea id="code" placeholder="js代码..." onkeydown="tab(this)"></textarea>
   </div>
 
   <div class="container">
@@ -157,6 +157,15 @@
     run.addEventListener("click", () => {
       runCode()
     })
+
+
+    function tab(obj) {
+      if (event.keyCode == 9) {
+        obj.value = obj.value + " "; // 跳几格由你自已决定
+        event.returnValue = false;
+      }
+    }
+
   </script>
 
 </body>
