@@ -132,7 +132,10 @@
         for (let i = 0; i < args.length; i++) {
           if (args[i] instanceof Array) {
             show.innerHTML += `[${args[i]}]`
-          } else {
+          } else if (typeof args[i] === "object") {
+            show.innerHTML += JSON.stringify(args[i])
+          }
+          else {
             show.innerHTML += args[i]
           }
           show.innerHTML += " "
