@@ -135,9 +135,7 @@
       console.log = function (...args) {
         show.innerHTML += "> "
         for (let i = 0; i < args.length; i++) {
-          if (args[i] instanceof Array) {
-            show.innerHTML += `[${args[i]}]`
-          } else if (typeof args[i] === "object") {
+          if (typeof args[i] === "object") {
             show.innerHTML += JSON.stringify(args[i])
           }
           else {
