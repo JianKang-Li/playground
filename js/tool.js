@@ -386,6 +386,12 @@
     return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
   }
 
+  function rem2px(rem) {
+    const docpx = getComputedStyle(document.documentElement)["font-size"]
+    let px = rem * parseInt(docpx)
+    return px
+  }
+
   // 比较两个日期之间差的天数
   function dayDif(date1, date2) {
     return Math.ceil(Math.abs(date1.getTime() - date2.getTime()) / 86400000)
@@ -465,7 +471,8 @@
     float,
     dayDif,
     timeFromDate,
-    rgbToHex
+    rgbToHex,
+    rem2px,
   }
 
   window.tool = tool
