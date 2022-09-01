@@ -447,6 +447,11 @@
     }
   }
 
+  // 格式化数字
+  function formatNumber(num) {
+    return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")
+  }
+
   let tool = {
     unique,
     CNumber,
@@ -473,6 +478,7 @@
     timeFromDate,
     rgbToHex,
     rem2px,
+    formatNumber,
   }
 
   window.tool = tool

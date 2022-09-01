@@ -51,66 +51,10 @@
   <!-- 导入tool库 -->
   <script src="./tool.js"></script>
   <script>
-    let input = tool.get("#ljk")
-    console.log(input)
-
-    const users = [
-      {
-        "firstname": "L",
-        "lastname": "JK"
-      },
-      {
-        "firstname": "L",
-        "lastname": "JL"
-      },
-      {
-        "firstname": "Y",
-        "lastname": "CL",
-        "like": function () {
-          console.log(this.firstname)
-        }
-      }
-    ]
-
-    // console.log($(".LK-input"))
-
-    let dom = new tool.Dom(tool.get("#ljk"))
-    console.log(dom)
-    dom.addClass("inp")
-    dom.removeClass("inp")
-    console.log(tool.Ctime())
-    console.log(tool.float(11.2 + 0.1))
-    console.log(tool.dayDif(new Date("2021-11-3"), new Date("2021-11-4")))
-    console.log(tool.rgbToHex(255, 255, 255))
-
-    /* let http = new tool.Http()
-    http.get({
-      url: "http://httpbin.org/get",
-      param: {
-        name: "ljk",
-        age: 10
-      }
-    }).then(res => {
-      console.log(res)
-    }, e => {
-      console.log(e)
-    }) */
+   
 
 
-    /* http.post({
-      url: "http://httpbin.org/post",
-      data: {
-        name: "ljk",
-        age: 19
-      }
-    }).then(res => {
-      console.log(res)
-    }, e => {
-      console.log(e)
-    }) */
-
-    console.log(tool.float(0.22 + 0.27))
-
+    console.log();
 
   </script>
 </body>
