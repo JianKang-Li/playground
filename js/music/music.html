@@ -254,9 +254,10 @@
         let mp3Result = await mp3Res.json()
         result.data.url = mp3Result.data[0].url
         songs.push(result.data)
-        // console.log(songs)
+        return 1
       } catch (e) {
         console.log(e)
+        return 0
       }
     }
 
@@ -265,11 +266,11 @@
         Current = Current + 1;
         PlaySong()
       } else if (Current === songs.length - 1) {
-        getSong()
-        Current = Current + 1;
-        setTimeout(() => {
+        getSong().then(res => {
+          Current += 1
           PlaySong()
-        }, 1000)
+        })
+
       }
     }
 
@@ -296,10 +297,11 @@
       }
     }
 
-    getSong()
-    setTimeout(() => {
+    getSong().then(res => {
       PlaySong()
-    }, 2000)
+    }, err => {
+      console.log(err)
+    })
   </script>
 </body>
 
