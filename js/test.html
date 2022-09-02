@@ -51,10 +51,13 @@
   <!-- 导入tool库 -->
   <script src="./tool.js"></script>
   <script>
-   
 
+    let button = tool.get("button")
+    let dom = new tool.Dom(button[0])
+    console.log(dom)
+    // dom.setText("123")
+    console.log(dom.getText())
 
-    console.log();
 
   </script>
 </body>
