@@ -269,6 +269,8 @@
         getSong().then(res => {
           Current += 1
           PlaySong()
+        }, err => {
+          console.log(err)
         })
 
       }
@@ -288,11 +290,13 @@
       let pic = CurrentSong.picurl;
       name.innerText = CurrentSong.artistsname
       song.innerText = CurrentSong.name
-      let flag = myAudio.paused
+      let flag = Array.from(controlDom.classList).some(function (item) {
+        return item === "active"
+      })
       myAudio.src = CurrentSong.url
       alarm.style["background"] = `url(${pic}) no-repeat center center`
       alarm.style["background-size"] = `cover`
-      if (!flag) {
+      if (flag) {
         myAudio.play()
       }
     }
