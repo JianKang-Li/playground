@@ -162,7 +162,13 @@
 
     function tab(obj) {
       if (event.keyCode == 9) {
-        obj.value = obj.value + " "; // 跳几格由你自已决定
+        let start = obj.selectionStart;
+        let end = obj.selectionEnd;
+        if (start) {
+          var txt = obj.value
+          var result = txt.substring(0, start) + "  " + txt.substring(end)
+          obj.value = result
+        }
         event.returnValue = false;
       }
     }
