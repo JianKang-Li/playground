@@ -159,6 +159,13 @@
     }
   }
 
+
+  // 获取url某个参数
+  function getQueryString(url, name) {
+    let U = new URLSearchParams(url);
+    return U.get(name)
+  }
+
   // 创建随机数字数组
   function CNumbers(n = 5, min = 0, max = 100) {
     let a = [];
@@ -488,6 +495,7 @@
     Bus,
     Http,
     XHR,
+    getQueryString,
     float,
     dayDif,
     timeFromDate,
