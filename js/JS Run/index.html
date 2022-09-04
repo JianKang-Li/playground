@@ -168,6 +168,9 @@
           var txt = obj.value
           var result = txt.substring(0, start) + "  " + txt.substring(end)
           obj.value = result
+          // 防止光标跳到最后
+          obj.selectionStart = start + 2
+          obj.selectionEnd = start + 2
         }
         event.returnValue = false;
       }
