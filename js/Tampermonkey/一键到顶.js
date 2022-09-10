@@ -25,6 +25,8 @@
 
 // @match      *.npmjs.com/*
 
+// @match      *gitee.com/*
+
 // @grant        none
 // @license      GPL
 // ==/UserScript==
