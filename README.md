@@ -59,3 +59,11 @@ rgb颜色转hex格式
 rem转px
 + formatNumber,
 格式化数字，增加(,)
++ getScrollOffset
+获取滚动条位置
++ getViewportOffset
+获取窗口大小
++ getStyle
+获取元素某个样式
++ Notify
+桌面通知
