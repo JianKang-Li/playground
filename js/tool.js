@@ -474,6 +474,43 @@
     return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")
   }
 
+  // 获取滚动条位置
+  function getScrollOffset() {
+    if (window.pageXOffset) {
+      return {
+        x: window.pageXOffset,
+        y: window.pageYOffset
+      }
+    } else {
+      return {
+        x: document.body.scrollLeft + document.documentElement.scrollLeft,
+        y: document.body.scrollTop + document.documentElement.scrollTop,
+      }
+    }
+  }
+
+  // 获取窗口大小
+  function getViewportOffset() {
+    if (window.innerWidth) {
+      return {
+        w: wind.innerWidth,
+        h: window.innerHeight
+      }
+    } else {
+      if (document.compatMode === "BackCompat") {
+        return {
+          w: document.body.clientWidth,
+          h: document.body.clientHeight
+        }
+      } else {
+        return {
+          w: document.documentElement.clientWidth,
+          h: document.documentElement.clientHeight
+        }
+      }
+    }
+  }
+
   let tool = {
     unique,
     CNumber,
@@ -502,6 +539,8 @@
     rgbToHex,
     rem2px,
     formatNumber,
+    getScrollOffset,
+    getViewportOffset
   }
 
   window.tool = tool
