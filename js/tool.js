@@ -408,6 +408,7 @@
     return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
   }
 
+  // rem转px
   function rem2px(rem) {
     const docpx = getComputedStyle(document.documentElement)["font-size"]
     let px = rem * parseInt(docpx)
@@ -511,6 +512,15 @@
     }
   }
 
+  // 获取元素样式
+  function getStyle(dom, prop) {
+    if (window.getComputedStyle) {
+      return window.getComputedStyle(dom, null)[prop]
+    } else {
+      return dom.currentStyle[prop];
+    }
+  }
+
   let tool = {
     unique,
     CNumber,
@@ -540,7 +550,8 @@
     rem2px,
     formatNumber,
     getScrollOffset,
-    getViewportOffset
+    getViewportOffset,
+    getStyle
   }
 
   window.tool = tool
