@@ -237,23 +237,27 @@
       nextSong()
     })
 
+
+    function getSongUrl(id) {
+      return `https://music.163.com/song/media/outer/url?id=${id}.mp3`
+    }
+
     async function getSong() {
       try {
-        /* 
-        名称	  类型	    必填	  说明
-        sort	  string	  选填	   选择输出分类[热歌榜，新歌榜，飙升榜，抖音榜，电音榜]，为空输出热歌榜
-        mid	    int	      选填	  网易云歌单 ID
-        format	string	  选填	  选择输出格式
-        */
-        let url = "https://api.uomg.com/api/rand.music?sort=热歌榜&format=json"
+        let url = "http://music.cyrilstudio.top/playlist/track/all?id=3778678"
         let res = await fetch(url)
         let result = await res.json()
-        const myURL = new URL(result.data.url);
-        let id = myURL.searchParams.get("id")
-        let mp3Res = await fetch("https://autumnfish.cn/song/url?id=" + id)
-        let mp3Result = await mp3Res.json()
-        result.data.url = mp3Result.data[0].url
-        songs.push(result.data)
+        // console.log(result.songs)
+        let songList = result.songs
+        songList.forEach(ele => {
+          songs.push({
+            name: ele.name,
+            picurl: ele.al.picUrl,
+            artistsname: ele.ar[0].name,
+            url: getSongUrl(ele.id),
+          })
+        });
+        // console.log(songs)
       } catch (e) {
         console.log(e)
       }
@@ -264,13 +268,9 @@
         Current = Current + 1;
         PlaySong()
       } else if (Current === songs.length - 1) {
-        getSong().then(res => {
-          Current += 1
-          PlaySong()
-        }, err => {
-          console.log(err)
-        })
-
+        alert("到歌单底部了，将自动重头开始")
+        Current = 0
+        PlaySong()
       }
     }
 
