@@ -6,6 +6,8 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="https://jiankang-li.github.io/Style-library/dist/static/css/index.css">
+  <script src="https://jiankang-li.github.io/Style-library/dist/static/js/index.js" defer></script>
   <title>JavaScript Run</title>
   <style>
     body {
@@ -33,33 +35,10 @@
       font-size: 1.5rem;
     }
 
-    .btn {
-      border: none;
-      width: fit-content;
-      padding: 0.5rem 0.8rem;
-      border-radius: 10px;
-      background-color: #48c5eb;
-      color: #fff;
+    #run,
+    #clean {
       float: right;
-    }
-
-    .runbtn {
-      margin-right: 10px;
-      float: right;
-      border: none;
-      width: fit-content;
-      padding: 0.5rem 0.8rem;
-      border-radius: 10px;
-      color: #fff;
-      background-color: #3bb76d;
-    }
-
-    button {
-      cursor: pointer;
-    }
-
-    button:focus {
-      outline: none;
+      margin-left: 1rem;
     }
 
     textarea {
@@ -116,14 +95,13 @@
 
 <body>
   <div class="links">
-    <button class="btn"><a href="./js/tools/canvas.html" target="_blank">canvas</a></button>
-    <button class="btn"><a href="./js/music/music.html" target="_blank">music</a></button>
+    <button class="btn"><a href="./js/tools/canvas.html" target="_blank" class="LK-link">canvas</a></button>
   </div>
   <div class="container">
     <div class="head">
       <span>请输入JS代码</span>
-      <button id="clean" class="btn">清空</button>
-      <button id="run" class="runbtn">运行代码</button>
+      <button id="clean" class="btn btn-danger" style="float: right;">清空</button>
+      <button id="run" class="btn btn-success">运行代码</button>
     </div>
     <textarea id="code" placeholder="js代码..." onkeydown="tab(this)"></textarea>
   </div>
