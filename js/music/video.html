@@ -32,11 +32,22 @@
       height: 90%;
       padding-bottom: 1rem;
     }
+
+    .btn {
+      width: fit-content;
+    }
+
+    @media screen and (min-width:800px) {
+      #video {
+        width: 720px;
+        height: 1280px;
+      }
+    }
   </style>
 </head>
 
 <body>
-  <div id="videos" class="card">
+  <div id="videos">
     <video src="" id="video" controls autoplay loop>
     </video>
     <div class="btns">
@@ -69,6 +80,12 @@
         console.log(e)
       }
     }
+
+    // video.addEventListener('canplay', function (e) {
+    //   console.log(e.target.videoWidth);
+    //   console.log(e.target.videoHeight);
+    // })
+
 
     function nextV() {
       current++
@@ -113,7 +130,7 @@
         })
       } else {
         video.loop = true
-        video.removeEventListener("ended")
+        removeEventListener("ended", video)
       }
     })
   </script>
