@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset=utf-8>
+  <link rel="stylesheet" href="https://jiankang-li.github.io/Style-library/dist/static/css/index.css">
+  <script src="https://jiankang-li.github.io/Style-library/dist/static/js/index.js" defer></script>
+  <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+  <style>
+    html,
+    body {
+      padding: 0;
+      margin: 0;
+      height: 100%;
+    }
+
+    body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    #videos {
+      padding: 1rem;
+      text-align: center;
+      width: 20rem;
+      height: 33rem;
+      background-color: antiquewhite;
+    }
+
+    #video {
+      width: 18rem;
+      height: 30rem;
+      padding-bottom: 1rem;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="videos" class="card">
+    <video src="" id="video" controls autoplay loop>
+    </video>
+    <div class="btns">
+      <button onclick="preV()" class="btn">pre</button>
+      <!-- <button onclick="getVideos()" class="btn">get</button> -->
+      <button onclick="nextV()" class="btn">next</button>
+      自动
+      <input type="checkbox" name="" id="auto">
+    </div>
+  </div>
+
+
+  <script>
+    const BaseUrl = "https://api.apiopen.top/api/getMiniVideo?"
+    let page = 0
+    let size = 10
+    let current = 0
+    let arr = []
+    let total = 0
+    const video = document.querySelector("#video")
+    async function getVideos() {
+      let url = BaseUrl + "page=" + page + "&size=" + size
+      try {
+        let res = await fetch(url)
+        let result = await res.json()
+        arr = result.result.list
+        total = result.result.total
+        video.src = arr[current].playurl
+      } catch (e) {
+        console.log(e)
+      }
+    }
+
+    function nextV() {
+      current++
+      if (current < total && current >= size) {
+        page++
+        getVideos()
+        current = 0
+      } else if (current > total) {
+        $Tip.error("到底了！")
+      }
+      video.src = arr[current].playurl
+      console.log("page:" + page, "current:" + current)
+    }
+
+    function preV() {
+      if (current === 0 && page === 0) {
+        $Tip.error("到顶了！")
+      }
+      else {
+        if (current > 0) {
+          current--
+        } else {
+          page--
+          getVideos()
+          current = 0
+        }
+        video.src = arr[current].playurl
+      }
+      console.log("page:" + page, "current:" + current)
+    }
+
+    window.addEventListener("load", () => {
+      getVideos()
+    })
+
+    const auto = document.querySelector("#auto")
+    auto.addEventListener("click", () => {
+      if (auto.checked) {
+        video.loop = false
+        video.addEventListener("ended", () => {
+          nextV()
+        })
+      } else {
+        video.loop = true
+        video.removeEventListener("ended")
+      }
+    })
+  </script>
+</body>
+
+</html>
