@@ -67,3 +67,7 @@ rem转px
 获取元素某个样式
 + Notify
 桌面通知
++ isEqual
+判断两个值或对象是否相等
++ isEmpty
+判断对象是否为空

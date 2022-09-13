@@ -160,7 +160,7 @@
   }
 
   // 判断对象是否为空
-  function IsEmpty(obj) {
+  function isEmpty(obj) {
     return Reflect.ownKeys(obj).length === 0 && obj.constructor === Object;
   }
 
@@ -583,7 +583,7 @@
     getStyle,
     Notify,
     isEqual,
-    IsEmpty,
+    isEmpty,
   }
 
   window.tool = tool
