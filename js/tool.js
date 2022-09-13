@@ -159,6 +159,10 @@
     }
   }
 
+  // 判断对象是否为空
+  function IsEmpty(obj) {
+    return Reflect.ownKeys(obj).length === 0 && obj.constructor === Object;
+  }
 
   // 获取url某个参数
   function getQueryString(url, name) {
