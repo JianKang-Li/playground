@@ -162,7 +162,9 @@
 
   // 获取url某个参数
   function getQueryString(url, name) {
-    url = url.split("?")[1]
+    if (url.indexOf("?") != -1) {
+      url = url.split("?")[1]
+    }
     let U = new URLSearchParams(url);
     return U.get(name)
   }
