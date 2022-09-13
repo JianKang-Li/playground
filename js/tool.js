@@ -164,6 +164,11 @@
     return Reflect.ownKeys(obj).length === 0 && obj.constructor === Object;
   }
 
+  // 判断是否相等
+  function isEqual(value1, value2) {
+    return Object.is(value1, value2)
+  }
+
   // 获取url某个参数
   function getQueryString(url, name) {
     if (url.indexOf("?") != -1) {
@@ -576,7 +581,9 @@
     getScrollOffset,
     getViewportOffset,
     getStyle,
-    Notify
+    Notify,
+    isEqual,
+    IsEmpty,
   }
 
   window.tool = tool
