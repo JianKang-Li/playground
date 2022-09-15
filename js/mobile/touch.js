@@ -1,4 +1,4 @@
-//封装mobile上的单击和长按的方法
+//封装mobile上的单击,长按，左滑，右滑的方法
 ; (function (doc) {
   var Touch = function (selector) {
     return Touch.prototype.init(selector)
@@ -42,6 +42,41 @@
           }, 500); break;
           case "touchmove": clearTimeout(t); t = null; break;
           case "touchend": clearTimeout(t); t = null; break;
+        }
+      }
+    },
+    swipLeft: function (callback) {
+      this.elem.addEventListener("touchstart", fn, false);
+      this.elem.addEventListener("touchend", fn, false);
+      var startP = null, endP = null, _self = this;
+      function fn(e) {
+        e.preventDefault()
+        // console.log(e.changedTouches[0].clientX)
+        switch (e.type) {
+          case "touchstart": startP = e.changedTouches[0].clientX; break;
+          case "touchend": endP = e.changedTouches[0].clientX;
+            if (startP - endP >= 100) {
+              callback.call(_self.elem, e)
+            };
+            break;
+        }
+      }
+    },
+
+    swipRight: function (callback) {
+      this.elem.addEventListener("touchstart", fn, false);
+      this.elem.addEventListener("touchend", fn, false);
+      var startP = null, endP = null, _self = this;
+      function fn(e) {
+        e.preventDefault()
+        // console.log(e.changedTouches[0].clientX)
+        switch (e.type) {
+          case "touchstart": startP = e.changedTouches[0].clientX; break;
+          case "touchend": endP = e.changedTouches[0].clientX;
+            if (endP - startP >= 100) {
+              callback.call(_self.elem, e)
+            };
+            break;
         }
       }
     }
