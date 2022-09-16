@@ -1,4 +1,4 @@
-(function (window) {
+; (function (window) {
   // 自定义方法库
   "use strict"
   // 获取dom元素,通过css选择器选择
@@ -572,6 +572,19 @@
     return sum;
   }
 
+  // 阶乘
+  function factorial(n) {
+    let a = [1];
+    for (let i = 1; i <= n; i++) {
+      for (let j = 0, c = 0; j < a.length || c != 0; j++) {
+        let m = j < a.length ? a[j] * i + c : c;
+        a[j] = m % 10;
+        c = (m - a[j]) / 10;
+      }
+    }
+    return a.reverse().join("")
+  }
+
   let tool = {
     unique,
     CNumber,
@@ -607,6 +620,7 @@
     isEqual,
     isEmpty,
     addBig,
+    factorial
   }
 
   window.tool = tool
