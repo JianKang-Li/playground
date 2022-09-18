@@ -295,18 +295,7 @@
 
   // 获取数据类型
   function type(obj) {
-    let type = typeof obj
-    if (type != "object") {
-      return type
-    } else {
-      if (obj instanceof Array) {
-        return "array"
-      } else if (obj === null) {
-        return "null"
-      } else {
-        return "object"
-      }
-    }
+    return Object.prototype.toString.call(obj).slice(8, -1)
   }
 
   // 快速排序
