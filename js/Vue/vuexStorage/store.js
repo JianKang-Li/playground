@@ -39,13 +39,17 @@ const storage = new Local()
 
 export const LocalStore = store => {
   // 当 store 初始化后调用
+  let loc = JSON.parse(localStorage.getItem("@vuex"))
+  if (loc) {
+    store.replaceState(loc)
+  }
   store.subscribe((mutation, state) => {
     console.log(mutation)
     console.log(state);
-    console.log(storage.getAll());
+    localStorage.setItem("@vuex", JSON.stringify(state))
   })
 }
 
-export default storage
+export default LocalStore
 
 
