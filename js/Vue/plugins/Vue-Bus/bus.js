@@ -49,7 +49,7 @@ class Bus {
 
 const install = (Vue) => {
   if (install.installed) return;
-  install.installed
+  install.installed = true
   Vue.prototype.$bus = new Bus()
 }
 
