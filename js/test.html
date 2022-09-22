@@ -49,19 +49,9 @@
 
 
   <!-- 导入tool库 -->
-  <script src="./tool.js"></script>
-  <script>
-
-    let button = tool.get("button")
-    let dom = new tool.Dom(button[0])
-    console.log(dom)
-    // dom.setText("123")
-    console.log(dom.getText())
-
-    let url = "http://www.baidu.com?search=js&xxx=kkk"
-    console.log(tool.getQueryString(url, "search"));
-
-
+  <script type="module">
+    import { CDate } from "./module.js"
+    console.log(CDate());
   </script>
 </body>
 

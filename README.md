@@ -3,7 +3,7 @@
 一个自己写点代码玩的地方
 [web](https://jiankang-li.github.io/playground/)
 
-### tool.js实现功能
+## `tool.js` 实现功能
 
 + unique,
 数组去重
@@ -71,3 +71,20 @@ rem转px
 判断两个值或对象是否相等
 + isEmpty
 判断对象是否为空
++ addBig
+大整数相加
++ factorial
+求阶乘
+
+### HTML 模块化使用
+
+```HTML
+<script type="module">
+  import { CDate } from "./module.js"
+  console.log(CDate());
+</script>
+```
+
+## t-nani
+
+这是一个爬取网站照片的python脚本
