@@ -133,5 +133,5 @@ for i in urlList:
     img.extend(imglist)
     img = set(img)
     img = list(img)
-print(img)
+# print(img)
 getImg(img, type)
