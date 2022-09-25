@@ -359,8 +359,10 @@
       this.local = localStorage
     }
     del(key) {
+      if (!key || !this.local[key]) return false;
       localStorage.removeItem(key)
       this.Update()
+      return true
     }
     clear() {
       localStorage.clear()
@@ -390,8 +392,10 @@
       this.session = sessionStorage
     }
     del(key) {
+      if (!key || !this.session[key]) return false;
       sessionStorage.removeItem(key)
       this.Update()
+      return true
     }
     clear() {
       sessionStorage.clear()
