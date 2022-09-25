@@ -75,6 +75,8 @@ rem转px
 大整数相加
 + factorial
 求阶乘
++ sleep
+睡眠
 
 ### HTML 模块化使用
 

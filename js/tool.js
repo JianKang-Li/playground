@@ -599,6 +599,14 @@
     return a.reverse().join("")
   }
 
+  // sleep()
+  function sleep(fn, delay, ...args) {
+    setTimeout(() => {
+      fn.apply(this, args)
+    }, delay)
+  }
+
+
   let tool = {
     unique,
     CNumber,
@@ -634,7 +642,8 @@
     isEqual,
     isEmpty,
     addBig,
-    factorial
+    factorial,
+    sleep
   }
 
   window.tool = tool

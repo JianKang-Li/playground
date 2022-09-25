@@ -569,3 +569,10 @@ export function factorial(n) {
   }
   return a.reverse().join("")
 }
+
+// 随眠
+export function sleep(fn, delay, ...args) {
+  setTimeout(() => {
+    fn.apply(this, args)
+  }, delay)
+}
