@@ -108,12 +108,11 @@
       return new Promise(async (resolve, reject) => {
         this.controller = new AbortController()
         this.signal = this.controller.signal
-        let res;
         if (param) {
           let str = new URLSearchParams(param).toString()
           url += "?" + str
         }
-        res = await fetch(url, { signal: this.signal }).then(async (res) => {
+        await fetch(url, { signal: this.signal }).then(async (res) => {
           let result = await res.json()
           resolve(result)
         }).catch(function (e) {
@@ -126,7 +125,6 @@
       return new Promise(async (resolve, reject) => {
         this.controller = new AbortController()
         this.signal = this.controller.signal
-        let res;
         if (headers === undefined) {
           headers = {
             "Content-Type": "application/json"
@@ -138,7 +136,7 @@
             _data = JSON.stringify(data)
           }
           try {
-            res = await fetch(url,
+            await fetch(url,
               {
                 method: "POST",
                 headers,
