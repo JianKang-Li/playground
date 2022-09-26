@@ -53,6 +53,17 @@
     import { CDate } from "./module.js"
     console.log(CDate());
   </script>
+
+
+  <script src="./tool.js"></script>
+  <script>
+    let http = new tool.Http()
+    http.get('http://httpbin.org/get').then(res => {
+      console.log(res);
+    }).catch(error => {
+      console.log(error);
+    })
+  </script>
 </body>
 
 </html>

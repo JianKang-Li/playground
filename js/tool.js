@@ -44,7 +44,7 @@
     constructor() {
     }
 
-    get({ url, param }) {
+    get(url, param) {
       this.xhr = new XMLHttpRequest();
       return new Promise((resolve, reject) => {
         let _url = url
@@ -104,7 +104,7 @@
     constructor() {
     }
 
-    get({ url, param }) {
+    get(url, param) {
       return new Promise(async (resolve, reject) => {
         this.controller = new AbortController()
         this.signal = this.controller.signal
@@ -121,7 +121,7 @@
       })
     }
 
-    async post({ url, headers, data }) {
+    post({ url, headers, data }) {
       return new Promise(async (resolve, reject) => {
         this.controller = new AbortController()
         this.signal = this.controller.signal
