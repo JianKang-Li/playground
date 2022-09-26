@@ -44,8 +44,8 @@ export const LocalStore = store => {
     store.replaceState(loc)
   }
   store.subscribe((mutation, state) => {
-    console.log(mutation)
-    console.log(state);
+    // console.log(mutation)
+    // console.log(state);
     localStorage.setItem("@vuex", JSON.stringify(state))
   })
 }
