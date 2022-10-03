@@ -1,5 +1,5 @@
 import sys
-
+import re
 from PyQt5.QtWidgets import QApplication, QMainWindow, QMessageBox
 from dictionary import Ui_Dictionary
 
@@ -15,17 +15,20 @@ class MyMainWindow(QMainWindow, Ui_Dictionary):
 
 	def search(self):
 		value = self.searchText.text()
-		res = ''
+		res = []
+		rest = re.compile(value)
 		for key in self.dict:
 			if key == value:
-				res = self.dict[key]
+				res.append(self.dict[key])
 				break
-			elif self.dict[key] == value:
-				res = key
-				break
-			else:
-				res = '未找到'
-		self.textBrowser.setText(res)
+			elif re.search(rest, self.dict[key]) != None:
+				res.append(key + " " + self.dict[key])
+		if (len(res) == 0):
+			self.textBrowser.setText('未找到')
+		else:
+			self.textBrowser.setText('')
+			for i in res:
+				self.textBrowser.append(i + "\n")
 
 	def addWord(self):
 		ch = self.chText.text()
