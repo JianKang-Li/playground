@@ -18,7 +18,7 @@ class Ui_Dictionary(object):
 		self.centralwidget = QtWidgets.QWidget(Dictionary)
 		self.centralwidget.setObjectName("centralwidget")
 		self.searchText = QtWidgets.QLineEdit(self.centralwidget)
-		self.searchText.setGeometry(QtCore.QRect(130, 40, 161, 41))
+		self.searchText.setGeometry(QtCore.QRect(130, 40, 201, 41))
 		font = QtGui.QFont()
 		font.setPointSize(16)
 		self.searchText.setFont(font)
@@ -28,7 +28,7 @@ class Ui_Dictionary(object):
 		self.label.setGeometry(QtCore.QRect(20, 40, 101, 31))
 		self.label.setObjectName("label")
 		self.textBrowser = QtWidgets.QTextBrowser(self.centralwidget)
-		self.textBrowser.setGeometry(QtCore.QRect(130, 130, 161, 111))
+		self.textBrowser.setGeometry(QtCore.QRect(100, 150, 231, 111))
 		font = QtGui.QFont()
 		font.setPointSize(16)
 		self.textBrowser.setFont(font)
@@ -70,7 +70,7 @@ class Ui_Dictionary(object):
 
 	def retranslateUi(self, Dictionary):
 		_translate = QtCore.QCoreApplication.translate
-		Dictionary.setWindowTitle(_translate("Dictionary", "Dictionary"))
+		Dictionary.setWindowTitle(_translate("Dictionary", "MainWindow"))
 		self.label.setText(_translate("Dictionary", "输入单词/中文"))
 		self.label_2.setText(_translate("Dictionary", "搜索结果:"))
 		self.searchButton.setText(_translate("Dictionary", "搜索"))

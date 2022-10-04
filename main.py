@@ -2,6 +2,7 @@ import sys
 import re
 from PyQt5.QtWidgets import QApplication, QMainWindow, QMessageBox
 from dictionary import Ui_Dictionary
+import PyQt5.QtGui as qg
 
 
 class MyMainWindow(QMainWindow, Ui_Dictionary):
@@ -65,5 +66,7 @@ class MyMainWindow(QMainWindow, Ui_Dictionary):
 if __name__ == "__main__":
 	app = QApplication(sys.argv)
 	myWin = MyMainWindow()
+	myWin.setWindowTitle('极简词典')
+	myWin.setWindowIcon(qg.QIcon("./favicon.ico"))
 	myWin.show()
 	sys.exit(app.exec_())
