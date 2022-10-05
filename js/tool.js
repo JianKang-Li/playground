@@ -629,9 +629,12 @@
   }
 
   // 防止重写
-  function CantWrite(obj, key) {
+  function CantWrite(obj, key, message = "Cannot be rewritten") {
     Object.defineProperty(obj, key, {
-      writable: false
+      writable: false,
+      set: function () {
+        throw new Error(message)
+      }
     })
   }
 
