@@ -628,6 +628,13 @@
     })
   }
 
+  // 防止重写
+  function CantWrite(obj, key) {
+    Object.defineProperty(obj, key, {
+      writable: false
+    })
+  }
+
 
   let tool = {
     unique,
@@ -666,7 +673,8 @@
     addBig,
     factorial,
     sleep,
-    retry
+    retry,
+    CantWrite
   }
 
   window.tool = tool
