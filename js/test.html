@@ -30,7 +30,7 @@
     <button onclick="closes(this.parentNode)">X</button>
     <table class="LK-table">
       <tr>
-        <td>1-1</td>
+        <td>1</td>
         <td>2</td>
         <td>3</td>
         <td>4</td>
@@ -57,12 +57,14 @@
 
   <script src="./tool.js"></script>
   <script>
-    let http = new tool.Http()
-    http.get('http://httpbin.org/get').then(res => {
-      console.log(res);
-    }).catch(error => {
-      console.log(error);
-    })
+    let obj1 = {
+      a: 10,
+      b: {
+        d: 1
+      }
+    }
+
+
   </script>
 </body>
 

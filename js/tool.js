@@ -245,7 +245,7 @@
     map.set(target, newObj);
     for (let key in target) {
       if (target.hasOwnProperty(key)) {
-        newObj[key] = dp(target[key], map);
+        newObj[key] = dpClone(target[key], map);
       }
     }
     return newObj;
