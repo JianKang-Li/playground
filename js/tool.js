@@ -629,13 +629,25 @@
   }
 
   // 防止重写
-  function CantWrite(obj, key, message = "Cannot be rewritten") {
-    Object.defineProperty(obj, key, {
-      writable: false,
-      set: function () {
-        throw new Error(message)
+  function deepFreeze(obj, attr, deep = 0) {
+    if (typeof obj[attr] != 'object') {
+      Object.defineProperty(obj, attr, {
+        writable: false
+      })
+      return
+    }
+    if (deep == 0) {
+      Object.freeze(obj[attr]);
+    } else {
+      Object.freeze(obj)
+    }
+    for (const key in obj[attr]) {
+      if (obj[attr].hasOwnProperty(key)) {
+        if (typeof obj[attr][key] === 'object') {
+          deepFreeze(obj[attr], key, 1)
+        }
       }
-    })
+    }
   }
 
 
@@ -677,7 +689,7 @@
     factorial,
     sleep,
     retry,
-    CantWrite
+    deepFreeze
   }
 
   window.tool = tool
