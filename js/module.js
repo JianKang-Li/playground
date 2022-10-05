@@ -602,10 +602,10 @@ export function retry(func, times = 0, delay = 0) {
 }
 
 // 深度冻结
-export function deepFreeze(obj, attr, deep = 0) {
+function deepFreeze(obj, attr, deep = 0) {
   const re = function (obj) {
     for (const key in obj) {
-      if (obj.hasOwnProperty(key)) {
+      if (Object.hasOwnProperty.call(obj, key)) {
         if (typeof obj[key] === 'object') {
           deepFreeze(obj, key, 1)
         }
