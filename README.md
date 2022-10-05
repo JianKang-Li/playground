@@ -77,6 +77,10 @@ rem转px
 求阶乘
 + sleep
 睡眠
++ retry
+重试
++ deepFreeze
+深度冻结
 
 ### HTML 模块化使用
 

@@ -628,25 +628,30 @@
     })
   }
 
-  // 防止重写
+  // 深度冻结
   function deepFreeze(obj, attr, deep = 0) {
-    if (typeof obj[attr] != 'object') {
-      Object.defineProperty(obj, attr, {
-        writable: false
-      })
-      return
-    }
-    if (deep == 0) {
-      Object.freeze(obj[attr]);
-    } else {
-      Object.freeze(obj)
-    }
-    for (const key in obj[attr]) {
-      if (obj[attr].hasOwnProperty(key)) {
-        if (typeof obj[attr][key] === 'object') {
-          deepFreeze(obj[attr], key, 1)
+    const re = function (obj) {
+      for (const key in obj) {
+        if (obj.hasOwnProperty(key)) {
+          if (typeof obj[key] === 'object') {
+            deepFreeze(obj, key, 1)
+          }
         }
       }
+    }
+    if (attr == undefined) {
+      Object.freeze(obj)
+      re(obj)
+      return
+    } else {
+      if (typeof obj[attr] != 'object') {
+        Object.defineProperty(obj, attr, {
+          writable: false
+        })
+        return
+      }
+      Object.freeze(deep === 1 ? obj[attr] : obj);
+      re(obj[attr])
     }
   }
 
