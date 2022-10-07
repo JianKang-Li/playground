@@ -42,6 +42,7 @@
         alert("获取失败")
         return;
       } else {
+        video.pause();
         set.forEach((img) => {
           window.open(img)
         })
