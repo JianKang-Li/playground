@@ -35,6 +35,10 @@
     dy1.addEventListener('click', function () {
       let imgs = document.querySelectorAll('.swiper-slide img')
       let set = new Set()
+      const videos = document.querySelectorAll('video')
+      const len = videos.length
+      let video = len === 1 ? videos[0] : len === 3 ? videos[1] : videos[0]
+      video.pause()
       imgs.forEach((item) => {
         set.add(item.src)
       })
