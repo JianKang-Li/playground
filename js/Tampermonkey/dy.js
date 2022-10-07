@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         dy
 // @namespace    http://tampermonkey.net/
-// @version      0.2.0
+// @version      0.2.1
 // @description  抖音网页视频链接下载!
 // @author       jk小帅
 // @match        https://www.douyin.com/*
