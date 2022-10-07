@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         dy
 // @namespace    http://tampermonkey.net/
-// @version      0.1.2
+// @version      0.2.0
 // @description  抖音网页视频链接下载!
 // @author       jk小帅
 // @match        https://www.douyin.com/*
@@ -13,41 +13,54 @@
 (function () {
   "use strict";
 
-  const buttons = `
-  <div class="fuy_wmct qoKzjoSV">
-  <span id='dy1' class="xPz2YtoZ">视频下载</span>
-  </div>
-`
+  const button1 = document.createElement('button')
+  button1.setAttribute('id', 'dy0')
+  button1.setAttribute('style', 'padding:0.3rem 0.5rem;background-color:#161722;color:#ffff;outline:none;position: fixed;left:2rem;bottom:9.5rem;z-index:99999')
+  button1.innerText = '视频下载'
 
+  const button2 = document.createElement('button')
+  button2.setAttribute('id', 'dy1')
+  button2.setAttribute('style', 'padding:0.3rem 0.5rem;background-color:#161722;color:#ffff;outline:none;position: fixed;left:2rem;bottom:6rem;z-index:99999')
+  button2.innerText = '图片下载\n(需开启弹出式权限)'
 
   window.onload = () => {
-    const bts = document.querySelector("#root > div > div.N_HNXA04.WcK6IrkT > div.kQ2JnIMK.S9ST96Zy > div.a9jyVZQj.S9ST96Zy > div > div")
-    bts.innerHTML += buttons
 
-    const dy1 = document.querySelector("#dy1")
-    // const dy = document.querySelector("#dy")
+    const body = document.querySelector('body')
+    body.appendChild(button1)
+    body.appendChild(button2)
 
-    dy1.addEventListener("click", function () {
-      var video = document.querySelector("#sliderVideo > div.JrMwkvQy.playerContainer.YFEqUSvt.dLCldFlr > div.zK9etl_2.slider-video > div > xg-video-container > video > source:nth-child(1)")
-      var video_like = document.querySelector("#slidelist > div.swiper-container.swiper-container-initialized.swiper-container-vertical.swiper-container-autoheight.qRePWKBJ.fullscreen_capture_feedback > div.swiper-wrapper > div.swiper-slide.MeiAPn_s.swiper-slide-active > div > div.KXURcZ2l.playerContainer.P8fJYYpG > div > div > xg-video-container > video > source:nth-child(1)")
-      console.log(video)
-      if (!video && !video_like) {
-        alert("获取失败!")
+    const dy0 = document.querySelector("#dy0")
+    const dy1 = document.querySelector('#dy1')
+
+    dy1.addEventListener('click', function () {
+      let imgs = document.querySelectorAll('.swiper-slide img')
+      let set = new Set()
+      imgs.forEach((item) => {
+        set.add(item.src)
+      })
+      if (set.size === 0) {
+        alert("获取失败")
+        return;
+      } else {
+        set.forEach((img) => {
+          window.open(img)
+        })
       }
-      else if (video) {
-        let url1 = video.src;
+    })
+
+    dy0.addEventListener('click', function () {
+      const videos = document.querySelectorAll('video')
+      const len = videos.length
+      let video = len === 1 ? videos[0] : len === 3 ? videos[1] : videos[0]
+      let src = video.firstChild.src;
+      if (!src) {
+        alert('获取url地址失败')
+      } else {
+        video.pause();
         setTimeout(() => {
-          window.open(url1);
-        }, 1000);
+          window.open(src);
+        }, 300);
       }
-      else if (video_like) {
-        let url1 = video_like.src;
-        setTimeout(() => {
-          window.open(url1);
-        }, 1000);
-      }
-    });
+    })
   }
-
 })()
-
