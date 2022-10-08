@@ -598,10 +598,8 @@
   }
 
   // sleep()
-  function sleep(fn, delay, ...args) {
-    setTimeout(() => {
-      fn.apply(this, args)
-    }, delay)
+  function sleep(delay) {
+    return new Promise((resolve) => setTimeout(resolve, delay))
   }
 
   // 自动重试

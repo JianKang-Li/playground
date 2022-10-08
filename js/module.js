@@ -571,10 +571,8 @@ export function factorial(n) {
 }
 
 // 随眠
-export function sleep(fn, delay, ...args) {
-  setTimeout(() => {
-    fn.apply(this, args)
-  }, delay)
+export function sleep(delay) {
+  return new Promise((resolve) => setTimeout(resolve, delay))
 }
 
 // 重试
