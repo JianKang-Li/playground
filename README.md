@@ -81,6 +81,16 @@ rem转px
 重试
 + deepFreeze
 深度冻结
++ toUp
+字符串转大写
++ toLow
+字符串转小写
++ FUp
+字符串首字母大写
++ uniqueArrayObject
+对象数组去重
++ getFirsLastDay
+返回当月第一天和最后一天
 
 ### HTML 模块化使用
 

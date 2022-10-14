@@ -652,6 +652,46 @@
       re(obj[attr])
     }
   }
+  // 转大写
+  function toUp(str) {
+    return str.toUpperCase();
+  }
+
+  // 转小写
+  function toLow(str) {
+    return str.toLowerCase();
+  }
+
+  // 首字母大写
+  function FUp(str) {
+    return str[0].toUpperCase() + str.substr(1).toLowerCase();
+  }
+
+  // 数组对象去重
+  function uniqueArrayObject(arr = [], key) {
+    if (arr.length === 0) return;
+    let list = [];
+    let map = {};
+    arr.forEach((ele) => {
+      if (!map[ele[key]]) {
+        map[ele[key]] = ele;
+      }
+    });
+    list = Object.values(map);
+    return list;
+  }
+
+  // 返回当月第一天和最后一天
+  function getFirsLastDay() {
+    let now = new Date();
+    let y = now.getFullYear();
+    let m = now.getMonth();
+    let firstDay = new Date(y, m, 1);
+    let lastDay = new Date(y, m + 1, 0);
+    firstDay = y + "-" + (firstDay.getMonth() + 1) + "-" + "01";
+    lastDay = y + "-" + (lastDay.getMonth() + 1) + "-" + lastDay.getDate();
+    return [firstDay, lastDay];
+  }
 
 
   let tool = {
@@ -692,7 +732,12 @@
     factorial,
     sleep,
     retry,
-    deepFreeze
+    deepFreeze,
+    toLow,
+    toUp,
+    FUp,
+    uniqueArrayObject,
+    getFirsLastDay
   }
 
   window.tool = tool

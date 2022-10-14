@@ -600,7 +600,7 @@ export function retry(func, times = 0, delay = 0) {
 }
 
 // 深度冻结
-function deepFreeze(obj, attr, deep = 0) {
+export function deepFreeze(obj, attr, deep = 0) {
   const re = function (obj) {
     for (const key in obj) {
       if (Object.hasOwnProperty.call(obj, key)) {
@@ -624,4 +624,41 @@ function deepFreeze(obj, attr, deep = 0) {
     Object.freeze(deep === 1 ? obj[attr] : obj);
     re(obj[attr])
   }
+}
+
+export function toUp(str) {
+  return str.toUpperCase();
+}
+
+export function toLow(str) {
+  return str.toLowerCase();
+}
+
+export function FUp(str) {
+  return str[0].toUpperCase() + str.substr(1).toLowerCase();
+}
+
+export function uniqueArrayObject(arr = [], key) {
+  if (arr.length === 0) return;
+  let list = [];
+  let map = {};
+  arr.forEach((ele) => {
+    if (!map[ele[key]]) {
+      map[ele[key]] = ele;
+    }
+  });
+  list = Object.values(map);
+  return list;
+}
+
+
+export function getFirsLasttDay() {
+  let now = new Date();
+  let y = now.getFullYear();
+  let m = now.getMonth();
+  let firstDay = new Date(y, m, 1);
+  let lastDay = new Date(y, m + 1, 0);
+  firstDay = y + "-" + (firstDay.getMonth() + 1) + "-" + "01";
+  lastDay = y + "-" + (lastDay.getMonth() + 1) + "-" + lastDay.getDate();
+  return [firstDay, lastDay];
 }
