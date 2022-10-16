@@ -211,7 +211,7 @@
 
   // 时间格式化
   function timeFromDate(date) {
-    date.toTimeString().slice(0, 8)
+    return date.toTimeString().slice(0, 8)
   }
 
   //获取当前日期并格式化为（YYYY-MM-DD）
