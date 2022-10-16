@@ -41,7 +41,8 @@
       }
 
       #run,
-      #clean {
+      #clean,
+      #copy {
         float: right;
         margin-left: 1rem;
       }
@@ -114,15 +115,9 @@
     <div class="container">
       <div class="head">
         <span>请输入JS代码</span>
-        <button
-          id="clean"
-          class="btn btn-danger"
-          style="float: right"
-          accesskey="c"
-        >
-          清空
-        </button>
+        <button id="clean" class="btn btn-danger" accesskey="c">清空</button>
         <button id="run" class="btn btn-success" accesskey="r">运行代码</button>
+        <button id="copy" class="btn">复制代码</button>
       </div>
       <textarea
         id="code"
@@ -137,10 +132,11 @@
     </div>
 
     <script>
-      let show = document.querySelector("#show");
-      let codes = document.querySelector("#code");
-      let run = document.querySelector("#run");
-      let cleanbtn = document.querySelector("#clean");
+      const show = document.querySelector("#show");
+      const codes = document.querySelector("#code");
+      const run = document.querySelector("#run");
+      const cleanbtn = document.querySelector("#clean");
+      const copybtn = document.querySelector("#copy");
 
       function runCode() {
         show.innerHTML = "";
@@ -168,13 +164,6 @@
         show.innerHTML = "";
         codes.value = "";
       }
-
-      cleanbtn.addEventListener("click", () => {
-        clean();
-      });
-      run.addEventListener("click", () => {
-        runCode();
-      });
 
       // 支持tab键
       function tab(obj) {
@@ -220,6 +209,31 @@
           event.preventDefault();
         }
       }
+
+      function copy() {
+        let code = codes.value;
+        let theClipboard = navigator.clipboard;
+        let promise = theClipboard.writeText(code);
+        promise.then(
+          () => {
+            $Tip.success("复制成功");
+          },
+          (err) => {
+            $Tip.error("复制失败", err);
+          }
+        );
+      }
+
+      copybtn.addEventListener("click", () => {
+        copy();
+      });
+
+      cleanbtn.addEventListener("click", () => {
+        clean();
+      });
+      run.addEventListener("click", () => {
+        runCode();
+      });
     </script>
   </body>
 </html>
