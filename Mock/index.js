@@ -63,14 +63,12 @@ function DateTime() {
   return day + " " + time;
 }
 
-
 //创建指定范围内的随机数字
 function CNumber(min = 0, max = 100) {
   let a;
   a = Math.floor(Math.random() * (max - min)) + min;
   return a;
 };
-
 
 //创建指定长度的字符串
 function CString(n = 5) {
@@ -91,7 +89,6 @@ function CNumbers(n = 5, min = 0, max = 100) {
   return a;
 };
 
-
 // 数组对象去重
 function uniqueArrayObject(arr = [], key) {
   if (arr.length === 0) return;
@@ -106,16 +103,12 @@ function uniqueArrayObject(arr = [], key) {
   return list;
 }
 
-// 创建数组
-function CArray() {
-
-}
-
+// 获取唯一值
 function generateRandom() {
   return Math.random().toString(16).slice(2);
 }
 
-
+// 创建函数
 function create(obj) {
   let keys = Object.keys(obj)
   let item = {}
@@ -153,12 +146,22 @@ function create(obj) {
       }
       case 'id': {
         item[key] = generateRandom()
+        break;
+      }
+      case 'boolean': {
+        item[key] = getRandom() >= 0.5
+        break;
+      }
+      case 'Bool2Num': {
+        item[key] = getRandom() >= 0.5 ? 0 : 1
+        break;
       }
     }
   }
   return item
 }
 
+// 入口函数
 function mock(obj, num) {
   let mock = []
   for (let i = 0; i < num; i++) {
@@ -168,12 +171,15 @@ function mock(obj, num) {
   return mock
 }
 
+
+// 数据样式
 let student = {
   ID: "id",//id
   name: "string 2 4",//字符串
-  sex: "number 0 1",//数字
+  sex: "Bool2Num",//布尔转数字
   phone: "numberStr 11",//全数字字符串
   create_time: "DayTime",//时间
+  author: "boolean"//布尔
 }
 
 console.log(mock(student, 10));
