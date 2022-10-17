@@ -212,16 +212,26 @@
 
       function copy() {
         let code = codes.value;
-        let theClipboard = navigator.clipboard;
-        let promise = theClipboard.writeText(code);
-        promise.then(
-          () => {
-            $Tip.success("复制成功");
-          },
-          (err) => {
-            $Tip.error("复制失败", err);
+        if (navigator.clipboard) {
+          let theClipboard = navigator.clipboard;
+          if (!code.trim()) {
+            $Tip.info("无代码可复制!");
+            return;
           }
-        );
+
+          let promise = theClipboard.writeText(code);
+          promise.then(
+            () => {
+              $Tip.success("复制成功");
+            },
+            (err) => {
+              $Tip.error("复制失败", err);
+            }
+          );
+        } else if (document.execCommand instanceof Function) {
+          codes.select();
+          document.execCommand("copy");
+        }
       }
 
       copybtn.addEventListener("click", () => {
