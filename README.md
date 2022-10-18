@@ -91,6 +91,8 @@ rem转px
 对象数组去重
 + getFirsLastDay
 返回当月第一天和最后一天
++ concurRequest
+规定最大并发数发送请求
 
 ### HTML 模块化使用
 
