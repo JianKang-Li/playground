@@ -1,309 +1,312 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>LK-Color</title>
-    <style>
-      html,
-      body {
-        width: 100%;
-        height: 100%;
-        padding: 0;
-        margin: 0;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
 
-      ::-webkit-scrollbar {
-        width: 0.3rem;
-      }
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LK-Color</title>
+  <style>
+    html,
+    body {
+      width: 100%;
+      height: 100%;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
 
-      ::-webkit-scrollbar-track {
-        width: 0.3rem;
-        background-color: #e8eaed;
-      }
+    ::-webkit-scrollbar {
+      width: 0.3rem;
+    }
 
-      ::-webkit-scrollbar-thumb {
-        width: 0.3rem;
-        background-color: #c0ced5;
-        border-radius: 1rem;
-      }
+    ::-webkit-scrollbar-track {
+      width: 0.3rem;
+      background-color: #e8eaed;
+    }
 
-      #show {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        flex-wrap: wrap;
-        width: 90%;
-        height: 100%;
-        margin-top: 8rem;
-      }
+    ::-webkit-scrollbar-thumb {
+      width: 0.3rem;
+      background-color: #c0ced5;
+      border-radius: 1rem;
+    }
 
-      .item {
-        width: 5rem;
-        height: 5rem;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: #ffffff;
-        cursor: pointer;
-        margin: 0.5rem;
-      }
+    #show {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      width: 90%;
+      height: 100%;
+      margin-top: 8rem;
+    }
 
-      .conversion {
-        width: 100%;
-        text-align: center;
-        background-color: rgba(255, 255, 255, 0.8);
-        position: fixed;
-        top: 0px;
-        padding: 1rem;
-        border-bottom-left-radius: 1rem;
-        border-bottom-right-radius: 1rem;
-        box-shadow: 1px 1px 10px #e8eaed;
-      }
+    .item {
+      width: 5rem;
+      height: 5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #ffffff;
+      cursor: pointer;
+      margin: 0.5rem;
+    }
 
-      .btn {
-        appearance: none;
-        border: 0px;
-        background-color: #e8eaed;
-        border-radius: 0.3rem;
-        padding: 0.5rem 1rem;
-        cursor: pointer;
-        color: #160f16;
-        font-size: 0.9rem;
-        vertical-align: middle;
-        transition: all 0.7s ease-in-out;
-      }
+    .conversion {
+      width: 100%;
+      text-align: center;
+      background-color: rgba(255, 255, 255, 0.8);
+      position: fixed;
+      top: 0px;
+      padding: 1rem;
+      border-bottom-left-radius: 1rem;
+      border-bottom-right-radius: 1rem;
+      box-shadow: 1px 1px 10px #e8eaed;
+    }
 
-      .btn:active {
-        transform: scale(0.3);
-        box-shadow: 10px 10px 10px #e8eaed, 12px 12px 12px #e8eaed;
-      }
+    .btn {
+      appearance: none;
+      border: 0px;
+      background-color: #e8eaed;
+      border-radius: 0.3rem;
+      padding: 0.5rem 1rem;
+      cursor: pointer;
+      color: #160f16;
+      font-size: 0.9rem;
+      vertical-align: middle;
+      transition: all 0.7s ease-in-out;
+    }
 
-      .text {
-        appearance: none;
-        border: 1px solid #c0ced5;
-        width: 10rem;
-        height: 2rem;
-        border-radius: 0.3rem;
-        font-size: 1rem;
-        outline: none;
-        padding: 0 1rem;
-      }
+    .btn:active {
+      transform: scale(0.3);
+      box-shadow: 10px 10px 10px #e8eaed, 12px 12px 12px #e8eaed;
+    }
 
-      .text:focus {
-        outline: 1px solid #82aab4;
-      }
+    .text {
+      appearance: none;
+      border: 1px solid #c0ced5;
+      width: 10rem;
+      height: 2rem;
+      border-radius: 0.3rem;
+      font-size: 1rem;
+      outline: none;
+      padding: 0 1rem;
+    }
 
-      .color {
-        appearance: none;
-        border: none;
-        padding: 0;
-        background-color: #ffffff;
-        vertical-align: middle;
-        width: 2rem;
-        height: 2rem;
-      }
-    </style>
-  </head>
-  <body>
-    <div class="conversion">
-      <div class="tool">
-        <input type="color" class="color" />
-        <input type="text" id="pre" class="text" />
-        <button class="btn" id="tran">转换</button>
-      </div>
-      <div class="after">
-        <span id="after"></span>
-      </div>
+    .text:focus {
+      outline: 1px solid #82aab4;
+    }
+
+    .color {
+      appearance: none;
+      border: none;
+      padding: 0;
+      background-color: #ffffff;
+      vertical-align: middle;
+      width: 2rem;
+      height: 2rem;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="conversion">
+    <div class="tool">
+      <input type="color" class="color" />
+      <input type="text" id="pre" class="text" />
+      <button class="btn" id="tran">转换</button>
     </div>
+    <div class="after">
+      <span id="after"></span>
+    </div>
+  </div>
 
-    <div id="show"></div>
+  <div id="show"></div>
 
-    <script>
-      const colors = [
-        "#f3f2f2",
-        "#eaecd4",
-        "#edeae6",
-        "#efebd5",
-        "#f3eae0",
-        "#e8eaed",
-        "#eae7b4",
-        "#c0ced5",
-        "#a0bfc4",
-        "#82aab4",
-        "#72a8af",
-        "#4a8e99",
-        "#458287",
-        "#627e90",
-        "#539c8a",
-        "#f2db43",
-        "#5cb787",
-        "#70a498",
-        "#47af52",
-        "#36957a",
-        "#2f8c58",
-        "#246c49",
-        "#1db561",
-        "#b4c3d0",
-        "#8bb8cb",
-        "#91aec4",
-        "#238bbc",
-        "#1988ae",
-        "#2a73ac",
-        "#4d779a",
-        "#5796b3",
-        "#f13a57",
-        "#eb3738",
-        "#e84f34",
-        "#e91c0c",
-        "#c13c5a",
-        "#c33141",
-        "#95242d",
-        "#965565",
-        "#f2db43",
-        "#f1ca23",
-        "#e9ba1b",
-        "#efaf10",
-        "#f3a01d",
-        "#e4d32b",
-        "#d3a31d",
-        "#d2b360",
-        "#e77345",
-        "#ea8637",
-        "#de5c1d",
-        "#d13b0e",
-        "#de5822",
-        "#d15726",
-        "#bf522f",
-        "#943917",
-        "#e2acba",
-        "#e294aa",
-        "#e37c9b",
-        "#de507c",
-        "#e4787f",
-        "#db7586",
-        "#e199a1",
-        "#e3698a",
-        "#605756",
-        "#5d5259",
-        "#3f3e44",
-        "#160f16",
-        "#0d0d19",
-        "#1a1a1a",
-        "#353631",
-        "#2a2a26",
-        "#9e8174",
-        "#8f6d58",
-        "#8c5643",
-        "#804913",
-        "#76412f",
-        "#673225",
-        "#482b27",
-        "#7b361f",
-        "#dcd9d0",
-        "#c8c6c1",
-        "#b0b4b7",
-        "#aaaeaf",
-        "#a49d94",
-        "#8d7b72",
-        "#646056",
-        "#858888",
-        "#9d95bd",
-        "#b87fab",
-        "#ba7297",
-        "#7c3c83",
-        "#7f6e99",
-        "#7c5d8e",
-        "#89286e",
-        "#785696",
-      ];
+  <script>
+    const colors = [
+      "#f3f2f2",
+      "#eaecd4",
+      "#edeae6",
+      "#efebd5",
+      "#f3eae0",
+      "#e8eaed",
+      "#eae7b4",
+      "#c0ced5",
+      "#a0bfc4",
+      "#82aab4",
+      "#72a8af",
+      "#4a8e99",
+      "#458287",
+      "#627e90",
+      "#539c8a",
+      "#f2db43",
+      "#5cb787",
+      "#70a498",
+      "#47af52",
+      "#36957a",
+      "#2f8c58",
+      "#246c49",
+      "#1db561",
+      "#b4c3d0",
+      "#8bb8cb",
+      "#91aec4",
+      "#238bbc",
+      "#1988ae",
+      "#2a73ac",
+      "#4d779a",
+      "#5796b3",
+      "#f13a57",
+      "#eb3738",
+      "#e84f34",
+      "#e91c0c",
+      "#c13c5a",
+      "#c33141",
+      "#95242d",
+      "#965565",
+      "#f2db43",
+      "#f1ca23",
+      "#e9ba1b",
+      "#efaf10",
+      "#f3a01d",
+      "#e4d32b",
+      "#d3a31d",
+      "#d2b360",
+      "#e77345",
+      "#ea8637",
+      "#de5c1d",
+      "#d13b0e",
+      "#de5822",
+      "#d15726",
+      "#bf522f",
+      "#943917",
+      "#e2acba",
+      "#e294aa",
+      "#e37c9b",
+      "#de507c",
+      "#e4787f",
+      "#db7586",
+      "#e199a1",
+      "#e3698a",
+      "#605756",
+      "#5d5259",
+      "#3f3e44",
+      "#160f16",
+      "#0d0d19",
+      "#1a1a1a",
+      "#353631",
+      "#2a2a26",
+      "#9e8174",
+      "#8f6d58",
+      "#8c5643",
+      "#804913",
+      "#76412f",
+      "#673225",
+      "#482b27",
+      "#7b361f",
+      "#dcd9d0",
+      "#c8c6c1",
+      "#b0b4b7",
+      "#aaaeaf",
+      "#a49d94",
+      "#8d7b72",
+      "#646056",
+      "#858888",
+      "#9d95bd",
+      "#b87fab",
+      "#ba7297",
+      "#7c3c83",
+      "#7f6e99",
+      "#7c5d8e",
+      "#89286e",
+      "#785696",
+    ];
 
-      const fragment = document.createDocumentFragment();
-      for (let i = 0; i < colors.length; i++) {
-        const div = document.createElement("div");
-        div.setAttribute("class", "item");
-        div.style.backgroundColor = colors[i];
-        div.innerText = colors[i].toLocaleUpperCase();
-        fragment.appendChild(div);
+    const fragment = document.createDocumentFragment();
+    for (let i = 0; i < colors.length; i++) {
+      const div = document.createElement("div");
+      div.setAttribute("class", "item");
+      div.style.backgroundColor = colors[i];
+      div.innerText = colors[i].toLocaleUpperCase();
+      fragment.appendChild(div);
+    }
+
+    const show = document.querySelector("#show");
+    show.appendChild(fragment);
+    show.addEventListener("click", (e) => {
+      let clip = navigator.clipboard;
+      if (clip) {
+        clip.writeText(e.target.innerText);
       }
+    });
 
-      const show = document.querySelector("#show");
-      show.appendChild(fragment);
-      show.addEventListener("click", (e) => {
-        let clip = navigator.clipboard;
-        if (clip) {
-          clip.writeText(e.target.innerText);
+    function transRgb(color) {
+      var reg = /^#([0-9a-fA-f]{3}|[0-9a-fA-f]{6})$/;
+      var sColor = color.toLowerCase();
+      if (sColor && reg.test(sColor)) {
+        if (sColor.length === 4) {
+          var sColorNew = "#";
+          for (var i = 1; i < 4; i += 1) {
+            sColorNew += sColor
+              .slice(i, i + 1)
+              .concat(sColor.slice(i, i + 1));
+          }
+          sColor = sColorNew;
         }
-      });
+        //处理六位的颜色值
+        var sColorChange = [];
+        for (var i = 1; i <= 6; i += 2) {
+          sColorChange.push(parseInt("0x" + sColor.slice(i, i + 2)));
+        }
+        return "rgba(" + sColorChange.join(",") + ")";
+      } else {
+        return sColor;
+      }
+    }
 
-      function transRgb(color) {
-        var reg = /^#([0-9a-fA-f]{3}|[0-9a-fA-f]{6})$/;
-        var sColor = color.toLowerCase();
-        if (sColor && reg.test(sColor)) {
-          if (sColor.length === 4) {
-            var sColorNew = "#";
-            for (var i = 1; i < 4; i += 1) {
-              sColorNew += sColor
-                .slice(i, i + 1)
-                .concat(sColor.slice(i, i + 1));
-            }
-            sColor = sColorNew;
-          }
-          //处理六位的颜色值
-          var sColorChange = [];
-          for (var i = 1; i <= 6; i += 2) {
-            sColorChange.push(parseInt("0x" + sColor.slice(i, i + 2)));
-          }
-          return "rgba(" + sColorChange.join(",") + ")";
-        } else {
-          return sColor;
+    function rgbToHex(color) {
+      var values = color
+        .replace(/rgba?\(/, "")
+        .replace(/\)/, "")
+        .replace(/[\s+]/g, "")
+        .split(",");
+      var a = parseFloat(values[3] || 1),
+        r = Math.floor(a * parseInt(values[0]) + (1 - a) * 255),
+        g = Math.floor(a * parseInt(values[1]) + (1 - a) * 255),
+        b = Math.floor(a * parseInt(values[2]) + (1 - a) * 255);
+      return (
+        "#" +
+        ("0" + r.toString(16)).slice(-2) +
+        ("0" + g.toString(16)).slice(-2) +
+        ("0" + b.toString(16)).slice(-2)
+      );
+    }
+
+    function trans() {
+      const color = document.querySelector("#pre").value;
+      const span = document.querySelector("#after");
+      let after;
+      switch (color[0]) {
+        case "#": {
+          after = transRgb(color);
+          break;
+        }
+        case "r": {
+          after = rgbToHex(color);
+          break;
         }
       }
+      // console.log(after);
+      span.innerText = after;
+    }
 
-      function rgbToHex(color) {
-        var values = color
-          .replace(/rgba?\(/, "")
-          .replace(/\)/, "")
-          .replace(/[\s+]/g, "")
-          .split(",");
-        var a = parseFloat(values[3] || 1),
-          r = Math.floor(a * parseInt(values[0]) + (1 - a) * 255),
-          g = Math.floor(a * parseInt(values[1]) + (1 - a) * 255),
-          b = Math.floor(a * parseInt(values[2]) + (1 - a) * 255);
-        return (
-          "#" +
-          ("0" + r.toString(16)).slice(-2) +
-          ("0" + g.toString(16)).slice(-2) +
-          ("0" + b.toString(16)).slice(-2)
-        );
-      }
+    const btn = document.querySelector("#tran");
+    btn.addEventListener("click", () => {
+      trans();
+    });
+  </script>
+</body>
 
-      function trans() {
-        const color = document.querySelector("#pre").value;
-        const span = document.querySelector("#after");
-        let after;
-        switch (color[0]) {
-          case "#": {
-            after = transRgb(color);
-            break;
-          }
-          case "r": {
-            after = rgbToHex(color);
-            break;
-          }
-        }
-        // console.log(after);
-        span.innerText = after;
-      }
-
-      const btn = document.querySelector("#tran");
-      btn.addEventListener("click", () => {
-        trans();
-      });
-    </script>
-  </body>
 </html>
