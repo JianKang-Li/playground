@@ -174,32 +174,6 @@ export function getQueryString(url, name) {
   return U.get(name)
 }
 
-// 创建随机数字数组
-export function CNumbers(n = 5, min = 0, max = 100) {
-  let a = [];
-  for (let i = 0; i < n; i++) {
-    a[i] = Math.floor(Math.random() * (max - min)) + min;
-  }
-  return a;
-};
-
-//创建指定长度的字符串
-export function CString(n = 5) {
-  let str = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
-  let result = "";
-  for (let j = 0; j < n; j++) {
-    result += str[Math.floor(Math.random() * str.length)];
-  }
-  return result;
-};
-
-//创建指定范围内的随机数字
-export function CNumber(min = 0, max = 100) {
-  let a;
-  a = Math.floor(Math.random() * (max - min)) + min;
-  return a;
-};
-
 //获取当前时间并格式化为（hh:mm:ss）
 export function Ctime() {
   let date = new Date();

@@ -176,6 +176,13 @@
     return U.get(name)
   }
 
+  //获取当前时间并格式化为（hh:mm:ss）
+  function Ctime() {
+    let date = new Date();
+    let time = date.toTimeString().slice(0, 8)
+    return time;
+  };
+
   // 时间格式化
   function timeFromDate(date) {
     return date.toTimeString().slice(0, 8)
@@ -703,6 +710,7 @@
     unique,
     dpClone,
     CDate,
+    Ctime,
     get,
     debounce,
     throttle,
