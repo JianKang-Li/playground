@@ -415,7 +415,15 @@
 
   // 比较两个日期之间差的天数
   function dayDif(date1, date2) {
-    return Math.ceil(Math.abs(date1.getTime() - date2.getTime()) / 86400000)
+    if (typeof date1 === 'number') {
+      date1 = new Date(date1)
+    }
+    if (typeof date2 === 'number') {
+      date2 = new Date(date2)
+    }
+    let start = new Date(`${date1.getFullYear()}-${date1.getMonth()}-${date1.getDate()}`)
+    let end = new Date(`${date2.getFullYear()}-${date2.getMonth()}-${date2.getDate()}`)
+    return Math.ceil(Math.abs(start.getTime() - end.getTime()) / 86400000)
   }
 
   // 事件总线
@@ -705,28 +713,38 @@
     });
   }
 
+  // 函数柯西化
+  function curry(fn, ...args) {
+    if (args.length >= fn.length) {
+      return fn(...args)
+    } else {
+      return function (..._args) {
+        return curry(fn, ..._args, ...args)
+      }
+    }
+  }
 
   let tool = {
-    unique,
-    dpClone,
-    CDate,
-    Ctime,
-    get,
-    debounce,
-    throttle,
-    Sreverse,
-    type,
-    quickSort,
-    Dom,
-    Cookie,
-    Local,
-    Session,
-    Bus,
-    Http,
-    XHR,
-    getQueryString,
-    float,
-    dayDif,
+    unique,//去重
+    dpClone,//深度克隆
+    CDate,//获取当前日期
+    Ctime,//获取当前时间
+    get,//获取元素
+    debounce,//防抖
+    throttle,//节流
+    Sreverse,//字符串反转
+    type,//精确类型判断
+    quickSort,//快排
+    Dom,//自定义DOM类
+    Cookie,//Cookie操作
+    Local,//localStorage操作
+    Session,//Session操作
+    Bus,//全局事件总线
+    Http,//fetch封装
+    XHR,//原生XHR封装
+    getQueryString,//获取url某个参数
+    float,//浮点数运算
+    dayDif,//比较两个日期相差的天数
     timeFromDate,
     rgbToHex,
     rem2px,
@@ -747,7 +765,8 @@
     FUp,
     uniqueArrayObject,
     getFirsLastDay,
-    concurRequest
+    concurRequest,
+    curry
   }
 
   window.tool = tool
