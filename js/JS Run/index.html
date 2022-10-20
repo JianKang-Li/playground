@@ -2,11 +2,11 @@
 <html lang="zh">
 
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
-  <link rel="stylesheet" href="https://jiankang-li.github.io/Style-library/dist/static/css/index.css">
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+  <link rel="stylesheet" href="https://jiankang-li.github.io/Style-library/dist/static/css/index.css" />
   <script src="https://jiankang-li.github.io/Style-library/dist/static/js/index.js" defer></script>
   <title>JavaScript Run</title>
   <style>
@@ -36,7 +36,8 @@
     }
 
     #run,
-    #clean {
+    #clean,
+    #copy {
       float: right;
       margin-left: 1rem;
     }
@@ -76,7 +77,7 @@
       color: red;
     }
 
-    @media screen and (max-height:700px) {
+    @media screen and (max-height: 700px) {
       .container textarea {
         height: 6.5rem;
       }
@@ -94,45 +95,48 @@
 </head>
 
 <body>
+  <div class="links">
+  </div>
   <div class="container">
     <div class="head">
       <span>请输入JS代码</span>
-      <button id="clean" class="btn btn-danger" style="float: right;">清空</button>
-      <button id="run" class="btn btn-success">运行代码</button>
+      <button id="clean" class="btn btn-danger" accesskey="c">清空</button>
+      <button id="run" class="btn btn-success" accesskey="r">运行代码</button>
+      <button id="copy" class="btn">复制代码</button>
     </div>
-    <textarea id="code" placeholder="js代码..." onkeydown="tab(this)"></textarea>
+    <textarea id="code" placeholder="js代码..." onkeydown="tab(this)" autofocus></textarea>
   </div>
 
   <div class="container">
-    <textarea id="show" disabled placeholder="运行结果"></textarea>
+    <textarea id="show" readonly placeholder="运行结果"></textarea>
   </div>
 
   <script>
-    let show = document.querySelector("#show")
-    let codes = document.querySelector("#code")
-    let run = document.querySelector("#run")
-    let cleanbtn = document.querySelector("#clean")
+    const show = document.querySelector("#show");
+    const codes = document.querySelector("#code");
+    const run = document.querySelector("#run");
+    const cleanbtn = document.querySelector("#clean");
+    const copybtn = document.querySelector("#copy");
 
     function runCode() {
-      show.innerHTML = ""
-      const console = {}
+      show.innerHTML = "";
+      const console = {};
       console.log = function (...args) {
-        show.innerHTML += "> "
+        show.innerHTML += "> ";
         for (let i = 0; i < args.length; i++) {
           if (!(args[i] instanceof Error) && typeof args[i] === "object") {
-            show.innerHTML += JSON.stringify(args[i])
+            show.innerHTML += JSON.stringify(args[i]);
+          } else {
+            show.innerHTML += args[i];
           }
-          else {
-            show.innerHTML += args[i]
-          }
-          show.innerHTML += " "
+          show.innerHTML += " ";
         }
-        show.innerHTML += "\n"
-      }
+        show.innerHTML += "\n";
+      };
       try {
-        eval(codes.value)
+        eval(codes.value);
       } catch (e) {
-        console.log(e)
+        console.log(e);
       }
     }
 
@@ -141,33 +145,85 @@
       codes.value = "";
     }
 
-    cleanbtn.addEventListener("click", () => {
-      clean()
-    })
-    run.addEventListener("click", () => {
-      runCode()
-    })
-
     // 支持tab键
     function tab(obj) {
       if (event.keyCode == 9) {
+        const tab = "  ";
+        const len = tab.length;
+        let text = obj.value;
         let start = obj.selectionStart;
         let end = obj.selectionEnd;
-        if (start) {
-          var txt = obj.value
-          var result = txt.substring(0, start) + "  " + txt.substring(end)
-          obj.value = result
+        let selectionText = text.substring(start, end);
+
+        if (start === end) {
+          text = text.substring(0, start) + tab + text.substring(end);
+          obj.value = text;
           // 防止光标跳到最后
-          obj.selectionStart = start + 2
-          obj.selectionEnd = start + 2
+          obj.selectionStart = start + len;
+          obj.selectionEnd = start + len;
+        } else if (selectionText.includes("\n")) {
+          const arr = selectionText.split("\n");
+          let str = text.substring(0, start);
+          let count = 0;
+          for (let i = 0; i < arr.length; i++) {
+            str += tab + arr[i] + "\n";
+            count++;
+          }
+          // 去掉最后一个换行
+          str = str.substring(0, str.length - 1);
+          str += text.substring(end);
+          obj.value = str;
+          obj.selectionStart = end + count * len;
+          obj.selectionEnd = end + count * len;
+        } else {
+          text =
+            text.substring(0, start) +
+            tab +
+            selectionText +
+            text.substring(end);
+          obj.value = text;
+          obj.selectionStart = start + len;
+          obj.selectionEnd = start + len;
         }
-        event.returnValue = false;
+
+        event.preventDefault();
       }
     }
 
+    function copy() {
+      let code = codes.value;
+      if (navigator.clipboard) {
+        let theClipboard = navigator.clipboard;
+        if (!code.trim()) {
+          $Tip.info("无代码可复制!");
+          return;
+        }
 
+        let promise = theClipboard.writeText(code);
+        promise.then(
+          () => {
+            $Tip.success("复制成功");
+          },
+          (err) => {
+            $Tip.error("复制失败", err);
+          }
+        );
+      } else {
+        $Tip.info("您的浏览器暂不支持复制代码");
+      }
+    }
+
+    copybtn.addEventListener("click", () => {
+      copy();
+    });
+
+    cleanbtn.addEventListener("click", () => {
+      clean();
+    });
+    run.addEventListener("click", () => {
+      runCode();
+    });
   </script>
-
 </body>
 
 </html>
