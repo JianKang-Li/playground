@@ -22,12 +22,14 @@
     constructor(dom) {
       this.dom = dom
     }
+
     addClass(clas) {
       let classNames = clas.splice(" ")
       classNames.forEach(item => {
         this.dom.classList.add(item)
       })
     }
+
     removeClass(className) {
       this.dom.classList.remove(className)
     }
@@ -91,6 +93,73 @@
     }
   }
 
+  // 创建元素
+  function createElement(type, props, children) {
+    let el;
+    if (type === 'text') {
+      el = document.createTextNode(props)
+    } else {
+      el = document.createElement(type)
+      for (let key in props) {
+        switch (key) {
+          case 'style': {
+            const style = props['style']
+            for (let attr in style) {
+              el.style[attr] = style[attr]
+            }
+            break;
+          } case 'events': {
+            const events = props['events']
+            for (let attr in events) {
+              el.addEventListener(attr, events[attr])
+            }
+            break;
+          } case "attrs": {
+            const datas = props['attrs']
+            for (let attr in datas) {
+              el.setAttribute(attr, datas[attr])
+            }
+            break;
+          }
+          default: {
+            break;
+          }
+        }
+      }
+
+
+      function processChildren(el, children) {
+        if (children) {
+          switch (typeof children) {
+            case "string": {
+              el.innerHTML += children
+              break;
+            }
+            case 'object': {
+              if (!Array.isArray(children)) {
+                el.appendChild(children)
+              } else {
+                for (let i in children) {
+                  processChildren(el, children[i])
+                }
+              }
+              break;
+            }
+            default: {
+              console.log(typeof children);
+              break;
+            }
+          }
+        }
+      }
+
+      if (children) {
+        processChildren(el, children)
+      }
+    }
+    return el
+  }
+
   //#endregion
 
   //#region ajax请求
@@ -128,7 +197,7 @@
       this.xhr = new XMLHttpRequest();
       return new Promise((resolve, reject) => {
         this.xhr.open('POST', url)
-        if (heads) {
+        if (headers) {
           this.setHeaders(headers)
         }
         this.xhr.send(data)
@@ -264,7 +333,7 @@
   }
 
   // 自动重试
-  function retry(func, times = 0, delay = 0) {
+  function retry(func, times = 1, delay = 0) {
     return new Promise((resolve, reject) => {
       // func是一件事，将他封装
       let inner = async function () {
@@ -670,6 +739,59 @@
     list = Object.values(map);
     return list;
   }
+
+  // 数组之间去重
+  function diffArray(arr1, arr2) {
+    let newArr = []
+    arr1.map((item) => {
+      if (arr2.indexOf(item) === -1) {
+        newArr.push(item)
+      }
+    })
+    return newArr
+  }
+
+  // 切片
+  function dropArray(arr, n = 1) {
+    return arr.slice(n)
+  }
+
+  // 右切片
+  function dropArrayR(arr, n = 1) {
+    return arr.slice(0, -n)
+  }
+
+  // 移除
+  function ArrayRemove(arr, fn) {
+    switch (typeof fn) {
+      case 'number': {
+        arr.forEach((item, index) => {
+          if (item === fn) {
+            arr.splice(index, 1)
+          }
+        })
+        break;
+      }
+      case "string": {
+        arr.forEach((item, index) => {
+          if (item === fn) {
+            arr.splice(index, 1)
+          }
+        })
+        break;
+      }
+      case 'function': {
+        arr.forEach((item, index) => {
+          if (Boolean(fn(item))) {
+            arr.splice(index, 1)
+          }
+        })
+        break;
+      }
+      default:
+        console.error("ArrayRemove expect to receive a number or method or string!");
+    }
+  }
   //#endregion
 
   //#region 函数操作
@@ -717,7 +839,7 @@
   }
 
   // sleep()
-  function sleep(delay) {
+  function sleep(delay = 1000) {
     return new Promise((resolve) => setTimeout(resolve, delay))
   }
   //#endregion
@@ -819,14 +941,8 @@
     let theClipboard = navigator.clipboard;
 
     if (theClipboard) {
-      navigator.permissions.query({
-        name: 'clipboard-write'
-      }).then(PermissionStatus => {
-        if (PermissionStatus.state === 'prompt') {
-          let promise = theClipboard.writeText(text)
-          return promise
-        }
-      })
+      let promise = theClipboard.writeText(text)
+      return promise
     } else {
       // 兼容不支持clipboard
       let copyInput = document.createElement('input');//创建input元素
@@ -840,13 +956,29 @@
 
   function browserType() {
     const explorer = window.navigator.userAgent.toLowerCase()
+    // console.log(explorer);
+    const isIE = !!window.ActiveXObject;
+    const isIE6 = isIE && !window.XMLHttpRequest;
+    const isIE8 = isIE && !!document.documentMode;
+    const isIE7 = isIE && !isIE6 && !isIE8;
+    if (isIE) {
+      if (isIE6) {
+        return "ie6";
+      } else if (isIE8) {
+        return "ie8";
+      } else if (isIE7) {
+        return "ie7";
+      }
+    }
     if (explorer.indexOf("msie") >= 0) {
       return 'IE'
     } else if (explorer.indexOf("firefox") >= 0) {
       return "Firefox"
+    } else if (explorer.indexOf("edg") >= 0) {
+      return 'Edge'
     } else if (explorer.indexOf("chrome") >= 0) {
       return "Chrome"
-    } else if (explorer.indexOf("opera") >= 0) {
+    } else if (explorer.indexOf("opera") >= 0 || explorer.indexOf("opr") > -1) {
       return "Opera"
     } else if (explorer.indexOf("safari") >= 0) {
       return "Safari"
@@ -857,62 +989,67 @@
   //#endregion
 
   let tool = {
-    //#region 
+    //#region 浏览器
     Notify,
     Copy,
     browserType,
     //#endregion
 
-    //#region 
+    //#region 事件总线
     Bus,
     //#endregion
 
-    //#region 
+    //#region 转换
     rgbToHex,
     rem2px,
     //#endregion
 
-    //#region 
+    //#region 函数
     curry,
     debounce,
     throttle,
     sleep,
     //#endregion
 
-    //#region 
+    //#region 数组
     unique,
     quickSort,
     uniqueArrayObject,
+    diffArray,
+    dropArray,
+    dropArrayR,
+    ArrayRemove,
     //#endregion
 
-    //#region 
+    //#region 对象
     dpClone,
     deepFreeze,
     //#endregion
 
-    //#region 
+    //#region 数字
     float,
     formatNumber,
     addBig,
     factorial,
     //#endregion
 
-    //#region 
+    //#region 字符串
     toUp,
     toLow,
     FUp,
     Sreverse,
     //#endregion
 
-    //#region 
+    //#region DOM
     get,
     Dom,
     getScrollOffset,
     getViewportOffset,
     getStyle,
+    createElement,
     //#endregion
 
-    //#region 
+    //#region ajax
     XHR,
     Http,
     getQueryString,
@@ -920,7 +1057,7 @@
     retry,
     //#endregion
 
-    //#region 
+    //#region 时间
     Ctime,
     timeFromDate,
     CDate,
@@ -928,13 +1065,13 @@
     getFirsLastDay,
     //#endregion
 
-    //#region 
+    //#region cookie
     Cookie,
     Local,
     Session,
     //#endregion
 
-    //#region 
+    //#region 类型
     type,
     isObject,
     isArray,
@@ -942,7 +1079,7 @@
     isString,
     //#endregion
 
-    //#region 
+    //#region 判断
     isEmpty,
     isEqual,
     //#endregion

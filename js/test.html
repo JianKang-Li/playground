@@ -8,7 +8,7 @@
   <!-- 导入自定义组件和样式库 -->
 
   <!-- 导入Jquery -->
-  <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+  <!-- <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script> -->
   <title>Document</title>
   <style>
     dialog {
@@ -26,33 +26,31 @@
   <button class="btn" onclick="copy('456')">copy</button>
   <input type="text" name="" id="" class="LK-input" />
   <input type="text" name="" id="ljk" class="LK-input" />
-  <dialog open>
-    <button onclick="closes(this.parentNode)">X</button>
-    <table class="LK-table">
-      <tr>
-        <td>1</td>
-        <td>2</td>
-        <td>3</td>
-        <td>4</td>
-      </tr>
-      <tr>
-        <td>2-1</td>
-      </tr>
-    </table>
-  </dialog>
 
   <script>
     function closes(s) {
       s.open = false;
     }
+    const body = document.querySelector('body')
   </script>
 
   <script src="./tool.js"></script>
 
   <script>
-    const { Copy, browserType } = tool
+    const { Copy, browserType, diffArray, dropArray, dropArrayR, ArrayRemove, createElement } = tool
     let copy = Copy
-    browserType()
+    // document.querySelector('body').innerHTML += browserType()
+    let arr = [1, 2, 3, 5, 4, 1]
+    // console.log(dropArray(arr, 2));
+    // ArrayRemove(arr, (item) => item % 2)
+    // ArrayRemove(arr, '1')
+    // console.log(arr);
+    function fn() {
+      console.log('fn');
+    }
+    let el = createElement('div', { style: { color: 'red' } }, [createElement('div', null, 'ljk'), '123', '222', createElement('p', { style: { color: 'black' } }, '123')])
+    body.appendChild(el)
+
   </script>
 </body>
 
