@@ -210,19 +210,22 @@
         let promise = theClipboard.writeText(code);
         promise.then(
           () => {
-            $Tip.success("复制成功");
+            $Tip.success("复制成功!");
+            show.innerHTML = '复制成功!'
           },
           (err) => {
-            $Tip.error("复制失败", err);
+            $Tip.error("复制失败!", err);
+            show.innerHTML = '复制失败!'
           }
         );
       } else {
         // 兼容不支持clipboard
         let copyInput = document.createElement('input'); //创建input元素
         document.body.appendChild(copyInput); //向页面底部追加输入框
-        copyInput.setAttribute('value', text); //添加属性，将url赋值给input元素的value属性
+        copyInput.setAttribute('value', code); //添加属性，将url赋值给input元素的value属性
         copyInput.select(); //选择input元素
         document.execCommand("Copy"); //执行复制命令
+        show.innerHTML = '复制成功!'
         copyInput.remove(); //删除动态创建的节点
       }
     }
