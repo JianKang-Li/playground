@@ -1,253 +1,243 @@
 <!DOCTYPE html>
 <html lang="zh">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
-    <link
-      rel="stylesheet"
-      href="https://jiankang-li.github.io/Style-library/dist/static/css/index.css"
-    />
-    <script
-      src="https://jiankang-li.github.io/Style-library/dist/static/js/index.js"
-      defer
-    ></script>
-    <title>JavaScript Run</title>
-    <style>
-      body {
-        width: 100vw;
-        height: 100vh;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        margin: 0;
-        padding: 0;
-        background: url("https://api.dujin.org/bing/1920.php");
-        background-position: center;
-        background-repeat: no-repeat;
-        background-size: cover;
-      }
 
-      .container {
-        width: 80%;
-        height: 40%;
-      }
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+  <link rel="stylesheet" href="https://jiankang-li.github.io/Style-library/dist/static/css/index.css" />
+  <script src="https://jiankang-li.github.io/Style-library/dist/static/js/index.js" defer></script>
+  <title>JavaScript Run</title>
+  <style>
+    body {
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      margin: 0;
+      padding: 0;
+      background: url("https://api.dujin.org/bing/1920.php");
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
+    }
 
-      .head {
-        color: #fff;
-        font-size: 1.5rem;
-      }
+    .container {
+      width: 80%;
+      height: 40%;
+    }
 
-      #run,
-      #clean,
-      #copy {
-        float: right;
-        margin-left: 1rem;
-      }
+    .head {
+      color: #fff;
+      font-size: 1.5rem;
+    }
 
-      textarea {
-        margin-top: 1rem;
-        resize: none;
-        padding: 0.5rem 0.8rem;
-        width: 95%;
-        height: 10rem;
-        overflow: scroll;
-        font-size: 1.3rem;
-        border: none;
-      }
+    #run,
+    #clean,
+    #copy {
+      float: right;
+      margin-left: 1rem;
+    }
 
-      textarea::-webkit-scrollbar {
-        width: 0;
-      }
+    textarea {
+      margin-top: 1rem;
+      resize: none;
+      padding: 0.5rem 0.8rem;
+      width: 95%;
+      height: 10rem;
+      overflow: scroll;
+      font-size: 1.3rem;
+      border: none;
+    }
 
-      textarea {
-        overflow: -moz-scrollbars-none;
-      }
+    textarea::-webkit-scrollbar {
+      width: 0;
+    }
 
-      textarea:focus {
-        outline: 1px solid #48c5eb;
-      }
+    textarea {
+      overflow: -moz-scrollbars-none;
+    }
 
-      #show {
-        background-color: #fff;
-      }
+    textarea:focus {
+      outline: 1px solid #48c5eb;
+    }
 
-      .tool {
-        width: 80%;
-      }
+    #show {
+      background-color: #fff;
+    }
 
-      .error {
-        color: red;
-      }
+    .tool {
+      width: 80%;
+    }
 
-      @media screen and (max-height: 700px) {
-        .container textarea {
-          height: 6.5rem;
-        }
-      }
+    .error {
+      color: red;
+    }
 
-      a {
-        text-decoration: none;
-        color: #fff;
+    @media screen and (max-height: 700px) {
+      .container textarea {
+        height: 6.5rem;
       }
+    }
 
-      .links button {
-        margin: 1rem;
-      }
-    </style>
-  </head>
+    a {
+      text-decoration: none;
+      color: #fff;
+    }
 
-  <body>
-    <div class="links">
-      <button class="btn">
-        <a href="./js/tools/canvas.html" target="_blank" class="LK-link"
-          >Canvas</a
-        >
-      </button>
-      <button class="btn">
-        <a href="./js/tools/markdown.html" target="_blank" class="LK-link"
-          >OnlineMarkDown</a
-        >
-      </button>
-      <button class="btn">
-        <a href="./js/tools/color.html" target="_blank" class="LK-link"
-          >Color</a
-        >
-      </button>
+    .links button {
+      margin: 1rem;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="links">
+    <button class="btn">
+      <a href="./js/tools/canvas.html" target="_blank" class="LK-link">Canvas</a>
+    </button>
+    <button class="btn">
+      <a href="./js/tools/markdown.html" target="_blank" class="LK-link">OnlineMarkDown</a>
+    </button>
+    <button class="btn">
+      <a href="./js/tools/color.html" target="_blank" class="LK-link">Color</a>
+    </button>
+  </div>
+  <div class="container">
+    <div class="head">
+      <span>请输入JS代码</span>
+      <button id="clean" class="btn btn-danger" accesskey="c">清空</button>
+      <button id="run" class="btn btn-success" accesskey="r">运行代码</button>
+      <button id="copy" class="btn">复制代码</button>
     </div>
-    <div class="container">
-      <div class="head">
-        <span>请输入JS代码</span>
-        <button id="clean" class="btn btn-danger" accesskey="c">清空</button>
-        <button id="run" class="btn btn-success" accesskey="r">运行代码</button>
-        <button id="copy" class="btn">复制代码</button>
-      </div>
-      <textarea
-        id="code"
-        placeholder="js代码..."
-        onkeydown="tab(this)"
-        autofocus
-      ></textarea>
-    </div>
+    <textarea id="code" placeholder="js代码..." onkeydown="tab(this)" autofocus></textarea>
+  </div>
 
-    <div class="container">
-      <textarea id="show" readonly placeholder="运行结果"></textarea>
-    </div>
+  <div class="container">
+    <textarea id="show" readonly placeholder="运行结果"></textarea>
+  </div>
 
-    <script>
-      const show = document.querySelector("#show");
-      const codes = document.querySelector("#code");
-      const run = document.querySelector("#run");
-      const cleanbtn = document.querySelector("#clean");
-      const copybtn = document.querySelector("#copy");
+  <script>
+    const show = document.querySelector("#show");
+    const codes = document.querySelector("#code");
+    const run = document.querySelector("#run");
+    const cleanbtn = document.querySelector("#clean");
+    const copybtn = document.querySelector("#copy");
 
-      function runCode() {
-        show.innerHTML = "";
-        const console = {};
-        console.log = function (...args) {
-          show.innerHTML += "> ";
-          for (let i = 0; i < args.length; i++) {
-            if (!(args[i] instanceof Error) && typeof args[i] === "object") {
-              show.innerHTML += JSON.stringify(args[i]);
-            } else {
-              show.innerHTML += args[i];
-            }
-            show.innerHTML += " ";
-          }
-          show.innerHTML += "\n";
-        };
-        try {
-          eval(codes.value);
-        } catch (e) {
-          console.log(e);
-        }
-      }
-
-      function clean() {
-        show.innerHTML = "";
-        codes.value = "";
-      }
-
-      // 支持tab键
-      function tab(obj) {
-        if (event.keyCode == 9) {
-          const tab = "  ";
-          const len = tab.length;
-          let text = obj.value;
-          let start = obj.selectionStart;
-          let end = obj.selectionEnd;
-          let selectionText = text.substring(start, end);
-
-          if (start === end) {
-            text = text.substring(0, start) + tab + text.substring(end);
-            obj.value = text;
-            // 防止光标跳到最后
-            obj.selectionStart = start + len;
-            obj.selectionEnd = start + len;
-          } else if (selectionText.includes("\n")) {
-            const arr = selectionText.split("\n");
-            let str = text.substring(0, start);
-            let count = 0;
-            for (let i = 0; i < arr.length; i++) {
-              str += tab + arr[i] + "\n";
-              count++;
-            }
-            // 去掉最后一个换行
-            str = str.substring(0, str.length - 1);
-            str += text.substring(end);
-            obj.value = str;
-            obj.selectionStart = end + count * len;
-            obj.selectionEnd = end + count * len;
+    function runCode() {
+      show.innerHTML = "";
+      const console = {};
+      console.log = function (...args) {
+        show.innerHTML += "> ";
+        for (let i = 0; i < args.length; i++) {
+          if (!(args[i] instanceof Error) && typeof args[i] === "object") {
+            show.innerHTML += JSON.stringify(args[i]);
           } else {
-            text =
-              text.substring(0, start) +
-              tab +
-              selectionText +
-              text.substring(end);
-            obj.value = text;
-            obj.selectionStart = start + len;
-            obj.selectionEnd = start + len;
+            show.innerHTML += args[i];
           }
-
-          event.preventDefault();
+          show.innerHTML += " ";
         }
+        show.innerHTML += "\n";
+      };
+      try {
+        eval(codes.value);
+      } catch (e) {
+        console.log(e);
       }
+    }
 
-      function copy() {
-        let code = codes.value;
-        if (navigator.clipboard) {
-          let theClipboard = navigator.clipboard;
-          if (!code.trim()) {
-            $Tip.info("无代码可复制!");
-            return;
+    function clean() {
+      show.innerHTML = "";
+      codes.value = "";
+    }
+
+    // 支持tab键
+    function tab(obj) {
+      if (event.keyCode == 9) {
+        const tab = "  ";
+        const len = tab.length;
+        let text = obj.value;
+        let start = obj.selectionStart;
+        let end = obj.selectionEnd;
+        let selectionText = text.substring(start, end);
+
+        if (start === end) {
+          text = text.substring(0, start) + tab + text.substring(end);
+          obj.value = text;
+          // 防止光标跳到最后
+          obj.selectionStart = start + len;
+          obj.selectionEnd = start + len;
+        } else if (selectionText.includes("\n")) {
+          const arr = selectionText.split("\n");
+          let str = text.substring(0, start);
+          let count = 0;
+          for (let i = 0; i < arr.length; i++) {
+            str += tab + arr[i] + "\n";
+            count++;
           }
-
-          let promise = theClipboard.writeText(code);
-          promise.then(
-            () => {
-              $Tip.success("复制成功");
-            },
-            (err) => {
-              $Tip.error("复制失败", err);
-            }
-          );
+          // 去掉最后一个换行
+          str = str.substring(0, str.length - 1);
+          str += text.substring(end);
+          obj.value = str;
+          obj.selectionStart = end + count * len;
+          obj.selectionEnd = end + count * len;
         } else {
-          $Tip.info("您的浏览器暂不支持复制代码");
+          text =
+            text.substring(0, start) +
+            tab +
+            selectionText +
+            text.substring(end);
+          obj.value = text;
+          obj.selectionStart = start + len;
+          obj.selectionEnd = start + len;
         }
+
+        event.preventDefault();
       }
+    }
 
-      copybtn.addEventListener("click", () => {
-        copy();
-      });
+    function copy() {
+      let code = codes.value;
+      if (navigator.clipboard) {
+        let theClipboard = navigator.clipboard;
+        if (!code.trim()) {
+          $Tip.info("无代码可复制!");
+          return;
+        }
+        let promise = theClipboard.writeText(code);
+        promise.then(
+          () => {
+            $Tip.success("复制成功");
+          },
+          (err) => {
+            $Tip.error("复制失败", err);
+          }
+        );
+      } else {
+        // 兼容不支持clipboard
+        let copyInput = document.createElement('input'); //创建input元素
+        document.body.appendChild(copyInput); //向页面底部追加输入框
+        copyInput.setAttribute('value', text); //添加属性，将url赋值给input元素的value属性
+        copyInput.select(); //选择input元素
+        document.execCommand("Copy"); //执行复制命令
+        copyInput.remove(); //删除动态创建的节点
+      }
+    }
 
-      cleanbtn.addEventListener("click", () => {
-        clean();
-      });
-      run.addEventListener("click", () => {
-        runCode();
-      });
-    </script>
-  </body>
+    copybtn.addEventListener("click", () => {
+      copy();
+    });
+
+    cleanbtn.addEventListener("click", () => {
+      clean();
+    });
+    run.addEventListener("click", () => {
+      runCode();
+    });
+  </script>
+</body>
+
 </html>

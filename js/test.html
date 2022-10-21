@@ -23,7 +23,7 @@
 </head>
 
 <body>
-  <button class="btn">Tip</button>
+  <button class="btn" onclick="copy('456')">copy</button>
   <input type="text" name="" id="" class="LK-input" />
   <input type="text" name="" id="ljk" class="LK-input" />
   <dialog open>
@@ -50,7 +50,9 @@
   <script src="./tool.js"></script>
 
   <script>
-
+    const { Copy, browserType } = tool
+    let copy = Copy
+    browserType()
   </script>
 </body>
 

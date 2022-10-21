@@ -1,6 +1,12 @@
 ; (function (window) {
   // 自定义方法库
   "use strict"
+
+  //#region DOM元素操作
+  /**
+  * DOM元素操作
+  **/
+
   // 获取dom元素,通过css选择器选择
   function get(option) {
     let doms = document.querySelectorAll(option)
@@ -38,6 +44,59 @@
       this.dom.remove()
     }
   }
+
+  // 获取滚动条位置
+  function getScrollOffset() {
+    if (window.pageXOffset) {
+      return {
+        x: window.pageXOffset,
+        y: window.pageYOffset
+      }
+    } else {
+      return {
+        x: document.body.scrollLeft + document.documentElement.scrollLeft,
+        y: document.body.scrollTop + document.documentElement.scrollTop,
+      }
+    }
+  }
+
+  // 获取窗口大小
+  function getViewportOffset() {
+    if (window.innerWidth) {
+      return {
+        w: wind.innerWidth,
+        h: window.innerHeight
+      }
+    } else {
+      if (document.compatMode === "BackCompat") {
+        return {
+          w: document.body.clientWidth,
+          h: document.body.clientHeight
+        }
+      } else {
+        return {
+          w: document.documentElement.clientWidth,
+          h: document.documentElement.clientHeight
+        }
+      }
+    }
+  }
+
+  // 获取元素样式
+  function getStyle(dom, prop) {
+    if (window.getComputedStyle) {
+      return window.getComputedStyle(dom, null)[prop]
+    } else {
+      return dom.currentStyle[prop];
+    }
+  }
+
+  //#endregion
+
+  //#region ajax请求
+  /**
+  * ajax请求
+  **/
 
   // 原始XHR发送请求
   class XHR {
@@ -157,16 +216,6 @@
     }
   }
 
-  // 判断对象是否为空
-  function isEmpty(obj) {
-    return Reflect.ownKeys(obj).length === 0 && obj.constructor === Object;
-  }
-
-  // 判断是否相等
-  function isEqual(value1, value2) {
-    return Object.is(value1, value2)
-  }
-
   // 获取url某个参数
   function getQueryString(url, name) {
     if (url.indexOf("?") != -1) {
@@ -175,6 +224,74 @@
     let U = new URLSearchParams(url);
     return U.get(name)
   }
+
+  // 最大并发数
+  function concurRequest(urls, maxNum) {
+    return new Promise((resolve) => {
+      if (urls.length === 0) {
+        resolve([]);
+        return;
+      }
+      const results = [];
+      let index = 0; //下一个请求下标
+      let count = 0; //当前请求完成数量
+      async function request() {
+        if (index === urls.length) {
+          return;
+        }
+        const i = index;
+        const url = urls[index];
+        index++;
+        try {
+          const resp = await fetch(url); //发送请求
+          results[i] = resp;
+        } catch (err) {
+          results[i] = err;
+        } finally {
+          // 判断是否所有请求完成
+          count++;
+          if (count === urls.length) {
+            resolve(results);
+          }
+          request();
+        }
+      }
+      const times = Math.min(maxNum, urls.length);
+      for (let i = 0; i < times; i++) {
+        request();
+      }
+    });
+  }
+
+  // 自动重试
+  function retry(func, times = 0, delay = 0) {
+    return new Promise((resolve, reject) => {
+      // func是一件事，将他封装
+      let inner = async function () {
+        try {
+          const result = await func()
+          resolve(result)
+        } catch (e) {
+          if (times-- <= 0) {
+            reject(e)
+          } else {
+            console.log('开始重试,剩余', times);
+            // 延时
+            setTimeout(() => {
+              inner()
+            }, delay)
+          }
+        }
+      }
+      inner()
+    })
+  }
+  //#endregion
+
+  //#region 时间操作方法
+  /**
+  * 时间操作方法
+  **/
 
   //获取当前时间并格式化为（hh:mm:ss）
   function Ctime() {
@@ -200,94 +317,36 @@
     return day;
   };
 
-  //深度复制
-  function dpClone(target, map = new Map()) {
-    if (target.constructor === Date) {
-      return new Date(target);
+  // 比较两个日期之间差的天数
+  function dayDif(date1, date2) {
+    if (typeof date1 === 'number') {
+      date1 = new Date(date1)
     }
-    if (target.constructor === RegExp) {
-      return new RegExp(target);
+    if (typeof date2 === 'number') {
+      date2 = new Date(date2)
     }
-    if (target instanceof Error) return new Error(target.message);
-    if (target instanceof Function)
-      return function proxy(...args) {
-        return target.call(this, args);
-      };
-    if (typeof target != "object") return target;
-    if (map.has(target)) return map.get(target);
-    let newObj = new target.constructor();
-    map.set(target, newObj);
-    for (let key in target) {
-      if (target.hasOwnProperty(key)) {
-        newObj[key] = dpClone(target[key], map);
-      }
-    }
-    return newObj;
-  };
-
-  // 利用Set去重
-  function unique(arr) {
-    let set = new Set(arr)
-    return Array.from(set)
+    let start = new Date(`${date1.getFullYear()}-${date1.getMonth()}-${date1.getDate()}`)
+    let end = new Date(`${date2.getFullYear()}-${date2.getMonth()}-${date2.getDate()}`)
+    return Math.ceil(Math.abs(start.getTime() - end.getTime()) / 86400000)
   }
 
-  /* 
-  节流: n 秒内只运行一次，若在 n 秒内重复触发，只有一次生效
-  防抖: n 秒后在执行该事件，若在 n 秒内被重复触发，则重新计时
-  */
-
-  // 防抖
-  function debounce(handle, delay = 1000) {
-    var timer = null;
-    return function () {
-      var _self = this, _args = arguments;
-      clearTimeout(timer);
-      timer = setTimeout(function () {
-        handle.apply(_self, _args)
-      }, delay)
-    }
+  // 返回当月第一天和最后一天
+  function getFirsLastDay() {
+    let now = new Date();
+    let y = now.getFullYear();
+    let m = now.getMonth();
+    let firstDay = new Date(y, m, 1);
+    let lastDay = new Date(y, m + 1, 0);
+    firstDay = y + "-" + (firstDay.getMonth() + 1) + "-" + "01";
+    lastDay = y + "-" + (lastDay.getMonth() + 1) + "-" + lastDay.getDate();
+    return [firstDay, lastDay];
   }
+  //#endregion
 
-  // 节流
-  function throttle(handle, wait = 1000) {
-    var lasetTime = 0;
-    return function () {
-      var nowTime = new Data().getTime();
-      if (nowTime - lasetTime > wait) {
-        handle.apply(this, arguments);
-        lasetTime = nowTime
-      }
-    }
-  }
-
-  // 字符串反转
-  function Sreverse(str) {
-    return str.split("").reverse().join("")
-  }
-
-  // 获取数据类型
-  function type(obj) {
-    return Object.prototype.toString.call(obj).slice(8, -1)
-  }
-
-  // 快速排序
-  function quickSort(arr) {
-    if (!Array.isArray(arr)) return;
-    if (arr.length <= 1) return arr;
-    var left = [],
-      right = [];
-    var num = Math.floor(arr.length / 2);
-    var numValue = arr.splice(num, 1)[0];
-    for (var i = 0; i < arr.length; i++) {
-      if (arr[i] > numValue) {
-        right.push(arr[i]);
-      } else {
-        left.push(arr[i]);
-      }
-    }
-    return [...quickSort(left), numValue, ...quickSort(right)];
-  }
-
+  //#region cookie,session,localStorage操作
+  /**
+  * cookie,session,localStorage操作
+  **/
   // 获取cookie
   class Cookie {
     getItem(sKey) {
@@ -395,12 +454,278 @@
       this.Update()
     }
   }
+  //#endregion
 
+  //#region 类型操作
+  /**
+  * 类型操作
+  **/
+  // 获取数据类型
+  function type(obj) {
+    return Object.prototype.toString.call(obj).slice(8, -1)
+  }
+
+  function isObject(param) {
+    return Object.prototype.toString.call(param).slice(8, -1) === 'Object'
+  }
+
+  function isArray(param) {
+    return Array.isArray(param)
+  }
+
+  function isFunction(param) {
+    return typeof param === 'function'
+  }
+
+  function isString(param) {
+    return typeof param === 'string'
+  }
+  //#endregion
+
+  //#region 判断操作
+  /**
+  * 判断操作
+  **/
+  // 判断对象是否为空
+  function isEmpty(obj) {
+    return Reflect.ownKeys(obj).length === 0 && obj.constructor === Object;
+  }
+
+  // 判断是否相等
+  function isEqual(value1, value2) {
+    return Object.is(value1, value2)
+  }
+  //#endregion
+
+  //#region 字符串操作
+  /**
+  * 字符串操作
+  **/
+  // 转大写
+  function toUp(str) {
+    return str.toUpperCase();
+  }
+
+  // 转小写
+  function toLow(str) {
+    return str.toLowerCase();
+  }
+
+  // 首字母大写
+  function FUp(str) {
+    return str[0].toUpperCase() + str.substr(1).toLowerCase();
+  }
+
+  // 字符串反转
+  function Sreverse(str) {
+    return str.split("").reverse().join("")
+  }
+  //#endregion
+
+  //#region 数字操作
+  /**
+  * 数字操作
+  **/
   // 浮点数运算，解决0.1+0.2!=0.3
   function float(args) {
     return parseFloat((args).toFixed(10))
   }
 
+  // 格式化数字
+  function formatNumber(num) {
+    return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")
+  }
+
+  // 大数相加
+  function addBig(a, b) {
+    //取两个数字的最大长度
+    let maxLength = Math.max(a.length, b.length);
+    //用0去补齐长度
+    a = a.padStart(maxLength, 0);
+    b = b.padStart(maxLength, 0);
+    //定义加法过程中需要用到的变量
+    let t = 0;
+    let f = 0;   //"进位"
+    let sum = "";
+    for (let i = maxLength - 1; i >= 0; i--) {
+      t = parseInt(a[i]) + parseInt(b[i]) + f;
+      f = Math.floor(t / 10);
+      sum = t % 10 + sum;
+    }
+    if (f !== 0) {
+      sum = '' + f + sum;
+    }
+    return sum;
+  }
+
+  // 阶乘
+  function factorial(n) {
+    let a = [1];
+    for (let i = 1; i <= n; i++) {
+      for (let j = 0, c = 0; j < a.length || c != 0; j++) {
+        let m = j < a.length ? a[j] * i + c : c;
+        a[j] = m % 10;
+        c = (m - a[j]) / 10;
+      }
+    }
+    return a.reverse().join("")
+  }
+  //#endregion
+
+  //#region 对象操作
+  /**
+  * 对象操作
+  **/
+  //深度复制
+  function dpClone(target, map = new Map()) {
+    if (target.constructor === Date) {
+      return new Date(target);
+    }
+    if (target.constructor === RegExp) {
+      return new RegExp(target);
+    }
+    if (target instanceof Error) return new Error(target.message);
+    if (target instanceof Function)
+      return function proxy(...args) {
+        return target.call(this, args);
+      };
+    if (typeof target != "object") return target;
+    if (map.has(target)) return map.get(target);
+    let newObj = new target.constructor();
+    map.set(target, newObj);
+    for (let key in target) {
+      if (target.hasOwnProperty(key)) {
+        newObj[key] = dpClone(target[key], map);
+      }
+    }
+    return newObj;
+  };
+
+  // 对象深度冻结
+  function deepFreeze(obj, attr, deep = 0) {
+    const re = function (obj) {
+      for (const key in obj) {
+        if (Object.hasOwnProperty.call(obj, key)) {
+          if (typeof obj[key] === 'object') {
+            deepFreeze(obj, key, 1)
+          }
+        }
+      }
+    }
+    if (attr == undefined) {
+      Object.freeze(obj)
+      re(obj)
+      return
+    } else {
+      if (typeof obj[attr] != 'object') {
+        Object.defineProperty(obj, attr, {
+          writable: false
+        })
+        return
+      }
+      Object.freeze(deep === 1 ? obj[attr] : obj);
+      re(obj[attr])
+    }
+  }
+  //#endregion
+
+  //#region 数组操作
+  /**
+  * 数组操作
+  **/
+  // 利用Set去重
+  function unique(arr) {
+    let set = new Set(arr)
+    return Array.from(set)
+  }
+
+  // 快速排序
+  function quickSort(arr) {
+    if (!Array.isArray(arr)) return;
+    if (arr.length <= 1) return arr;
+    var left = [],
+      right = [];
+    var num = Math.floor(arr.length / 2);
+    var numValue = arr.splice(num, 1)[0];
+    for (var i = 0; i < arr.length; i++) {
+      if (arr[i] > numValue) {
+        right.push(arr[i]);
+      } else {
+        left.push(arr[i]);
+      }
+    }
+    return [...quickSort(left), numValue, ...quickSort(right)];
+  }
+
+  // 数组对象去重
+  function uniqueArrayObject(arr = [], key) {
+    if (arr.length === 0) return;
+    let list = [];
+    let map = {};
+    arr.forEach((ele) => {
+      if (!map[ele[key]]) {
+        map[ele[key]] = ele;
+      }
+    });
+    list = Object.values(map);
+    return list;
+  }
+  //#endregion
+
+  //#region 函数操作
+  /**
+  * 函数操作
+  **/
+  // 函数柯西化
+  function curry(fn, ...args) {
+    if (args.length >= fn.length) {
+      return fn(...args)
+    } else {
+      return function (..._args) {
+        return curry(fn, ..._args, ...args)
+      }
+    }
+  }
+
+  /* 
+  节流: n 秒内只运行一次，若在 n 秒内重复触发，只有一次生效
+  防抖: n 秒后在执行该事件，若在 n 秒内被重复触发，则重新计时
+  */
+
+  // 防抖
+  function debounce(handle, delay = 1000) {
+    var timer = null;
+    return function () {
+      var _self = this, _args = arguments;
+      clearTimeout(timer);
+      timer = setTimeout(function () {
+        handle.apply(_self, _args)
+      }, delay)
+    }
+  }
+
+  // 节流
+  function throttle(handle, wait = 1000) {
+    var lasetTime = 0;
+    return function () {
+      var nowTime = new Data().getTime();
+      if (nowTime - lasetTime > wait) {
+        handle.apply(this, arguments);
+        lasetTime = nowTime
+      }
+    }
+  }
+
+  // sleep()
+  function sleep(delay) {
+    return new Promise((resolve) => setTimeout(resolve, delay))
+  }
+  //#endregion
+
+  //#region 转换
+  /**
+  * 单位转换
+  **/
   // rgb 转 hex
   function rgbToHex(r, g, b) {
     return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
@@ -412,20 +737,12 @@
     let px = rem * parseInt(docpx)
     return px
   }
+  //#endregion
 
-  // 比较两个日期之间差的天数
-  function dayDif(date1, date2) {
-    if (typeof date1 === 'number') {
-      date1 = new Date(date1)
-    }
-    if (typeof date2 === 'number') {
-      date2 = new Date(date2)
-    }
-    let start = new Date(`${date1.getFullYear()}-${date1.getMonth()}-${date1.getDate()}`)
-    let end = new Date(`${date2.getFullYear()}-${date2.getMonth()}-${date2.getDate()}`)
-    return Math.ceil(Math.abs(start.getTime() - end.getTime()) / 86400000)
-  }
-
+  //#region 事件总线
+  /**
+  * 事件总线
+  **/
   // 事件总线
   class Bus {
     constructor() {
@@ -475,58 +792,12 @@
       }
     }
   }
+  //#endregion
 
-  // 格式化数字
-  function formatNumber(num) {
-    return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")
-  }
-
-  // 获取滚动条位置
-  function getScrollOffset() {
-    if (window.pageXOffset) {
-      return {
-        x: window.pageXOffset,
-        y: window.pageYOffset
-      }
-    } else {
-      return {
-        x: document.body.scrollLeft + document.documentElement.scrollLeft,
-        y: document.body.scrollTop + document.documentElement.scrollTop,
-      }
-    }
-  }
-
-  // 获取窗口大小
-  function getViewportOffset() {
-    if (window.innerWidth) {
-      return {
-        w: wind.innerWidth,
-        h: window.innerHeight
-      }
-    } else {
-      if (document.compatMode === "BackCompat") {
-        return {
-          w: document.body.clientWidth,
-          h: document.body.clientHeight
-        }
-      } else {
-        return {
-          w: document.documentElement.clientWidth,
-          h: document.documentElement.clientHeight
-        }
-      }
-    }
-  }
-
-  // 获取元素样式
-  function getStyle(dom, prop) {
-    if (window.getComputedStyle) {
-      return window.getComputedStyle(dom, null)[prop]
-    } else {
-      return dom.currentStyle[prop];
-    }
-  }
-
+  //#region 浏览器原生方法
+  /**
+  * 浏览器原生方法
+  **/
 
   // 桌面通知
   function Notify(title, { body }) {
@@ -544,229 +815,137 @@
     }
   }
 
-  // 大数相加
-  function addBig(a, b) {
-    //取两个数字的最大长度
-    let maxLength = Math.max(a.length, b.length);
-    //用0去补齐长度
-    a = a.padStart(maxLength, 0);
-    b = b.padStart(maxLength, 0);
-    //定义加法过程中需要用到的变量
-    let t = 0;
-    let f = 0;   //"进位"
-    let sum = "";
-    for (let i = maxLength - 1; i >= 0; i--) {
-      t = parseInt(a[i]) + parseInt(b[i]) + f;
-      f = Math.floor(t / 10);
-      sum = t % 10 + sum;
-    }
-    if (f !== 0) {
-      sum = '' + f + sum;
-    }
-    return sum;
-  }
+  function Copy(text) {
+    let theClipboard = navigator.clipboard;
 
-  // 阶乘
-  function factorial(n) {
-    let a = [1];
-    for (let i = 1; i <= n; i++) {
-      for (let j = 0, c = 0; j < a.length || c != 0; j++) {
-        let m = j < a.length ? a[j] * i + c : c;
-        a[j] = m % 10;
-        c = (m - a[j]) / 10;
-      }
-    }
-    return a.reverse().join("")
-  }
-
-  // sleep()
-  function sleep(delay) {
-    return new Promise((resolve) => setTimeout(resolve, delay))
-  }
-
-  // 自动重试
-  function retry(func, times = 0, delay = 0) {
-    return new Promise((resolve, reject) => {
-      // func是一件事，将他封装
-      let inner = async function () {
-        try {
-          const result = await func()
-          resolve(result)
-        } catch (e) {
-          if (times-- <= 0) {
-            reject(e)
-          } else {
-            console.log('开始重试,剩余', times);
-            // 延时
-            setTimeout(() => {
-              inner()
-            }, delay)
-          }
+    if (theClipboard) {
+      navigator.permissions.query({
+        name: 'clipboard-write'
+      }).then(PermissionStatus => {
+        if (PermissionStatus.state === 'prompt') {
+          let promise = theClipboard.writeText(text)
+          return promise
         }
-      }
-      inner()
-    })
-  }
-
-  // 深度冻结
-  function deepFreeze(obj, attr, deep = 0) {
-    const re = function (obj) {
-      for (const key in obj) {
-        if (Object.hasOwnProperty.call(obj, key)) {
-          if (typeof obj[key] === 'object') {
-            deepFreeze(obj, key, 1)
-          }
-        }
-      }
-    }
-    if (attr == undefined) {
-      Object.freeze(obj)
-      re(obj)
-      return
+      })
     } else {
-      if (typeof obj[attr] != 'object') {
-        Object.defineProperty(obj, attr, {
-          writable: false
-        })
-        return
-      }
-      Object.freeze(deep === 1 ? obj[attr] : obj);
-      re(obj[attr])
+      // 兼容不支持clipboard
+      let copyInput = document.createElement('input');//创建input元素
+      document.body.appendChild(copyInput);//向页面底部追加输入框
+      copyInput.setAttribute('value', text);//添加属性，将url赋值给input元素的value属性
+      copyInput.select();//选择input元素
+      document.execCommand("Copy");//执行复制命令
+      copyInput.remove();//删除动态创建的节点
     }
   }
-  // 转大写
-  function toUp(str) {
-    return str.toUpperCase();
-  }
 
-  // 转小写
-  function toLow(str) {
-    return str.toLowerCase();
-  }
-
-  // 首字母大写
-  function FUp(str) {
-    return str[0].toUpperCase() + str.substr(1).toLowerCase();
-  }
-
-  // 数组对象去重
-  function uniqueArrayObject(arr = [], key) {
-    if (arr.length === 0) return;
-    let list = [];
-    let map = {};
-    arr.forEach((ele) => {
-      if (!map[ele[key]]) {
-        map[ele[key]] = ele;
-      }
-    });
-    list = Object.values(map);
-    return list;
-  }
-
-  // 返回当月第一天和最后一天
-  function getFirsLastDay() {
-    let now = new Date();
-    let y = now.getFullYear();
-    let m = now.getMonth();
-    let firstDay = new Date(y, m, 1);
-    let lastDay = new Date(y, m + 1, 0);
-    firstDay = y + "-" + (firstDay.getMonth() + 1) + "-" + "01";
-    lastDay = y + "-" + (lastDay.getMonth() + 1) + "-" + lastDay.getDate();
-    return [firstDay, lastDay];
-  }
-
-  // 最大并发数
-  function concurRequest(urls, maxNum) {
-    return new Promise((resolve) => {
-      if (urls.length === 0) {
-        resolve([]);
-        return;
-      }
-      const results = [];
-      let index = 0; //下一个请求下标
-      let count = 0; //当前请求完成数量
-      async function request() {
-        if (index === urls.length) {
-          return;
-        }
-        const i = index;
-        const url = urls[index];
-        index++;
-        try {
-          const resp = await fetch(url); //发送请求
-          results[i] = resp;
-        } catch (err) {
-          results[i] = err;
-        } finally {
-          // 判断是否所有请求完成
-          count++;
-          if (count === urls.length) {
-            resolve(results);
-          }
-          request();
-        }
-      }
-      const times = Math.min(maxNum, urls.length);
-      for (let i = 0; i < times; i++) {
-        request();
-      }
-    });
-  }
-
-  // 函数柯西化
-  function curry(fn, ...args) {
-    if (args.length >= fn.length) {
-      return fn(...args)
+  function browserType() {
+    const explorer = window.navigator.userAgent.toLowerCase()
+    if (explorer.indexOf("msie") >= 0) {
+      return 'IE'
+    } else if (explorer.indexOf("firefox") >= 0) {
+      return "Firefox"
+    } else if (explorer.indexOf("chrome") >= 0) {
+      return "Chrome"
+    } else if (explorer.indexOf("opera") >= 0) {
+      return "Opera"
+    } else if (explorer.indexOf("safari") >= 0) {
+      return "Safari"
     } else {
-      return function (..._args) {
-        return curry(fn, ..._args, ...args)
-      }
+      return 'unknow'
     }
   }
+  //#endregion
 
   let tool = {
-    unique,//去重
-    dpClone,//深度克隆
-    CDate,//获取当前日期
-    Ctime,//获取当前时间
-    get,//获取元素
-    debounce,//防抖
-    throttle,//节流
-    Sreverse,//字符串反转
-    type,//精确类型判断
-    quickSort,//快排
-    Dom,//自定义DOM类
-    Cookie,//Cookie操作
-    Local,//localStorage操作
-    Session,//Session操作
-    Bus,//全局事件总线
-    Http,//fetch封装
-    XHR,//原生XHR封装
-    getQueryString,//获取url某个参数
-    float,//浮点数运算
-    dayDif,//比较两个日期相差的天数
-    timeFromDate,
+    //#region 
+    Notify,
+    Copy,
+    browserType,
+    //#endregion
+
+    //#region 
+    Bus,
+    //#endregion
+
+    //#region 
     rgbToHex,
     rem2px,
+    //#endregion
+
+    //#region 
+    curry,
+    debounce,
+    throttle,
+    sleep,
+    //#endregion
+
+    //#region 
+    unique,
+    quickSort,
+    uniqueArrayObject,
+    //#endregion
+
+    //#region 
+    dpClone,
+    deepFreeze,
+    //#endregion
+
+    //#region 
+    float,
     formatNumber,
+    addBig,
+    factorial,
+    //#endregion
+
+    //#region 
+    toUp,
+    toLow,
+    FUp,
+    Sreverse,
+    //#endregion
+
+    //#region 
+    get,
+    Dom,
     getScrollOffset,
     getViewportOffset,
     getStyle,
-    Notify,
-    isEqual,
-    isEmpty,
-    addBig,
-    factorial,
-    sleep,
-    retry,
-    deepFreeze,
-    toLow,
-    toUp,
-    FUp,
-    uniqueArrayObject,
-    getFirsLastDay,
+    //#endregion
+
+    //#region 
+    XHR,
+    Http,
+    getQueryString,
     concurRequest,
-    curry
+    retry,
+    //#endregion
+
+    //#region 
+    Ctime,
+    timeFromDate,
+    CDate,
+    dayDif,
+    getFirsLastDay,
+    //#endregion
+
+    //#region 
+    Cookie,
+    Local,
+    Session,
+    //#endregion
+
+    //#region 
+    type,
+    isObject,
+    isArray,
+    isFunction,
+    isString,
+    //#endregion
+
+    //#region 
+    isEmpty,
+    isEqual,
+    //#endregion
   }
 
   window.tool = tool
