@@ -989,6 +989,10 @@
   //#endregion
 
   let tool = {
+    //#region 库信息
+    VERSION: '0.1.0',
+    //#endregion
+
     //#region 浏览器
     Notify,
     Copy,
