@@ -549,6 +549,13 @@
   function isString(param) {
     return typeof param === 'string'
   }
+
+  function isInteger(num) {
+    // 如果使用bumber类型会丢失精度
+    return parseInt(num) + '' === num
+  }
+
+
   //#endregion
 
   //#region 判断操作
@@ -563,6 +570,45 @@
   // 判断是否相等
   function isEqual(value1, value2) {
     return Object.is(value1, value2)
+  }
+
+  // 判断长度
+  function len(param) {
+    switch (Object.prototype.toString.call(param).slice(8, -1)) {
+      case "Array": {
+        return param.length
+      } case "Set": {
+        return param.size
+      } case 'Function': {
+        return param.length
+      } case 'Object': {
+        return Object.keys(param).length
+      } case "String": {
+        return param.length
+      } case 'Map': {
+        return param.size
+      } case "Undefined": {
+        return 0
+      } case "Null": {
+        return 0
+      } case 'Number': {
+        if (param !== param) {
+          // NaN
+          return 0
+        } else {
+          return param.toString().length
+        }
+      } case "BigInt": {
+        return param.toString().length
+      } case "Boolean": {
+        return param ? 1 : 0
+      }
+      default: {
+        // Date RegExp Symbol
+        let type = Object.prototype.toString.call(param).slice(8, -1);
+        console.warn(`${type} are not supported`);
+      }
+    }
   }
   //#endregion
 
@@ -588,6 +634,11 @@
   // 字符串反转
   function Sreverse(str) {
     return str.split("").reverse().join("")
+  }
+
+  // 字符统计
+  function Scount(str) {
+    return str.split('').reduce((a, b) => (a[b]++ || (a[b] = 1), a), {})
   }
   //#endregion
 
@@ -763,34 +814,89 @@
 
   // 移除
   function ArrayRemove(arr, fn) {
-    switch (typeof fn) {
-      case 'number': {
-        arr.forEach((item, index) => {
-          if (item === fn) {
-            arr.splice(index, 1)
-          }
-        })
-        break;
-      }
-      case "string": {
-        arr.forEach((item, index) => {
-          if (item === fn) {
-            arr.splice(index, 1)
-          }
-        })
-        break;
-      }
-      case 'function': {
-        arr.forEach((item, index) => {
-          if (Boolean(fn(item))) {
-            arr.splice(index, 1)
-          }
-        })
-        break;
-      }
-      default:
-        console.error("ArrayRemove expect to receive a number or method or string!");
+    if ((typeof fn == "number") || (typeof fn == "string") || (typeof fn == "object")) {
+      arr.forEach((item, index) => {
+        if (item === fn) {
+          arr.splice(index, 1)
+        }
+      })
+    } else if (typeof fn == 'function') {
+      arr.forEach((item, index) => {
+        if (Boolean(fn(item))) {
+          arr.splice(index, 1)
+        }
+      })
     }
+    else {
+      console.error("ArrayRemove expect to receive a number or method or string!");
+    }
+  }
+  //#endregion
+
+  //#region 集合操作
+  /**
+  * 集合操作 
+  **/
+  //  只要有一个满足条件
+  function setSome(set, callback) {
+    if (!(set instanceof Set)) {
+      throw Error('This method applies to Set.')
+    }
+    else {
+      const arr = Array.from(set)
+      return arr.some(callback)
+    }
+  }
+
+  // 是否都满足条件
+  function setEvery(set, callback) {
+    if (!(set instanceof Set)) {
+      throw Error('This method applies to Set.')
+    }
+    else {
+      const arr = Array.from(set)
+      return arr.every(callback)
+    }
+  }
+
+  // 过滤
+  function setFilter(set, condition) {
+    let nset = new Set()
+    if (isFunction(condition)) {
+      set.forEach((item, key, set) => {
+        if (condition(item, key, set)) {
+          nset.add(item)
+        }
+      })
+    } else if (isArray(condition)) {
+      set.forEach((item) => {
+        if (!condition.includes(item)) {
+          nset.add(item)
+        }
+      })
+    } else {
+      set.forEach((item) => {
+        if (item != condition) {
+          nset.add(item)
+        }
+      })
+    }
+    return nset
+  }
+
+  // 获取位置的元素
+  function setAt(set, item) {
+    const arr = Array.from(set)
+    return arr.at(item)
+  }
+
+  // set翻转
+  function setReverse(set) {
+    const arr = Array.from(set).reverse()
+    set.clear()
+    arr.forEach((item) => {
+      set.add(item)
+    })
   }
   //#endregion
 
@@ -806,6 +912,18 @@
       return function (..._args) {
         return curry(fn, ..._args, ...args)
       }
+    }
+  }
+
+  function once(fn) {
+    let first = true
+    let result;
+    return function () {
+      if (first) {
+        first = false
+        result = fn.apply(this, arguments)
+      }
+      return result
     }
   }
 
@@ -991,6 +1109,7 @@
   let tool = {
     //#region 库信息
     VERSION: '0.1.0',
+    JSTIME: '2022',
     //#endregion
 
     //#region 浏览器
@@ -1013,6 +1132,7 @@
     debounce,
     throttle,
     sleep,
+    once,
     //#endregion
 
     //#region 数组
@@ -1023,6 +1143,14 @@
     dropArray,
     dropArrayR,
     ArrayRemove,
+    //#endregion
+
+    //#region 集合
+    setSome,
+    setEvery,
+    setFilter,
+    setAt,
+    setReverse,
     //#endregion
 
     //#region 对象
@@ -1042,6 +1170,7 @@
     toLow,
     FUp,
     Sreverse,
+    Scount,
     //#endregion
 
     //#region DOM
@@ -1086,6 +1215,8 @@
     //#region 判断
     isEmpty,
     isEqual,
+    len,
+    isInteger,
     //#endregion
   }
 

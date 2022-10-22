@@ -37,20 +37,25 @@
   <script src="./tool.js"></script>
 
   <script>
-    const { Copy, browserType, diffArray, dropArray, dropArrayR, ArrayRemove, createElement } = tool
+    const { once, setAt, setEvery, setSome, Copy, createElement } = tool
     let copy = Copy
     // document.querySelector('body').innerHTML += browserType()
-    let arr = [1, 2, 3, 5, 4, 1]
-    // console.log(dropArray(arr, 2));
-    // ArrayRemove(arr, (item) => item % 2)
-    // ArrayRemove(arr, '1')
-    // console.log(arr);
-    function fn() {
-      console.log('fn');
+    let arr = [1, 2, 3, 5, 4, 1, 9, 8]
+    function fn(a, b) {
+      return a + b
     }
+    let str = 'fasachadclkdadjc'
+    let reg = /^abc/
+    let map = new Map()
+    let date = new Date()
+    let symbol = Symbol('ljk')
+    let set = new Set(arr)
     let el = createElement('div', { style: { color: 'red' } }, [createElement('div', null, 'ljk'), '123', '222', createElement('p', { style: { color: 'black' } }, '123')])
     body.appendChild(el)
-
+    // console.log(isInteger('0.1'));
+    let ofn = once(fn)
+    console.log(ofn(1, 2));
+    console.log(ofn(4, 5));
   </script>
 </body>
 
