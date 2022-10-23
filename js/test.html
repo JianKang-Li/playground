@@ -50,12 +50,11 @@
     let date = new Date()
     let symbol = Symbol('ljk')
     let set = new Set(arr)
-    let el = createElement('div', { style: { color: 'red' } }, [createElement('div', null, 'ljk'), '123', '222', createElement('p', { style: { color: 'black' } }, '123')])
+    let el = createElement('div', { style: { color: 'red' } }, [createElement('div', null, '<p>11111</p><div>这是块级元素</div>'), '123', '222', createElement('p', { style: { color: 'black' } }, '123')])
     body.appendChild(el)
     // console.log(isInteger('0.1'));
     let ofn = once(fn)
     console.log(ofn(1, 2));
-    console.log(ofn(4, 5));
   </script>
 </body>
 
