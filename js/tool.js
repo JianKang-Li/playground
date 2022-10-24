@@ -610,6 +610,12 @@
       }
     }
   }
+
+  // 判断浏览器类型
+  const detectDeviceType = () =>
+    /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+      navigator.userAgent
+    ) ? "Mobile" : "Desktop";
   //#endregion
 
   //#region 字符串操作
@@ -1249,6 +1255,7 @@
     isEqual,
     len,
     isInteger,
+    detectDeviceType,
     //#endregion
   }
 
