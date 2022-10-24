@@ -1106,10 +1106,42 @@
   }
   //#endregion
 
+  //#region 简单响应式Solid.js
+  let _currentEffect;
+  function createEffect(effect) {
+    _currentEffect = effect
+    effect()
+    _currentEffect = null
+  }
+
+  function createSignal(value) {
+    const effects = new Set()
+    function read() {
+      // 依赖收集
+      if (_currentEffect) effects.add(_currentEffect);
+      return value
+    }
+
+    function write(newValue) {
+      value = newValue
+      // 触发依赖
+      for (const effect of effects) {
+        effect()
+      }
+    }
+    return [read, write]
+  }
+  //#endregion
+
   let tool = {
     //#region 库信息
     VERSION: '0.1.0',
     JSTIME: '2022',
+    //#endregion
+
+    //#region 简单响应式
+    createEffect,
+    createSignal,
     //#endregion
 
     //#region 浏览器
