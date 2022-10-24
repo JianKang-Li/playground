@@ -1,32 +1,28 @@
 // ==UserScript==
 // @name         一键到顶
 // @namespace    http://tampermonkey.net/
-// @version      0.1.1
+// @version      0.1.24
 // @description  页面到顶
 // @author       ljk
 
 // @match      *.baidu.com/*
-
 // @match      *.bilibili.com/*
-
 // @match      *.zhihu.com/*
-
 // @match      *store.steampowered.com/*
 // @match      *steamcommunity.com/*
 // @match      *help.steampowered.com/*
-
 // @match      *store.epicgames.com/*
 // @match      *.epicgames.com/*
 // @match      *.unrealengine.com/*
-
 // @match      *.csdn.net/*
-
 // @match      *github.com/*
-
 // @match      *.npmjs.com/*
-
 // @match      *gitee.com/*
+// @match      *juejin.cn/*
+// @match      *.cnblogs.com/*
+// @match      *.youtube.com/*
 
+// @match      *biquys.com/*
 // @grant        none
 // @license      GPL
 // ==/UserScript==
@@ -43,8 +39,8 @@
     justify-content: center;
     position: fixed;
     left: 1em;
-    bottom: 3em;
-    z-index: 999;
+    bottom: 6em;
+    z-index: 9999;
   }
 
   .lbtn {
@@ -53,6 +49,7 @@
     border: 0;
     color: #00abe3;
     cursor: pointer;
+    margin-left:0;
   }
 
   .lbtn:focus {
