@@ -170,45 +170,78 @@
   // 原始XHR发送请求
   class XHR {
     constructor() {
+      function use(normal, error) {
+        normal && this.normals.push(normal)
+        error && this.errors.push(error)
+      }
+
+      this.interceptors = {
+        request: {
+          normals: [],
+          errors: [],
+          use: use
+        },
+        response: {
+          normals: [],
+          errors: [],
+          use: use
+        },
+      }
+    }
+
+    dispatch(url, method, data) {
+      return new Promise((resolve, reject) => {
+        this.interceptors.request.normals.map((fn) => {
+          this.xhr = fn(this.xhr)
+        })
+        this.xhr.open(method, url)
+        data ? this.xhr.send(data) : this.xhr.send();
+        const _this = this
+        this.xhr.onreadystatechange = function () {
+          if (this.readyState === 4 && this.status >= 200 && this.status < 300) {
+            let text = JSON.parse(this.responseText)
+            _this.interceptors.response.normals.map((fn) => {
+              text = fn(text)
+            })
+            resolve(text)
+          } else if (this.status >= 400) {
+            _this.interceptors.response.errors.map((fn) => {
+              this.statusText = fn(this.statusText)
+            })
+            reject(this.statusText)
+          }
+        }
+      })
     }
 
     get(url, param) {
-      this.xhr = new XMLHttpRequest();
-      return new Promise((resolve, reject) => {
+      try {
+        this.xhr = new XMLHttpRequest();
         let _url = url
         if (param) {
           let str = new URLSearchParams(param).toString()
           _url += "?" + str
         }
-        this.xhr.open("GET", _url)
-        this.xhr.send();
-        this.xhr.onreadystatechange = function () {
-          if (this.readyState === 4 && this.status === 200) {
-            resolve(this.responseText)
-          } else if (this.status >= 400) {
-            reject(this.statusText)
-          }
-        }
+        return this.dispatch(_url, 'GET')
+      } catch (e) {
+        this.interceptors.request.errors.map((fn) => {
+          e = fn(e)
+        })
       }
-      )
     }
 
-    post({ url, data, headers }) {
-      this.xhr = new XMLHttpRequest();
-      return new Promise((resolve, reject) => {
-        this.xhr.open('POST', url)
+    post(url, data, headers) {
+      try {
+        this.xhr = new XMLHttpRequest();
         if (headers) {
           this.setHeaders(headers)
         }
-        this.xhr.send(data)
-        this.xhr.onreadystatechange = function () {
-          if (this.readyState === 4 && this.status === 200) {
-            resolve(this.responseText);
-          } else if (this.status >= 400) {
-            reject(this.statusText)
-          }
-        }
-      })
+        return this.dispatch(url, "POST", data)
+      } catch (e) {
+        this.interceptors.request.errors.map((fn) => {
+          e = fn(e)
+        })
+      }
     }
 
     setHeaders(headers) {
@@ -230,54 +263,83 @@
   // 使用fetch发送请求
   class Http {
     constructor() {
+      function use(normal, error) {
+        normal && this.normals.push(normal)
+        error && this.errors.push(error)
+      }
+
+      this.interceptors = {
+        request: {
+          normals: [],
+          errors: [],
+          use: use
+        },
+        response: {
+          normals: [],
+          errors: [],
+          use: use
+        },
+      }
     }
 
-    get(url, param) {
+    dispatch(url, data) {
       return new Promise(async (resolve, reject) => {
         this.controller = new AbortController()
         this.signal = this.controller.signal
-        if (param) {
-          let str = new URLSearchParams(param).toString()
-          url += "?" + str
-        }
-        await fetch(url, { signal: this.signal }).then(async (res) => {
+        data = Object.assign(data, { signal: this.signal })
+        this.interceptors.request.normals.map((fn) => {
+          data = fn(data)
+        })
+        const _this = this
+        await fetch(url, data).then(async (res) => {
           let result = await res.json()
+          _this.interceptors.response.normals.map((fn) => {
+            result = fn(result)
+          })
           resolve(result)
         }).catch(function (e) {
-          reject(e.message)
+          _this.interceptors.response.errors.map((fn) => {
+            e = fn(e)
+          })
+          reject(e)
         })
       })
     }
 
-    post({ url, headers, data }) {
-      return new Promise(async (resolve, reject) => {
-        this.controller = new AbortController()
-        this.signal = this.controller.signal
+    get(url, param) {
+      try {
+        if (param) {
+          let str = new URLSearchParams(param).toString()
+          url += "?" + str
+        }
+        let promise = this.dispatch(url, { method: 'GET' })
+        return promise
+      } catch (e) {
+        this.interceptors.request.errors.map((fn) => {
+          e = fn(e)
+        })
+      }
+    }
+
+    post(url, data, headers) {
+      try {
         if (headers === undefined) {
           headers = {
             "Content-Type": "application/json"
           }
         }
+        let _data;
         if (data) {
-          let _data;
           if (headers["Content-Type"] === "application/json") {
             _data = JSON.stringify(data)
           }
-          try {
-            await fetch(url,
-              {
-                method: "POST",
-                headers,
-                body: _data,
-                signal: this.signal
-              })
-            let result = await res.json()
-            resolve(result)
-          } catch (e) {
-            reject(e.message)
-          }
         }
-      })
+        return this.dispatch(url, { headers, body: _data, method: "POST" })
+      } catch (e) {
+        this.interceptors.request.errors.map((fn) => {
+          e = fn(e)
+        })
+      }
     }
 
     httpAbort() {
@@ -612,10 +674,11 @@
   }
 
   // 判断浏览器类型
-  const detectDeviceType = () =>
-    /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+  function detectDeviceType() {
+    return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
       navigator.userAgent
     ) ? "Mobile" : "Desktop";
+  }
   //#endregion
 
   //#region 字符串操作
