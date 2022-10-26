@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         dy
 // @namespace    http://tampermonkey.net/
-// @version      0.2.2
+// @version      0.2.3
 // @description  抖音网页视频链接下载!
 // @author       jk小帅
 // @match        https://www.douyin.com/*
@@ -56,7 +56,7 @@
       })
       console.log(set);
       if (set.size === 0) {
-        alert("获取失败")
+        alert("获取图片失败")
         return;
       } else {
         set.forEach((img) => {
@@ -75,7 +75,14 @@
       } else {
         video.pause();
         setTimeout(() => {
-          window.open(src);
+          const date = new Date()
+          let filename = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}_${date.getHours()}_${date.getMinutes()}_${date.getSeconds()}`
+          const a = document.createElement('a')
+          a.href = "https://www.douyin.com/" + src
+          a.download = `${filename}.mp4`
+          document.body.appendChild(a)
+          a.click()
+          a.remove()
         }, 300);
       }
     })
