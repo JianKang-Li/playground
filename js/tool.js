@@ -1046,6 +1046,19 @@
     let px = rem * parseInt(docpx)
     return px
   }
+
+  // html字符转换
+  function Str2Html(str) {
+    return str.replace(/[&<>"']/g, (m) => ({
+      "&": '&amp;',
+      "<": '&lt;',
+      '>': "&gt;",
+      '"': "&quot;",
+      "'": "&#39;",
+      " ": "&nbsp;"
+    }[m]))
+  }
+
   //#endregion
 
   //#region 事件总线
@@ -1226,6 +1239,7 @@
     //#region 转换
     rgbToHex,
     rem2px,
+    Str2Html,
     //#endregion
 
     //#region 函数

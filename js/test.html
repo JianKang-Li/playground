@@ -26,6 +26,9 @@
   <button class="btn" onclick="copy('456')">copy</button>
   <input type="text" name="" id="" class="LK-input" />
   <input type="text" name="" id="ljk" class="LK-input" />
+  <code>
+
+  </code>
   <script src="./tool.js"></script>
   <script>
     const { Copy: copy } = tool
@@ -37,7 +40,12 @@
   </script>
 
 
-
+  <script>
+    const { Str2Html } = tool
+    html = Str2Html('<div><p>"  123"</p></div>')
+    console.log(html);
+    body.innerHTML += html
+  </script>
 
   <script>
     /*  const { XHR, Http } = tool

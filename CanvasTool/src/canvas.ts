@@ -110,6 +110,10 @@ export interface Ellipse {
 
 /* 转换和变形 */
 
+/* 图像 */
+export interface image {
+  url: string;
+}
 /* 保存格式 */
 export interface Format {
   type: "image/png" | "image/ipeg" | "image/webp";
