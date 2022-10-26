@@ -6,6 +6,15 @@
   /**
   * DOM元素操作
   **/
+  // 下载
+  function down(file, filename = '下载', type) {
+    let a = document.createElement('a')
+    a.download = filename + type;
+    a.href = URL.createObjectURL(file)
+    document.body.appendChild(a)
+    a.click()
+    a.remove()
+  }
 
   // 获取dom元素,通过css选择器选择
   function get(option) {
@@ -1059,6 +1068,45 @@
     }[m]))
   }
 
+  // 数据导出为execl
+  /**
+    * @param json
+    * {
+    *   head:['姓名',"性别","年龄"],
+    *   data:[["小名","男",18],["小红","女",18],["小张","男",17]]
+    * }
+    **/
+  function Excel(json) {
+    let str = "<table border='1' style='border-collapse:collapse'>"
+    for (let key in json) {
+      switch (key) {
+        case 'head': {
+          str += '<thead><tr>'
+          for (let i of json['head']) {
+            str += `<td>${i}</td>`
+          }
+          str += "</tr></thead>"
+          break;
+        }
+        case 'data': {
+          str += "<tbody>"
+          for (let data of json['data']) {
+            str += "<tr>"
+            for (let i of data) {
+              str += `<td>${i}</td>`
+            }
+            str += "</tr>"
+          }
+          str += "</tbody>"
+          break;
+        }
+      }
+    }
+    str += "</table>"
+    const blob = new Blob([str], { type: 'application/xlsx' });
+    return blob
+  }
+
   //#endregion
 
   //#region 事件总线
@@ -1240,6 +1288,7 @@
     rgbToHex,
     rem2px,
     Str2Html,
+    Excel,
     //#endregion
 
     //#region 函数
@@ -1295,6 +1344,7 @@
     getViewportOffset,
     getStyle,
     createElement,
+    down,
     //#endregion
 
     //#region ajax
