@@ -74,16 +74,19 @@
         alert('获取url地址失败')
       } else {
         video.pause();
-        setTimeout(() => {
-          const date = new Date()
-          let filename = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}_${date.getHours()}_${date.getMinutes()}_${date.getSeconds()}`
-          const a = document.createElement('a')
-          a.href = "https://www.douyin.com/" + src
-          a.download = `${filename}.mp4`
-          document.body.appendChild(a)
-          a.click()
-          a.remove()
-        }, 300);
+        const date = new Date()
+        let filename = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}_${date.getHours()}_${date.getMinutes()}_${date.getSeconds()}`
+        fetch(src)
+          .then(res => res.blob())
+          .then(blob => {
+            const a = document.createElement("a");
+            const objectUrl = window.URL.createObjectURL(blob);
+            a.download = filename;
+            a.href = objectUrl;
+            a.click();
+            window.URL.revokeObjectURL(objectUrl);
+            a.remove();
+          })
       }
     })
   }
