@@ -1185,6 +1185,7 @@
     }
   }
 
+  // 复制
   function Copy(text) {
     let theClipboard = navigator.clipboard;
 
@@ -1202,6 +1203,7 @@
     }
   }
 
+  // 浏览器类型
   function browserType() {
     const explorer = window.navigator.userAgent.toLowerCase()
     // console.log(explorer);
@@ -1233,6 +1235,32 @@
     } else {
       return 'unknow'
     }
+  }
+
+  // 打印PDF
+  function downPDF(container) {
+    const style = document.createElement('style')
+    style.innerHTML = `@media print {
+      @page {
+        margin: 0;
+      }
+
+      body {
+        margin: 2.54cm 1.91cm;
+      }
+
+      body> :not(${container}) {
+        display: none;
+      }
+    }`
+
+    const div = document.querySelector(container)
+    let old = document.body.innerHTML
+    document.body.innerHTML = ''
+    document.body.appendChild(style)
+    document.body.appendChild(div)
+    window.print()
+    document.body.innerHTML = old
   }
   //#endregion
 
@@ -1278,6 +1306,7 @@
     Notify,
     Copy,
     browserType,
+    downPDF,
     //#endregion
 
     //#region 事件总线

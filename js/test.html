@@ -23,12 +23,18 @@
 </head>
 
 <body>
-  <button class="btn" onclick="copy('456')">copy</button>
+  <button class="btn" onclick="test()">pdf</button>
   <input type="text" name="" id="" class="LK-input" />
   <input type="text" name="" id="ljk" class="LK-input" />
-  <code>
 
-  </code>
+  <div class="print">
+    <p>这是需要下载的内容</p>
+    <p>这是需要下载的内容</p>
+    <p>这是需要下载的内容</p>
+    <p>这是需要下载的内容</p>
+    <p>这是需要下载的内容</p>
+  </div>
+
   <script src="./tool.js"></script>
   <script>
     const { Copy: copy } = tool
@@ -41,10 +47,14 @@
 
 
   <script>
-    const { Str2Html } = tool
+    const { Str2Html, downPDF } = tool
     html = Str2Html('<div><p>"  123"</p></div>')
     console.log(html);
     body.innerHTML += html
+
+    function test() {
+      downPDF('.print')
+    }
   </script>
 
   <script>
