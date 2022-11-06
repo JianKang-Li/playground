@@ -64,7 +64,9 @@
   // 增加选择网址弹出选项
   window.addEventListener('mouseup', () => {
     let url = window.getSelection().toString().trim()
-    if (/^http/.test(url)) {
+    let s = /^http/.test(url)
+    let t = /www.*/.test(url)
+    if (s || t) {
       const body = document.body
       const pop = document.createElement('div')
       pop.className = 'poptext'
@@ -81,6 +83,9 @@
       buttons.appendChild(button2)
       buttons.appendChild(button3)
       button1.addEventListener('click', () => {
+        if (t) {
+          url = "http://" + url
+        }
         window.open(url)
         pop.remove()
       })
