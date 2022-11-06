@@ -50,6 +50,10 @@
   .poptext>div button{
     margin:0.3rem
   }
+
+  .poptext .qx{
+    background-color: #eee;
+  }
 `
 
   const body = document.querySelector("body")
@@ -70,6 +74,7 @@
       const button2 = document.createElement('button')
       button2.innerText = '复制'
       const button3 = document.createElement('button')
+      button3.className = 'qx'
       button3.innerText = '取消'
       const buttons = document.createElement('div')
       buttons.appendChild(button1)
