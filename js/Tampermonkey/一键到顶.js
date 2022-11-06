@@ -64,15 +64,12 @@
     <button id='editable' class="lbtn">网页编辑</button>
     `
   buttons.setAttribute("contenteditable", false)
-  // console.log(buttons)
 
   const body = document.querySelector("body")
 
   body.appendChild(style)
   body.appendChild(buttons)
 
-  // $("body").append(buttons)
-  // $("body").append(style)
   const ljk = document.querySelector("#ljk")
   const bz = document.querySelector("#bz")
   const edit = document.querySelector("#editable")
