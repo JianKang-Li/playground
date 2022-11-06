@@ -53,6 +53,7 @@
 
   .poptext .qx{
     background-color: #eee;
+    color:black
   }
 `
 
