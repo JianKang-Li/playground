@@ -18,7 +18,7 @@
   const style = document.createElement("style")
   style.innerHTML = `
   .poptext {
-    width: max-content;
+    width: fit-content;
     padding: 0.3rem 1rem;
     position: fixed;
     top: 1rem;
@@ -32,6 +32,10 @@
       3px 3px 15px #eee;
       z-index:9999;
     border-radius: 0.3rem;
+    max-width:15rem;
+    text-overflow: ellipsis;
+    white-space:normal;
+    word-break:break-all;
   }
 
   .poptext button {
