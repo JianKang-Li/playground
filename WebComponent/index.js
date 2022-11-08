@@ -1,3 +1,24 @@
+
+/*
+常用的生命周期方法如下:
+
+connectedCallback
+
+当 web component 被添加到 DOM 时，会调用这个回调函数，这个函数只会被执行一次。可以在这个回调函数中完成一些初始化操作，比如更加参数设置组件的样式。
+
+disconnectedCallback
+
+当 web component 从文档 DOM 中删除时执行。
+
+adoptedCallback
+
+当 web component 被移动到新文档时执行。
+
+attributeChangedCallback
+
+被监听的属性发生变化时执行。
+*/
+
 // button
 class myBtn extends HTMLElement {
   constructor() {
