@@ -4,6 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <link rel="shortcut icon" href="../../favicon.ico" type="image/x-icon">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>LK-Color</title>
   <style>
@@ -46,12 +47,18 @@
     .item {
       width: 5rem;
       height: 5rem;
+      border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
       color: #ffffff;
       cursor: pointer;
       margin: 0.5rem;
+      transition: all 0.5s linear;
+    }
+
+    .item:active {
+      transform: scale(0.8);
     }
 
     .conversion {
@@ -127,6 +134,16 @@
 
   <script>
     const colors = [
+      "#1D8FE1",
+      "#22E1FF",
+      "#FFA99F",
+      "#FF719A",
+      "#E2E7ED",
+      "#FFE6FA",
+      "#D7FFFE",
+      '#46aef7',
+      '#a1c4fd',
+      '#c2e9fb',
       "#f3f2f2",
       "#eaecd4",
       "#edeae6",
