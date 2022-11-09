@@ -1109,7 +1109,6 @@
 
   // svg代码转base64
   function svg2base(svg) {
-    let svg = svg;
     return 'data:image/svg+xml;base64,' + window.btoa(svg);
   }
   //#endregion

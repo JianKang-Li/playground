@@ -9,6 +9,8 @@
 
   <!-- 导入Jquery -->
   <!-- <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script> -->
+  <!-- dayjs -->
+  <script src="https://unpkg.com/dayjs@1.8.21/dayjs.min.js"></script>
   <title>Document</title>
   <style>
     dialog {
@@ -33,26 +35,26 @@
     <p>这是需要下载的内容</p>
 
     <p>www.baidu.com</p>
+    <p>hsa.www.baidu</p>
   </div>
 
   <script src="./tool.js"></script>
+  <script src="./LKDay/LDay.js"></script>
   <!-- <script src="./Tampermonkey/链接识别.js"></script> -->
   <script>
-    const { Copy: copy } = tool
-
-    function closes(s) {
-      s.open = false;
-    }
-    const body = document.querySelector('body')
-
-    console.log(/www.*/.test('www.baidu.com'));
+    const date1 = Lday("2022 11 9")
+    const date2 = dayjs("2022 11 9")
+    console.log(date2);
+    console.log(date1.get('ms'));
   </script>
 
 
   <script>
+    const body = document.querySelector('body')
+
     const { Str2Html, downPDF } = tool
     html = Str2Html('<div><p>"  123"</p></div>')
-    console.log(html);
+    // console.log(html);
     body.innerHTML += html
 
     function test() {
