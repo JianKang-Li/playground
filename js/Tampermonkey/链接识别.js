@@ -70,7 +70,7 @@
   window.addEventListener('mouseup', () => {
     let url = window.getSelection().toString().trim()
     let s = /^http/.test(url)
-    let t = /www.*/.test(url)
+    let t = /^www.*/.test(url)
     if (s || t) {
       const body = document.body
       const pop = document.createElement('div')
