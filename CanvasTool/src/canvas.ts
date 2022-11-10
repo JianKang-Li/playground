@@ -17,8 +17,9 @@ export interface Shadow {
 }
 
 /* 绘制样式 */
-export interface Set {
+export interface Setting {
   globalAlpha?: number;
+  imageSmoothing?: boolean;
 }
 
 /* 文本接口 */
@@ -111,9 +112,14 @@ export interface Ellipse {
 /* 转换和变形 */
 
 /* 图像 */
-export interface image {
-  url: string;
+export interface Img {
+  src: string;
+  x?: number;
+  y?: number;
+  width?: number;
+  height?: number;
 }
+
 /* 保存格式 */
 export interface Format {
   type: "image/png" | "image/ipeg" | "image/webp";
@@ -125,6 +131,7 @@ export default class Canvas {
   selector: string;
   canvas: HTMLCanvasElement;
   ctx: CanvasRenderingContext2D;
+  BitMap: any;
 
   constructor(selector: string) {
     this.selector = selector;
@@ -147,8 +154,10 @@ export default class Canvas {
   }
 
   /* 全局设置 */
-  set(setting: Set) {
+  set(setting: Setting) {
     setting.globalAlpha && (this.ctx.globalAlpha = setting.globalAlpha);
+    setting.imageSmoothing &&
+      (this.ctx.imageSmoothingEnabled = setting.imageSmoothing);
   }
 
   /* 设置线条样式 */
@@ -181,6 +190,59 @@ export default class Canvas {
   /* 角度转弧度 */
   deg2rad(deg: number): number {
     return (Math.PI / 180) * deg;
+  }
+
+  /* 画图 */
+  protected createImg(src: string): Promise<HTMLImageElement> {
+    return new Promise((resolve, reject) => {
+      const img = new Image();
+      img.onload = function () {
+        resolve(img);
+      };
+      img.onerror = function (e) {
+        reject(e);
+      };
+      img.src = require("" + src);
+    });
+  }
+
+  /* 返回值为图片的BitMap数据 */
+  async drawImg(img: Img) {
+    this.ctx.beginPath();
+    let x = img.x || 0;
+    let y = img.y || 0;
+    let wid = img.width || 150;
+    let hei = img.height || 200;
+    let _img = await this.createImg(img.src);
+    this.ctx.drawImage(_img, x, y, wid, hei);
+    let data = this.ctx.getImageData(x, y, wid, hei).data;
+    let map = this.getBitMap(wid, hei, data);
+    return map;
+  }
+
+  getPixelAt(
+    x: number,
+    y: number,
+    width: number,
+    pixels: Uint8ClampedArray
+  ): [number, number, number, number] {
+    const i = y * width * 4 + x * 4;
+    return [
+      pixels[i],
+      pixels[i + 1],
+      pixels[i + 2],
+      +(pixels[i + 3] / 255).toFixed(2),
+    ];
+  }
+
+  getBitMap(wid: number, hei: number, data: Uint8ClampedArray) {
+    let map = [];
+    for (let i = 0; i < hei; i++) {
+      for (let j = 0; j < wid; j++) {
+        map.push(this.getPixelAt(j, i, wid, data));
+      }
+    }
+    return map;
   }
 
   /* 画弧 */
@@ -303,7 +365,7 @@ export default class Canvas {
     }
   }
 
-  /* 转换为数据 */
+  /* 转换为图片 */
   SaveAs(format: Format) {
     let url = this.canvas.toDataURL(format.type);
     const oA = document.createElement("a");

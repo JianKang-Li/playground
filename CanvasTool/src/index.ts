@@ -8,6 +8,8 @@ import Canvas, {
   Point,
   Shadow,
   Ellipse,
+  Img,
+  Setting,
 } from "./canvas";
 
 const canvas = new Canvas("canvas");
@@ -145,7 +147,7 @@ let ellipse2: Ellipse = {
   type: "stroke",
 };
 
-canvas.drawEllipse(ellipse2);
+// canvas.drawEllipse(ellipse2);
 
 const btn = document.querySelector("#btn");
 
@@ -154,4 +156,17 @@ function down() {
 }
 btn?.addEventListener("click", () => {
   down();
+});
+
+let img: Img = {
+  src: "./assets/bw.jpeg",
+  x: 0,
+  y: 0,
+  width: 100,
+  height: 300,
+};
+
+canvas.drawImg(img).then((res) => {
+  let data = res;
+  console.log(data);
 });
