@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         链接识别
 // @namespace    http://tampermonkey.net/
-// @version      0.0.5
+// @version      0.0.6
 // @description  链接跳转
 // @author       ljk
 
