@@ -1,19 +1,17 @@
 const path = require('path')
 
 const HtmlWebpackPlugin = require('html-webpack-plugin')
-
-
 const isProduction = process.env.NODE_ENV === "production";
 
 module.exports = {
-  entry: isProduction ? "./src/canvas.ts" : {
+  entry: isProduction ? "./src/LDay.ts" : {
     index: "./src/index.ts",
-    canvas: "./src/canvas.ts"
+    LDay: "./src/LDay.ts"
   },
   output: isProduction ? {
     path: path.resolve(__dirname, "dist"),
-    filename: "Canvas.js",
-    library: "Canvas",// 在全局变量中增加一个library变量
+    filename: "LDay.js",
+    library: "LDay",// 在全局变量中增加一个library变量
     libraryTarget: "umd",
     libraryExport: 'default',
     clean: true,
@@ -27,20 +25,6 @@ module.exports = {
       {
         test: /\.(ts|tsx)$/i,
         loader: "ts-loader",
-        exclude: [path.resolve(__dirname, "node_modules")]
-      },
-      {
-        test: /\.(png|jpe?g|gif|svg)$/,
-        type: "asset",
-        parser: {
-          dataUrlCondition: {
-            maxSize: 10 * 1024, // 小于10kb的图片会被base64处理
-          },
-        },
-        generator: {
-          //输出图片名称 :10代表取前十位hash值
-          filename: 'static/images/[hash:10][ext][query]'
-        }
       },
     ]
   },
