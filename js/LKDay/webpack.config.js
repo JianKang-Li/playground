@@ -35,6 +35,7 @@ module.exports = {
     splitChunks: {
       chunks: 'all',
     },
+    runtimeChunk: isProduction ? undefined : 'single'
   },
   plugins: [
     new HtmlWebpackPlugin({

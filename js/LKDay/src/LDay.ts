@@ -9,9 +9,11 @@ class Day {
   private $s: number;
   private $t: number;
   private $L: boolean;
+  protected Months: Array<number>;
 
-  constructor(date?: string) {
+  constructor(date?: string | number) {
     this.date = date ? new Date(date) : new Date();
+    this.Months = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
     this.$Y = this.date.getFullYear();
     this.$M = this.date.getMonth() + 1;
     this.$D = this.date.getDate();
@@ -25,6 +27,10 @@ class Day {
 
   /* 判断是否是闰年 */
   isLeap() {
+    let flag = (this.$Y % 4 === 0 && this.$Y !== 0) || this.$Y % 400 === 0;
+    if (flag) {
+      this.Months[1] = 29;
+    }
     return (this.$Y % 4 === 0 && this.$Y !== 0) || this.$Y % 400 === 0;
   }
 
@@ -54,9 +60,8 @@ class Day {
   /* 一年内第几天 */
   dayOfYear() {
     let num = this.$D;
-    const Months = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
     for (let i = 0; i < this.$M - 1; i++) {
-      num += Months[i];
+      num += this.Months[i];
     }
     if (this.$L) {
       num++;
@@ -70,6 +75,123 @@ class Day {
     const diff = this.$t - firstday.getTime();
     const days = Math.ceil(diff / 86400000);
     return Math.ceil(days / 7) + 1;
+  }
+
+  /* 加 */
+  add(num: number, key: string): Day {
+    let Y = this.$Y;
+    let M = this.$M;
+    let t = this.$t;
+    let nums;
+    const keys = ["y", "year", "M", "month"];
+    let flag = keys.includes(key);
+    function addT(num: number) {
+      let res = t + num;
+      return res;
+    }
+    switch (key) {
+      case "y":
+      case "year":
+        Y = Y + num;
+        break;
+      case "M":
+      case "month":
+        M = M + num;
+        if (M > 12) {
+          Y = Y + Math.floor(M / 12);
+          M = M % 12;
+        }
+        break;
+      case "d":
+      case "date":
+        nums = num * 1000 * 60 * 60 * 24;
+        break;
+      case "h":
+      case "hour":
+        nums = num * 1000 * 60 * 60;
+        break;
+      case "m":
+      case "minute":
+        nums = num * 1000 * 60;
+        break;
+      case "s":
+      case "second":
+        nums = num * 1000;
+        break;
+      case "ms":
+      case "millisecond":
+        break;
+    }
+    let para = flag
+      ? `${Y} ${M} ${this.$D} ${this.$h}:${this.$m}:${this.$s}`
+      : addT(nums as number);
+
+    return new Day(para);
+  }
+
+  /* 减 */
+  subtract(num: number, key: string): Day {
+    let Y = this.$Y;
+    let M = this.$M;
+    let t = this.$t;
+    let nums;
+    const keys = ["y", "year", "M", "month"];
+    let flag = keys.includes(key);
+    function subT(num: number) {
+      let res = t - num;
+      return res;
+    }
+    switch (key) {
+      case "y":
+      case "year":
+        Y = Y - num;
+        break;
+      case "M":
+      case "month":
+        M = M - num;
+        if (M < 0) {
+          let n = Math.floor(M / 12);
+          Y = Y + n;
+          M = Math.abs(n) * 12 + M;
+          if (M === 0) {
+            Y = Y - 1;
+            M = 12;
+          }
+        } else if (M === 0) {
+          Y = Y - 1;
+          M = 12;
+        }
+        break;
+      case "d":
+      case "date":
+        nums = num * 1000 * 60 * 60 * 24;
+        break;
+      case "h":
+      case "hour":
+        nums = num * 1000 * 60 * 60;
+        break;
+      case "m":
+      case "minute":
+        nums = num * 1000 * 60;
+        break;
+      case "s":
+      case "second":
+        nums = num * 1000;
+        break;
+      case "ms":
+      case "millisecond":
+        break;
+    }
+    let para = flag
+      ? `${Y} ${M} ${this.$D} ${this.$h}:${this.$m}:${this.$s}`
+      : subT(nums as number);
+
+    return new Day(para);
+  }
+
+  /* 获取本月天数 */
+  daysInMonth() {
+    return this.Months[this.$M - 1];
   }
 
   /* 获取数据 */
@@ -101,8 +223,22 @@ class Day {
       case "day":
         return this.$W;
       default:
-        return this.date;
+        return this[key as keyof Day];
     }
+  }
+
+  /* 格式转换 */
+  toArray() {
+    // 年 月 日 时 分 秒 星期几(从0开始)
+    return [
+      this.$Y,
+      this.$M,
+      this.$D,
+      this.$h,
+      this.$m,
+      this.$s,
+      this.$W === 0 ? 7 : this.$W,
+    ];
   }
 }
 
