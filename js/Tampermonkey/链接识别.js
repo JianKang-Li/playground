@@ -48,7 +48,7 @@
   }
 
   .poptext>div{
-    display:flex,
+    display:flex;
     align-items: center;
   }
   .poptext>div button{
