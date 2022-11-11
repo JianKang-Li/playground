@@ -30,7 +30,7 @@ export interface Text {
   x: number;
   y: number;
   maxWidth?: number;
-  color?: string;
+  color?: string | CanvasGradient;
   textAlign?: CanvasTextAlign;
   direction?: "ltr" | "rtl" | "inherit";
   textBaseline?:
@@ -48,7 +48,7 @@ export interface Rect {
   y: number;
   height: number;
   width: number;
-  color?: string;
+  color?: string | CanvasGradient;
   type?: "fill" | "stroke";
 }
 
@@ -57,6 +57,7 @@ export interface Point {
   x: number;
   y: number;
   size?: number;
+  color?: string;
 }
 
 /* 三角形接口 */
@@ -65,7 +66,7 @@ export interface Triangle {
   point2: Point;
   point3: Point;
   type?: "stroke" | "fill";
-  color?: string;
+  color?: string | CanvasGradient;
 }
 
 /* 图形 */
@@ -73,7 +74,7 @@ export interface Graph {
   points: Point[];
   close?: boolean;
   type?: "fill" | "stroke";
-  color?: string;
+  color?: string | CanvasGradient;
 }
 
 /* 弧线 */
@@ -85,7 +86,7 @@ export interface Arc {
   radius: number;
   anticlockwise?: boolean;
   type?: "stroke" | "fill";
-  color?: string;
+  color?: string | CanvasGradient;
 }
 
 /* 椭圆 */
@@ -99,7 +100,7 @@ export interface Ellipse {
   end: number;
   anticlockwise?: boolean;
   type?: "fill" | "stroke";
-  color?: string;
+  color?: string | CanvasGradient;
 }
 
 /* 贝塞尔曲线 */
@@ -108,6 +109,21 @@ export interface Ellipse {
 /* 三次贝塞尔曲线 */
 
 /* 渐变 */
+export interface GradientColor {
+  position: number;
+  color: string;
+}
+
+export interface Gradient {
+  type: "line" | "radial";
+  colors: Array<GradientColor>;
+  x1: number;
+  y1: number;
+  x2: number;
+  y2: number;
+  r1?: number;
+  r2?: number;
+}
 
 /* 转换和变形 */
 
@@ -182,9 +198,70 @@ export default class Canvas {
     shadow.offsetY && (this.ctx.shadowOffsetY = shadow.offsetY);
   }
 
+  /* 保存状态 */
+  save(): void {
+    this.ctx.save();
+  }
+
   /* 重置 */
   restore(): void {
     this.ctx.restore();
+  }
+
+  /* 渐变 */
+  getGradient(gra: Gradient) {
+    let grad = null;
+    if (gra.type === "line") {
+      grad = this.ctx.createLinearGradient(gra.x1, gra.y1, gra.x2, gra.y2);
+    } else {
+      if (gra.r1 && gra.r2) {
+        grad = this.ctx.createRadialGradient(
+          gra.x1,
+          gra.y1,
+          gra.r1,
+          gra.x2,
+          gra.y2,
+          gra.r2
+        );
+      } else {
+        throw new Error("Missing parameter r1 or r2");
+      }
+    }
+    for (let i = 0; i < gra.colors.length; i++) {
+      const color = gra.colors[i];
+      grad.addColorStop(color.position, color.color);
+    }
+    return grad;
+  }
+
+  /* 设置转换默认旋转点为0,0使用transform进行设置
+  scale方法可以缩放画布的水平和垂直的单位
+  */
+  setTran(tran: string, ...args: number[]) {
+    let key = tran;
+    switch (key) {
+      case "rotate":
+        this.ctx.rotate(this.deg2rad(args[0]));
+        return;
+      case "translate":
+        this.ctx.translate(args[0], args[1]);
+        return;
+      case "scale":
+        this.ctx.scale(args[0], args[1]);
+        return;
+      case "transform":
+        this.ctx.transform(
+          args[0],
+          args[1],
+          args[2],
+          args[3],
+          args[4],
+          args[5]
+        );
+        return;
+      default:
+        throw new Error(`Cant't identify ${key}`);
+    }
   }
 
   /* 角度转弧度 */
@@ -235,7 +312,7 @@ export default class Canvas {
     ];
   }
 
-  getBitMap(wid: number, hei: number, data: Uint8ClampedArray) {
+  protected getBitMap(wid: number, hei: number, data: Uint8ClampedArray) {
     let map = [];
     for (let i = 0; i < hei; i++) {
       for (let j = 0; j < wid; j++) {
@@ -290,6 +367,7 @@ export default class Canvas {
   /* 点默认1px */
   drawPoint(point: Point): void {
     this.ctx.beginPath();
+    point.color && (this.ctx.fillStyle = point.color);
     this.ctx.arc(
       point.x,
       point.y,

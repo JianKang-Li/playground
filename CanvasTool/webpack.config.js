@@ -51,6 +51,7 @@ module.exports = {
     splitChunks: {
       chunks: 'all',
     },
+    runtimeChunk: 'single'
   },
   plugins: [
     new HtmlWebpackPlugin({

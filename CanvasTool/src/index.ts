@@ -68,8 +68,8 @@ let arc: Arc = {
   start: 90,
   end: 270,
   anticlockwise: false,
-  color: "blue",
-  type: "fill",
+  color: "black",
+  type: "stroke",
 };
 
 let shadow: Shadow = {
@@ -160,13 +160,70 @@ btn?.addEventListener("click", () => {
 
 let img: Img = {
   src: "./assets/bw.jpeg",
-  x: 0,
+  x: 400,
   y: 0,
-  width: 100,
+  width: 150,
   height: 300,
 };
 
-canvas.drawImg(img).then((res) => {
+/* canvas.drawImg(img).then((res) => {
   let data = res;
-  console.log(data);
+  // console.log(data);
+}); */
+
+let grad = canvas.getGradient({
+  type: "radial",
+  x1: 45,
+  y1: 45,
+  r1: 10,
+  x2: 52,
+  y2: 50,
+  r2: 30,
+  colors: [
+    { position: 0, color: "#F4F201" },
+    { position: 0.8, color: "#E4C700" },
+    { position: 1, color: "rgba(228,199,0,0)" },
+  ],
 });
+
+canvas.drawPoint({ x: 300, y: 300, size: 2, color: "blue" });
+
+canvas.drawEllipse(ellipse2);
+
+canvas.setLine({ lineWidth: 2, dash: [2, 3] });
+
+canvas.drawArc(arc);
+
+canvas.setTran("scale", 1, 1);
+
+canvas.drawArc({
+  x: 150,
+  y: 100,
+  radius: 50,
+  start: 90,
+  end: 270,
+  anticlockwise: false,
+  color: "black",
+  type: "fill",
+});
+
+canvas.drawImg(img);
+
+canvas.restore();
+
+canvas.drawText({
+  text: "ljk",
+  x: 300,
+  y: 100,
+});
+
+canvas.drawRect({
+  x: 0,
+  y: 0,
+  type: "fill",
+  width: 200,
+  height: 200,
+  color: grad,
+});
+
+
