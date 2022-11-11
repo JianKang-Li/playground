@@ -45,14 +45,12 @@
     padding: 0.3rem 1rem;
     border-radius: 0.3rem;
     color: #fff;
+    margin:0 0.3rem;
   }
 
-  .poptext div{
+  .poptext>div{
     display:flex;
-    align-items: center;
-  }
-  .poptext div button{
-    margin:0.3rem
+    margin-top:1rem;
   }
 
   .poptext .qx{
