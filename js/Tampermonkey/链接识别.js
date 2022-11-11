@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         链接识别
 // @namespace    http://tampermonkey.net/
-// @version      0.0.6
+// @version      0.0.7
 // @description  链接跳转
 // @author       ljk
 
@@ -47,11 +47,11 @@
     color: #fff;
   }
 
-  .poptext>div{
+  .poptext div{
     display:flex;
     align-items: center;
   }
-  .poptext>div button{
+  .poptext div button{
     margin:0.3rem
   }
 
