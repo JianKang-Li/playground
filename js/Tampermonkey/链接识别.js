@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         链接识别
 // @namespace    http://tampermonkey.net/
-// @version      0.0.7
+// @version      0.0.8
 // @description  链接跳转
 // @author       ljk
 
@@ -18,7 +18,7 @@
   const style = document.createElement("style")
   style.innerHTML = `
   .poptext {
-    width: fit-content;
+    width: 15rem;
     padding: 0.3rem 1rem;
     position: fixed;
     top: 1rem;
@@ -27,12 +27,13 @@
     background-color: #fff;
     display: flex;
     align-items: center;
+    justify-content: center;
     flex-direction: column;
     box-shadow: 2px 2px 10px #eee,
       3px 3px 15px #eee;
       z-index:9999;
     border-radius: 0.3rem;
-    max-width:15rem;
+    max-width:20rem;
     text-overflow: ellipsis;
     white-space:normal;
     word-break:break-all;
@@ -49,8 +50,11 @@
   }
 
   .poptext>div{
+    width:15rem;
     display:flex;
     margin-top:1rem;
+    align-items: center;
+    justify-content: center;
   }
 
   .poptext .qx{
