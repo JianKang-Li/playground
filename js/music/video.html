@@ -4,7 +4,7 @@
 <head>
   <meta charset=utf-8>
   <link rel="stylesheet" href="https://jiankang-li.github.io/Style-library/dist/static/css/index.css">
-  <script src="https://jiankang-li.github.io/Style-library/dist/static/js/index.js" defer></script>
+  <script src="https://jiankang-li.github.io/Style-library/dist/static/js/index.js"></script>
   <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
   <style>
     html,
@@ -29,8 +29,11 @@
 
     #video {
       width: fit-content;
-      height: 80vh;
+      max-width: 80vw;
+      height: fit-content;
+      max-height: 80vh;
       padding-bottom: 1rem;
+      cursor: pointer;
     }
 
     .btn {
@@ -40,7 +43,9 @@
     @media screen and (max-width:1000px) {
       #video {
         width: fit-content;
-        height: 80vh;
+        max-width: 80vw;
+        height: fit-content;
+        max-height: 70vh;
       }
     }
   </style>
@@ -68,6 +73,7 @@
     let arr = []
     let total = 0
     const video = document.querySelector("#video")
+
     async function getVideos() {
       let url = BaseUrl + "page=" + page + "&size=" + size
       try {
@@ -85,6 +91,16 @@
     //   console.log(e.target.videoWidth);
     //   console.log(e.target.videoHeight);
     // })
+    function debounce(fun, delay) {
+      return function (args) {
+        let that = this
+        let _args = args
+        clearTimeout(fun.id)
+        fun.id = setTimeout(function () {
+          fun.call(that, _args)
+        }, delay)
+      }
+    }
 
 
     function nextV() {
@@ -94,15 +110,20 @@
         getVideos()
         current = 0
       } else if (current > total) {
-        $Tip.error("到底了！")
+        let warn2 = debounce(test1, 500)
+        warn2()
       }
       video.src = arr[current].playurl
-      console.log("page:" + page, "current:" + current)
+      // console.log("page:" + page, "current:" + current)
     }
+    function test() { $Tip.error("到顶了") }
+    function test1() { $Tip.error("到底了") }
 
     function preV() {
       if (current === 0 && page === 0) {
-        $Tip.error("到顶了！")
+
+        let warn1 = debounce(test, 500)
+        warn1()
       }
       else {
         if (current > 0) {
@@ -114,7 +135,7 @@
         }
         video.src = arr[current].playurl
       }
-      console.log("page:" + page, "current:" + current)
+      // console.log("page:" + page, "current:" + current)
     }
 
     window.addEventListener("load", () => {
@@ -133,6 +154,14 @@
         removeEventListener("ended", video)
       }
     })
+
+    window.onmousewheel = document.onmousewheel = (e) => {
+      if (e.wheelDelta < 0) {
+        nextV()
+      } else if (e.wheelDelta > 0) {
+        preV()
+      }
+    }
   </script>
 </body>
 
