@@ -5,12 +5,41 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Font Awesome CSS-->
+  <link href="https://cdn.bootcss.com/font-awesome/5.13.0/css/all.css" rel="stylesheet">
   <title>WebComponents</title>
   <script src="./index.js"></script>
+
+  <style>
+    a {
+      text-decoration: none;
+      padding: 0.1rem 0;
+    }
+
+    a:link,
+    a:visited {
+      color: rgb(70, 174, 247);
+    }
+
+    a:hover {
+      color: rgba(70, 174, 247, 0.8);
+      border-bottom: 1px solid rgba(70, 174, 247, 0.8);
+    }
+  </style>
 </head>
 
 <body>
-  <my-btn><span slot="content">test</span></my-btn>
+  <lk-btn>
+    <i class="fa fa-address-card" slot="bicon"></i>
+    <span slot="content">驾驶员</span>
+  </lk-btn>
+
+  <lk-input></lk-input>
+
+  <lk-link>
+    <i class="fa fa-address-card" slot="bicon"></i>
+    <a href="#" slot="link">链接</a>
+  </lk-link>
 </body>
 
 </html>
