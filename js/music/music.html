@@ -204,6 +204,7 @@
     let time = null
     const songs = []
     let Current = 0
+    let CS = null
 
     function playF() {
       let flag = Array.from(controlDom.classList).some(function (item) {
@@ -245,34 +246,42 @@
 
     async function getSong() {
       try {
-        let url = "http://music.cyrilstudio.top/playlist/track/all?id=3778678"
+        let url = "https://api.uomg.com/api/rand.music?sort=热歌榜&format=json"
         let res = await fetch(url)
         let result = await res.json()
+        CS = result.data
+        let oldUrl = CS.url
+        CS.url = oldUrl + '.mp3'
+        // console.log(result);
         // console.log(result.songs)
-        let songList = result.songs
-        songList.forEach(ele => {
-          songs.push({
-            name: ele.name,
-            picurl: ele.al.picUrl,
-            artistsname: ele.ar[0].name,
-            url: getSongUrl(ele.id),
-          })
-        });
+        // let songList = result.songs
+        // songList.forEach(ele => {
+        //   songs.push({
+        //     name: ele.name,
+        //     picurl: ele.al.picUrl,
+        //     artistsname: ele.ar[0].name,
+        //     url: getSongUrl(ele.id),
+        //   })
+        // });
+        songs.push(CS)
         // console.log(songs)
       } catch (e) {
-        console.log(e)
+        console.log("getSong1" + e)
       }
     }
 
-    function nextSong() {
+    async function nextSong() {
       if (Current < songs.length - 1) {
         Current = Current + 1;
         PlaySong()
       } else if (Current === songs.length - 1) {
-        alert("到歌单底部了，将自动重头开始")
-        Current = 0
+        //  alert("到歌单底部了，将自动重头开始")
+        //  Current = 0
+        await getSong()
+        Current = Current + 1
         PlaySong()
       }
+      // console.log(songs);
     }
 
     function prevSong() {
@@ -286,6 +295,8 @@
 
     function PlaySong() {
       let CurrentSong = songs[Current]
+      // let CurrentSong = CS
+      // console.log(CS);
       let pic = CurrentSong.picurl;
       name.innerText = CurrentSong.artistsname
       song.innerText = CurrentSong.name
@@ -295,16 +306,31 @@
       myAudio.src = CurrentSong.url
       alarm.style["background"] = `url(${pic}) no-repeat center center`
       alarm.style["background-size"] = `cover`
-      if (flag) {
-        myAudio.play()
+      try {
+        if (flag) {
+          myAudio.play()
+        }
+      } catch (e) {
+        console.log("播放器", e);
       }
     }
 
     getSong().then(res => {
       PlaySong()
     }, err => {
-      console.log(err)
+      console.log("getSong", err)
     })
+
+
+    window.onerror = function (msg, url, l) {
+      var txt = "There was an error on this page.\n\n"
+      txt += "Error: " + msg + "\n"
+      txt += "URL: " + url + "\n"
+      txt += "Line: " + l + "\n\n"
+      // txt += "Click OK to continue.\n\n"
+      // alert(txt)
+      return true
+    } //如果返回值为 false，则在控制台 (JavaScript console) 中显示错误消息。反之则不会
   </script>
 </body>
 
