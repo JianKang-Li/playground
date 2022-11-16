@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Youtube优化
 // @namespace    http://tampermonkey.net/
-// @version      0.0.1
+// @version      0.0.2
 // @description  youtube优化
 // @author       ljk
 
@@ -20,14 +20,28 @@
       return document.querySelectorAll("a")
     }
 
+    function selectV(tag) {
+      const arr = Array.from(document.querySelectorAll(`${tag} a`))
+      return arr
+    }
+
     function Open(e, href) {
+      const video = document.querySelector('video')
+      video.pause()
       e.preventDefault();
       e.stopPropagation()
       window.open(href)
       return false
     }
 
-    const list = selectAll()
+    const exclude = ["#guide-content", 'ytd-mini-guide-renderer', "ytd-masthead"]
+    let excludes = []
+    for (let i = 0; i < exclude.length; i++) {
+      let items = selectV(exclude[i])
+      excludes = excludes.concat(items)
+    }
+
+    const list = Array.from(selectAll()).filter(item => !excludes.includes(item))
 
     list.forEach((item) => {
       item.setAttribute('target', "_blank")
@@ -36,6 +50,7 @@
         Open(e, url)
       }
     })
+
   }
 
   function debounce(fn, delay) {
@@ -89,7 +104,7 @@
     window.addEventListener('scroll', () => {
       dekidnap()
       let actions = document.querySelector("#actions")
-      if (!document.querySelector('#lkdown')) {
+      if (!document.querySelector('#lkdown') && /watch\?/.test(window.location.href)) {
         actions.insertBefore(button, actions.firstChild)
       }
     })
