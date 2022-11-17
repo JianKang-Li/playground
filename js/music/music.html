@@ -7,149 +7,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="shortcut icon" href="https://github.com/JianKang-Li/Pics/blob/main/imgs/favicon.ico?raw=true"
     type="image/x-icon">
+  <link rel="stylesheet" href="index.css">
+  <script src="index.js" defer></script>
   <title>音乐播放器</title>
-  <style>
-    html,
-    body {
-      width: 100%;
-      height: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin: 0;
-      padding: 0;
-      background: skyblue;
-      background: url("https://api.dujin.org/bing/1920.php") no-repeat center center;
-      background-size: cover;
-    }
-
-    #myAudio {
-      display: none;
-    }
-
-    .player {
-      position: relative;
-    }
-
-    .control {
-      width: 20rem;
-      height: 5rem;
-      background: #fff;
-      border-radius: 1rem;
-      position: relative;
-      box-shadow: 0 20px 20px 5px rgba(132, 132, 132, 0.2);
-    }
-
-    .alarm {
-      width: 5rem;
-      height: 5rem;
-      border-radius: 50%;
-      position: absolute;
-      top: -1.5rem;
-      left: 1.5rem;
-      background: #000;
-      background-size: cover;
-    }
-
-    .alarm.active {
-      animation: rotates 3s infinite linear;
-    }
-
-    @keyframes rotates {
-      from {
-        transform: rotate(0);
-      }
-
-      to {
-        transform: rotate(360deg);
-      }
-    }
-
-
-    .alarm::after {
-      content: "";
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      width: 1rem;
-      height: 1rem;
-      border-radius: 50%;
-      background: #fff;
-      z-index: 1;
-      transform: translate(-50%, -50%);
-    }
-
-    .buts {
-      display: flex;
-      justify-content: flex-end;
-      height: 5rem;
-      padding: 0 1rem;
-    }
-
-    .prev,
-    .play,
-    .next {
-      width: 4rem;
-      height: auto;
-      border-radius: 1rem;
-      cursor: pointer;
-      text-align: center;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .play {
-      background: url("https://github.com/JianKang-Li/Pics/blob/main/imgs/play.png?raw=true") no-repeat center center;
-      background-size: 1rem;
-    }
-
-
-    .control.active .play {
-      background: url("https://github.com/JianKang-Li/Pics/blob/main/imgs/stop.png?raw=true") no-repeat center center;
-    }
-
-    .info {
-      opacity: 0;
-      position: absolute;
-      height: 6rem;
-      top: -5rem;
-      left: 1rem;
-      right: 1rem;
-      background: rgba(255, 255, 255, 0.5);
-      padding: 0.5rem 1rem 0.5rem 5.5rem;
-      border-radius: 1rem;
-    }
-
-    .info.active {
-      opacity: 1;
-    }
-
-    .song {
-      font-size: 1rem;
-      color: #222;
-      margin-bottom: 0.5rem;
-    }
-
-    .name {
-      font-size: 12px;
-      margin-bottom: 0.5rem;
-    }
-
-    .progress-bar {
-      height: 0.2rem;
-      width: 100%;
-      background: #ddd;
-      border-radius: 1rem;
-    }
-
-    .bar {
-      width: 0%;
-      height: 0.2rem;
-      background: red;
-      border-radius: 1rem;
-    }
-  </style>
 </head>
 
 <body>
@@ -159,12 +19,13 @@
 
   <div class="player">
     <!-- 播放信息 -->
-    <div class="info" id="info">
+    <div class="info active" id="info">
       <div class="song" id="song">未知</div>
       <div class="name" id="name">未知</div>
       <div class="progress-bar">
         <div class="bar"></div>
       </div>
+      <span id="time">0:00/0:00</span>
     </div>
     <!-- 播放信息end -->
     <!-- 控件 -->
@@ -177,7 +38,21 @@
               d="M206 865h-38c-30.928 0-56-25.072-56-56V216c0-30.928 25.072-56 56-56h38c30.928 0 56 25.072 56 56v593c0 30.928-25.072 56-56 56z m168.686-386.191l422.304-303.4c32.294-23.201 77.282-15.83 100.484 16.464A72 72 0 0 1 911 233.883v559.053c0 39.764-32.235 72-72 72a72 72 0 0 1-39.95-12.1L376.288 570.877c-25.73-17.16-32.677-51.93-15.517-77.66a56 56 0 0 1 13.915-14.408z"
               p-id="2033"></path>
           </svg></div>
-        <div id="play" class="play" accesskey="k"></div>
+        <div id="play" class="play" accesskey="k">
+          <svg id="play1" t="1668694833540" class="icon" viewBox="0 0 1024 1024" version="1.1"
+            xmlns="http://www.w3.org/2000/svg" p-id="2673" width="18" height="18">
+            <path
+              d="M755.552 495.36l-384-296.672a31.936 31.936 0 0 0-51.552 25.28v593.504a32 32 0 0 0 51.552 25.28l384-296.704a32 32 0 0 0 0-50.656"
+              p-id="2674"></path>
+          </svg>
+
+          <svg id="play2" t="1668694922739" class="icon" viewBox="0 0 1024 1024" version="1.1"
+            xmlns="http://www.w3.org/2000/svg" p-id="3589" width="18" height="18">
+            <path
+              d="M426.666667 138.666667v746.666666a53.393333 53.393333 0 0 1-53.333334 53.333334H266.666667a53.393333 53.393333 0 0 1-53.333334-53.333334V138.666667a53.393333 53.393333 0 0 1 53.333334-53.333334h106.666666a53.393333 53.393333 0 0 1 53.333334 53.333334z m330.666666-53.333334H650.666667a53.393333 53.393333 0 0 0-53.333334 53.333334v746.666666a53.393333 53.393333 0 0 0 53.333334 53.333334h106.666666a53.393333 53.393333 0 0 0 53.333334-53.333334V138.666667a53.393333 53.393333 0 0 0-53.333334-53.333334z"
+              fill="#231815" p-id="3590"></path>
+          </svg>
+        </div>
         <div class="next" onclick="nextSong()" accesskey="l"><svg t="1662086045865" class="icon" viewBox="0 0 1024 1024"
             version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2810" width="18" height="18">
             <path
@@ -187,150 +62,13 @@
       </div>
     </div>
     <!-- 控件end -->
+    <!-- 歌词 -->
   </div>
-
+  <div class="lyric">
+    <p class="glass" id="lyric">暂无歌词</p>
+  </div>
   <script>
-    let playBut = document.querySelector("#play")
-    let myAudio = document.querySelector("#myAudio")
-    let controlDom = document.querySelector("#control")
-    let infoBar = document.querySelector("#info")
-    let bar = document.querySelector(".bar")
-    let song = document.querySelector("#song")
-    let name = document.querySelector("#name")
-    let alarm = document.querySelector(".alarm")
-    let source = document.querySelector("#myAudioSource")
-    playBut.addEventListener("click", playF)
 
-    let time = null
-    const songs = []
-    let Current = 0
-    let CS = null
-
-    function playF() {
-      let flag = Array.from(controlDom.classList).some(function (item) {
-        return item === "active"
-      })
-      if (flag) {
-        controlDom.classList.remove("active")
-        infoBar.classList.remove("active")
-        alarm.classList.remove("active")
-        myAudio.pause()
-        clearInterval(time)
-      } else {
-        controlDom.classList.add("active")
-        infoBar.classList.add("active")
-        alarm.classList.add("active")
-        myAudio.play()
-
-        // 更新bar宽度
-        time = setInterval(() => {
-          let wid = update(myAudio.currentTime, myAudio.duration)
-          // console.log(wid)
-          bar.style.width = wid + "%"
-        }, 1000)
-      }
-    }
-
-    function update(current, duration) {
-      return current / duration * 100
-    }
-
-    myAudio.addEventListener("ended", function () {
-      nextSong()
-    })
-
-
-    function getSongUrl(id) {
-      return `https://music.163.com/song/media/outer/url?id=${id}.mp3`
-    }
-
-    async function getSong() {
-      try {
-        let url = "https://api.uomg.com/api/rand.music?sort=热歌榜&format=json"
-        let res = await fetch(url)
-        let result = await res.json()
-        CS = result.data
-        let oldUrl = CS.url
-        CS.url = oldUrl + '.mp3'
-        // console.log(result);
-        // console.log(result.songs)
-        // let songList = result.songs
-        // songList.forEach(ele => {
-        //   songs.push({
-        //     name: ele.name,
-        //     picurl: ele.al.picUrl,
-        //     artistsname: ele.ar[0].name,
-        //     url: getSongUrl(ele.id),
-        //   })
-        // });
-        songs.push(CS)
-        // console.log(songs)
-      } catch (e) {
-        console.log("getSong1" + e)
-      }
-    }
-
-    async function nextSong() {
-      if (Current < songs.length - 1) {
-        Current = Current + 1;
-        PlaySong()
-      } else if (Current === songs.length - 1) {
-        //  alert("到歌单底部了，将自动重头开始")
-        //  Current = 0
-        await getSong()
-        Current = Current + 1
-        PlaySong()
-      }
-      // console.log(songs);
-    }
-
-    function prevSong() {
-      if (Current === 0) {
-        alert("已经到歌单头部了哟！")
-        return;
-      }
-      Current = Current - 1;
-      PlaySong()
-    }
-
-    function PlaySong() {
-      let CurrentSong = songs[Current]
-      // let CurrentSong = CS
-      // console.log(CS);
-      let pic = CurrentSong.picurl;
-      name.innerText = CurrentSong.artistsname
-      song.innerText = CurrentSong.name
-      let flag = Array.from(controlDom.classList).some(function (item) {
-        return item === "active"
-      })
-      myAudio.src = CurrentSong.url
-      alarm.style["background"] = `url(${pic}) no-repeat center center`
-      alarm.style["background-size"] = `cover`
-      try {
-        if (flag) {
-          myAudio.play()
-        }
-      } catch (e) {
-        console.log("播放器", e);
-      }
-    }
-
-    getSong().then(res => {
-      PlaySong()
-    }, err => {
-      console.log("getSong", err)
-    })
-
-
-    window.onerror = function (msg, url, l) {
-      var txt = "There was an error on this page.\n\n"
-      txt += "Error: " + msg + "\n"
-      txt += "URL: " + url + "\n"
-      txt += "Line: " + l + "\n\n"
-      // txt += "Click OK to continue.\n\n"
-      // alert(txt)
-      return true
-    } //如果返回值为 false，则在控制台 (JavaScript console) 中显示错误消息。反之则不会
   </script>
 </body>
 

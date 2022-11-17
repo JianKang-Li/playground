@@ -21,6 +21,7 @@
 // @match      *juejin.cn/*
 // @match      *.cnblogs.com/*
 // @match      *.youtube.com/*
+// @match      *.uniapp.dcloud.net.cn/*
 
 // @match      *biquys.com/*
 // @grant        none
