@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Youtube优化
 // @namespace    http://tampermonkey.net/
-// @version      0.0.2
+// @version      0.0.3
 // @description  youtube优化
 // @author       ljk
 
@@ -34,7 +34,7 @@
       return false
     }
 
-    const exclude = ["#guide-content", 'ytd-mini-guide-renderer', "ytd-masthead"]
+    const exclude = ['#sections > ytd-guide-section-renderer:nth-child(1)', "ytd-masthead", "#items > ytd-guide-collapsible-entry-renderer", "#content > ytd-mini-guide-renderer"]
     let excludes = []
     for (let i = 0; i < exclude.length; i++) {
       let items = selectV(exclude[i])
