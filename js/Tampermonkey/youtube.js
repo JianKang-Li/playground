@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Youtube优化
 // @namespace    http://tampermonkey.net/
-// @version      0.0.3
+// @version      0.0.4
 // @description  youtube优化
 // @author       ljk
 
@@ -69,9 +69,9 @@
     // 等待加载完成劫持
     setTimeout(() => {
       kidnap()
-    }, 2000)
+    }, 1000)
     // 页面滚动劫持
-    const dekidnap = debounce(kidnap, 500)
+    const dekidnap = debounce(kidnap, 300)
 
     /* 实现视频按钮添加下载 */
     const button = document.createElement('button')
