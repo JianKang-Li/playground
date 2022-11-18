@@ -14,21 +14,12 @@ const play2 = document.querySelector('#play2')
 const lyricDom = document.querySelector("#lyric")
 let lyricText = null
 playBut.addEventListener("click", playF)
+let billboard = "热歌榜"
 
 let time = null
 const songs = []
 let Current = 0
 let CS = null
-
-barContainer.addEventListener('click', (e) => {
-  // console.log(e.offsetX);
-  let ewidth = e.offsetX
-  let barwidth = barContainer.getBoundingClientRect().width
-  let percent = (ewidth / barwidth)
-  let currentTime = percent * Math.floor(myAudio.duration)
-  myAudio.currentTime = currentTime
-  update(currentTime, myAudio.duration)
-})
 
 function playF() {
   let flag = Array.from(controlDom.classList).some(function (item) {
@@ -57,12 +48,14 @@ function playF() {
   }
 }
 
+/* 秒转分:秒 */
 function sec2Min(num) {
   let m = Math.floor(num / 60)
   let s = Math.floor(num % 60)
   return `${m}:${s.toString().padStart(2, '0')}`
 }
 
+/* 更新页面信息 */
 function update(current, duration) {
   timeSpan.innerText = `${sec2Min(current)}/${sec2Min(duration)}`
   let wid = current / duration * 100
@@ -81,7 +74,7 @@ function update(current, duration) {
   lyricText['-1'] = `${song.innerText}`
   // console.log(key);
   key = key || '-1'
-  lyricDom.innerText = lyricText[key]
+  lyricDom.innerText = " " + lyricText[key]
 }
 
 myAudio.addEventListener("ended", function () {
@@ -93,6 +86,7 @@ function getSongUrl(id) {
   return `https://music.163.com/song/media/outer/url?id=${id}.mp3`
 }
 
+/* 获取歌词 */
 async function getSongLyric(id) {
   try {
     let ajax = await fetch(`https://music.cyrilstudio.top/lyric?id=${id}`)
@@ -111,9 +105,10 @@ function getID(url) {
   return id
 }
 
+/* 获取歌曲 */
 async function getSong() {
   try {
-    let url = "https://api.uomg.com/api/rand.music?sort=热歌榜&format=json"
+    let url = `https://api.uomg.com/api/rand.music?sort=${billboard}&format=json`
     let res = await fetch(url)
     let result = await res.json()
     CS = result.data
@@ -154,6 +149,7 @@ async function getSong() {
   }
 }
 
+/* 下一首 */
 async function nextSong() {
   if (Current < songs.length - 1) {
     Current = Current + 1;
@@ -168,6 +164,7 @@ async function nextSong() {
   // console.log(songs);
 }
 
+/* 上一首 */
 function prevSong() {
   if (Current === 0) {
     alert("已经到歌单头部了哟！")
@@ -197,6 +194,7 @@ function PlaySong() {
 
 }
 
+// 初始化
 getSong().then(res => {
   PlaySong()
 }, err => {
@@ -208,6 +206,29 @@ myAudio.addEventListener('loadeddata', function () {
     update(myAudio.currentTime, myAudio.duration)
   }
 });
+
+// 歌单选择
+const billboards = ["热歌榜", "新歌榜", "飙升榜", "抖音榜", "电音榜"]
+function select(e) {
+  const num = parseInt(e.target.value)
+  billboard = billboards[num]
+  // console.log(billboard);
+}
+
+const radios = document.querySelector(".radios")
+radios.addEventListener('click', (e) => {
+  select(e)
+})
+
+barContainer.addEventListener('click', (e) => {
+  // console.log(e.offsetX);
+  let ewidth = e.offsetX
+  let barwidth = barContainer.getBoundingClientRect().width
+  let percent = (ewidth / barwidth)
+  let currentTime = percent * Math.floor(myAudio.duration)
+  myAudio.currentTime = currentTime
+  update(currentTime, myAudio.duration)
+})
 
 
 window.onerror = function (msg, url, l) {

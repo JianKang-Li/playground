@@ -1,14 +1,20 @@
+* {
+  box-sizing: border-box;
+}
+
 html,
 body {
   width: 100%;
   height: 100%;
+}
+
+body {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   margin: 0;
   padding: 0;
-  background: skyblue;
   background: url("https://api.dujin.org/bing/1920.php") no-repeat center center;
   background-size: cover;
 }
@@ -19,7 +25,7 @@ body {
 
 .player {
   position: relative;
-  min-width: 25rem;
+  min-width: fit-content;
 }
 
 .control {
@@ -75,7 +81,6 @@ body {
   display: flex;
   justify-content: center;
   height: 5rem;
-  padding: 0 1rem;
 }
 
 .prev,
@@ -90,6 +95,10 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.prev {
+  margin-left: 6rem;
 }
 
 .play {
@@ -156,15 +165,29 @@ body {
 }
 
 .lyric {
-  width: 30rem;
+  width: 100vmin;
 }
 
 .glass {
   text-align: center;
   width: 100%;
   background: rgba(255, 255, 255, 0.5);
-  padding: 0.3rem 0;
   font-size: 1.3rem;
   border-radius: 0.5rem;
   padding: 0.3rem 1rem;
+}
+
+.radios {
+  color: #fff;
+}
+
+@media screen and (max-width:800) {
+  .lyric {
+    width: 100vmin;
+    min-width: 100vmin;
+  }
+
+  .player {
+    width: 20vmin;
+  }
 }
