@@ -231,12 +231,9 @@ barContainer.addEventListener('click', (e) => {
 })
 
 
-window.onerror = function (msg, url, l) {
-  var txt = "There was an error on this page.\n\n"
-  txt += "Error: " + msg + "\n"
-  txt += "URL: " + url + "\n"
-  txt += "Line: " + l + "\n\n"
-  // txt += "Click OK to continue.\n\n"
-  // alert(txt)
-  return false
-} //如果返回值为 false，则在控制台 (JavaScript console) 中显示错误消息。反之则不会
+window.addEventListener('unhandledrejection', function (event) {
+  let txt = ''
+  txt += "原因" + event.reason //获取到catch的err的原因(内容) 与控制台报错一致
+  txt += "promise" + event.promise //获取到未处理的promise对象
+  console.log(txt);
+})
