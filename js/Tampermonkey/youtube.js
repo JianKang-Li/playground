@@ -69,7 +69,7 @@
     // 等待加载完成劫持
     setTimeout(() => {
       kidnap()
-    }, 1000)
+    }, 500)
     // 页面滚动劫持
     const dekidnap = debounce(kidnap, 300)
 
