@@ -1,13 +1,13 @@
-let playBut = document.querySelector("#play")
-let myAudio = document.querySelector("#myAudio")
-let controlDom = document.querySelector("#control")
-let infoBar = document.querySelector("#info")
+const playBut = document.querySelector("#play")
+const myAudio = document.querySelector("#myAudio")
+const controlDom = document.querySelector("#control")
+const infoBar = document.querySelector("#info")
 const barContainer = document.querySelector(".progress-bar")
-let bar = document.querySelector(".bar")
-let song = document.querySelector("#song")
-let name = document.querySelector("#name")
-let alarm = document.querySelector(".alarm")
-let source = document.querySelector("#myAudioSource")
+const bar = document.querySelector(".bar")
+const song = document.querySelector("#song")
+const name = document.querySelector("#name")
+const alarm = document.querySelector(".alarm")
+const source = document.querySelector("#myAudioSource")
 const timeSpan = document.querySelector('#time')
 const play1 = document.querySelector('#play1')
 const play2 = document.querySelector('#play2')
@@ -19,7 +19,6 @@ let billboard = "热歌榜"
 let time = null
 const songs = []
 let Current = 0
-let CS = null
 
 function playF() {
   let flag = Array.from(controlDom.classList).some(function (item) {
@@ -111,6 +110,7 @@ async function getSong() {
     let url = `https://api.uomg.com/api/rand.music?sort=${billboard}&format=json`
     let res = await fetch(url)
     let result = await res.json()
+    let CS = null
     CS = result.data
     let oldUrl = CS.url
     CS.url = oldUrl + '.mp3'
