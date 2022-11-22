@@ -35,7 +35,7 @@ baseUrl = "http://www.t-nani.co.kr/"
 
 times = getTime()
 # 图片保存位置
-path = "F:\\python\\test\\img\\" + times
+path = "D:\\Frontend\\python\\test\\img\\" + times
 
 
 # 移除js、css
