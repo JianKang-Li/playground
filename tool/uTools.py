@@ -1,9 +1,11 @@
 import sys
 
 from PyQt5.QtCore import QStringListModel
-from PyQt5.QtWidgets import QApplication, QMainWindow, QSystemTrayIcon
+from PyQt5.QtGui import QIcon
+
+from PyQt5.QtWidgets import QApplication, QMainWindow, QAction, QMenu, QSystemTrayIcon, qApp
 from tool import Ui_MainWindow
-from os import system, chdir,popen
+from os import system, chdir, popen
 import re
 
 
@@ -21,7 +23,7 @@ def get_install_list():
                 each_key = winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, f'{i}\\{winreg.EnumKey(key, j)}')
                 DisplayName = winreg.QueryValueEx(each_key, 'DisplayName')[0]
                 path = winreg.QueryValueEx(each_key, 'DisplayIcon')[0]
-                res=re.compile(r'.*\.ico$')
+                res = re.compile(r'.*\.ico$')
                 if (path != "" and not res.match(path)):
                     obj["name"] = DisplayName
                     obj["path"] = path
@@ -35,6 +37,11 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
     def __init__(self, parent=None):
         super(MyMainWindow, self).__init__(parent)
         self.setupUi(self)
+        self.ui = Ui_MainWindow
+        self.setTrayIcon()
+        self.init_ui()
+
+    def init_ui(self):
         self.registry.clicked.connect(self.openRegistry)
         self.control.clicked.connect(self.openControl)
         self.exec.clicked.connect(self.execCmd)
@@ -46,13 +53,35 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
         self.lists = get_install_list()
         for i in self.lists:
             self.items.append(i['name'])
-        # print(self.lists)
         self.listModel = QStringListModel()
         self.listModel.setStringList(self.items)
         self.result.setModel(self.listModel)
         self.result.clicked.connect(self.clicked)
-        self.tray = QSystemTrayIcon()
 
+    def setTrayIcon(self):
+        # 初始化菜单单项
+        self.quitAppAction = QAction("退出")
+        # 菜单单项连接方法
+        self.quitAppAction.triggered.connect(self.quitApp)
+        # 初始化菜单列表
+        self.trayIconMenu = QMenu()
+        self.trayIconMenu.addAction(self.quitAppAction)
+        # 构建菜单UI
+        self.trayIcon = QSystemTrayIcon()
+        self.trayIcon.setContextMenu(self.trayIconMenu)
+        self.trayIcon.setIcon(QIcon("./favicon.ico"))
+        # 左键双击打开主界面
+        self.trayIcon.activated[QSystemTrayIcon.ActivationReason].connect(self.openMainWindow)
+        # 允许托盘菜单显示
+        self.trayIcon.show()
+
+    def openMainWindow(self, reason):
+        if reason == QSystemTrayIcon.DoubleClick:
+            self.showNormal()
+            self.activateWindow()
+
+    def quitApp(self):
+        qApp.quit()
 
     def clicked(self, qModel):
         index = qModel.row()
@@ -65,13 +94,13 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
         self.openSoft(item['path'])
 
     def openSoft(self, path):
-        path=path.replace('"',"")
-        arr=path.split("\\")
-        exe=arr[len(arr)-1]
+        path = path.replace('"', "")
+        arr = path.split("\\")
+        exe = arr[len(arr) - 1]
         pa = path[0:len(path) - len(exe) - 1]
-        arr1=exe.split(",")
-        exe=arr1[0]
-        b=None
+        arr1 = exe.split(",")
+        exe = arr1[0]
+        b = None
         try:
             chdir(pa)
             b = popen('"{}"'.format(exe))
@@ -113,5 +142,7 @@ if __name__ == "__main__":
     app = QApplication(sys.argv)
     myWin = MyMainWindow()
     myWin.setWindowTitle('工具箱')
+    myWin.setWindowIcon(QIcon("./favicon.ico"))
     myWin.show()
+    app.setQuitOnLastWindowClosed(False)
     sys.exit(app.exec_())
