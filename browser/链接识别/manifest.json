@@ -1,0 +1,28 @@
+{
+  "manifest_version": 3,
+  "name": "网页链接识别",
+  "version": "0.0.1",
+  "description": "网页链接识别",
+  "action": {
+    "default_icon": "Ljk.png"
+  },
+  "icons": {
+    "128": "Ljk.png",
+    "48": "Ljk.png",
+    "16": "Ljk.png"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*/*"
+      ],
+      "exclude_matches": [
+        "*://127.0.0.1:*/*",
+        "*://localhost:*/*"
+      ],
+      "js": [
+        "index.js"
+      ]
+    }
+  ]
+}
