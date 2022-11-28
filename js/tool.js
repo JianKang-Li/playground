@@ -16,6 +16,14 @@
     a.remove()
   }
 
+  // 获取全局对象
+  function getGlobal() {
+    if (typeof self !== 'undefined') { return self; }
+    if (typeof window !== 'undefined') { return window; }
+    if (typeof global !== 'undefined') { return global; }
+    throw new Error('unable to locate global object');
+  };
+
   // 获取dom元素,通过css选择器选择
   function get(option) {
     let doms = document.querySelectorAll(option)
@@ -1379,6 +1387,7 @@
     getStyle,
     createElement,
     down,
+    getGlobal,
     //#endregion
 
     //#region ajax
