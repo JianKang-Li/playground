@@ -3,10 +3,11 @@ import sys
 from PyQt5.QtCore import QStringListModel
 from PyQt5.QtGui import QIcon
 
-from PyQt5.QtWidgets import QApplication, QMainWindow, QAction, QMenu, QSystemTrayIcon, qApp
+from PyQt5.QtWidgets import QApplication, QMainWindow, QAction, QMenu, QSystemTrayIcon, qApp, QFileDialog, QMessageBox
 from tool import Ui_MainWindow
-from os import system, chdir, popen
+from os import system, chdir, popen, listdir, rename, path
 import re
+# 打包 pyinstaller -F -w -i favicon.ico uTools.py
 
 
 def get_install_list():
@@ -57,6 +58,38 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
         self.listModel.setStringList(self.items)
         self.result.setModel(self.listModel)
         self.result.clicked.connect(self.clicked)
+        self.check_folder.clicked.connect(self.getFilePath)
+        self.renamebtn.clicked.connect(self.rename)
+        self.path = None
+
+    def show_message(self, message):
+        QMessageBox.about(self, "tip", message)
+
+    def getFilePath(self):
+        directory = QFileDialog.getExistingDirectory(None, "选取文件夹", "c:/")  # 起始路径
+        if directory != '':
+            self.path = directory
+            self.floder.setText(directory)
+
+    def rename(self):
+        if (self.path != None):
+            if (self.filename.text() != ''):
+                filename = self.filename.text()
+                num = 1
+                # 遍历更改文件名
+                for file in listdir(self.path):
+                    arr = file.split('.')
+                    extend = arr[len(arr) - 1]
+                    if len(arr) >= 2:
+                        rename(path.join(self.path, file),
+                               path.join(self.path, filename.format(n=str(num)) + '.' + extend))
+
+                        num += 1
+                self.show_message("重命名完成")
+            else:
+                self.show_message("请输入示例文件名使用{n}为重命名默认字段")
+        else:
+            self.show_message('请先选择文件夹')
 
     def setTrayIcon(self):
         # 初始化菜单单项
