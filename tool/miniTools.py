@@ -7,7 +7,7 @@ from PyQt5.QtWidgets import QApplication, QMainWindow, QAction, QMenu, QSystemTr
 from tool import Ui_MainWindow
 from os import system, chdir, popen, listdir, rename, path
 import re
-# 打包 pyinstaller -F -w -i favicon.ico uTools.py
+# 打包 pyinstaller -F -w -i favicon.ico miniTools.py
 
 
 def get_install_list():
