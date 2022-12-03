@@ -7,6 +7,8 @@ from PyQt5.QtWidgets import QApplication, QMainWindow, QAction, QMenu, QSystemTr
 from tool import Ui_MainWindow
 from os import system, chdir, popen, listdir, rename, path
 import re
+
+
 # 打包 pyinstaller -F -w -i favicon.ico miniTools.py
 
 
@@ -61,6 +63,20 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
         self.check_folder.clicked.connect(self.getFilePath)
         self.renamebtn.clicked.connect(self.rename)
         self.path = None
+        self.replace.clicked.connect(self.rep)
+
+    def rep(self):
+        if (self.Text.toPlainText() != '' and self.replaceText.text() != ""):
+            text = self.Text.toPlainText()
+            reps = self.replaceText.text()
+            word = self.words.text()
+            if (reps == "\\n"):
+                result = text.replace('\n', word)
+            else:
+                result = text.replace(reps, word)
+            self.Text.setPlainText(result)
+        else:
+            self.show_message("请确保文本和待替换文本不为空")
 
     def show_message(self, message):
         QMessageBox.about(self, "tip", message)
