@@ -72,6 +72,8 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
             word = self.words.text()
             if (reps == "\\n"):
                 result = text.replace('\n', word)
+            elif (word == "\\n"):
+                result = text.replace(reps, "\n")
             else:
                 result = text.replace(reps, word)
             self.Text.setPlainText(result)
