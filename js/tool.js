@@ -1293,6 +1293,27 @@
     window.print()
     document.body.innerHTML = old
   }
+
+  // 多标签页通信
+  function sendMsg(type, payload) {
+    localStorage.setItem("@@" + type, JSON.stringify({
+      payload,
+      temp: Date.now()
+    }))
+  }
+
+  function listenMsg(handler) {
+    const storageHandler = e => {
+      const data = JSON.parse(e.newValue)
+      handler(e.key.substring(2), data.payload)
+    }
+
+    window.addEventListener('storage', storageHandler)
+    return () => {
+      window.removeEventListener('storage', storageHandler)
+    }
+  }
+
   //#endregion
 
   //#region 简单响应式Solid.js
@@ -1338,6 +1359,8 @@
     Copy,
     browserType,
     downPDF,
+    sendMsg,
+    listenMsg,
     //#endregion
 
     //#region 事件总线
