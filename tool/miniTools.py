@@ -1,5 +1,4 @@
 import sys
-
 from PyQt5.QtCore import QStringListModel
 from PyQt5.QtGui import QIcon
 
@@ -7,6 +6,7 @@ from PyQt5.QtWidgets import QApplication, QMainWindow, QAction, QMenu, QSystemTr
 from tool import Ui_MainWindow
 from os import system, chdir, popen, listdir, rename, path
 import re
+import win32api
 
 
 # 打包 pyinstaller -F -w -i favicon.ico miniTools.py
@@ -18,6 +18,7 @@ def get_install_list():
     # 需要遍历的两个注册表
     sub_key = [r'SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall',
                r'SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall']
+
     for i in sub_key:
         key = winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, i)
         for j in range(winreg.QueryInfoKey(key)[0]):
@@ -33,7 +34,16 @@ def get_install_list():
                     result.append(obj)
             except WindowsError:
                 pass
-    return result
+    key = winreg.OpenKey(winreg.HKEY_CURRENT_USER,
+                         r'Software\Microsoft\Windows\CurrentVersion\Explorer\Shell Folders')
+    desk = winreg.QueryValueEx(key, "Desktop")[0]
+    for item in listdir(desk):
+        obj = {}
+        if (re.search(r".lnk", item) != None):
+            obj['name'] = item
+            obj['path'] = desk + "\\" + item
+            result.append(obj)
+    return [result, desk]
 
 
 class MyMainWindow(QMainWindow, Ui_MainWindow):
@@ -53,9 +63,10 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
         self.command.clicked.connect(self.openCmd)
         self.server.clicked.connect(self.openServe)
         self.items = []
-        self.lists = get_install_list()
+        self.lists = get_install_list()[0]
         for i in self.lists:
             self.items.append(i['name'])
+        self.desktop = get_install_list()[1]
         self.listModel = QStringListModel()
         self.listModel.setStringList(self.items)
         self.result.setModel(self.listModel)
@@ -146,17 +157,20 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 
     def openSoft(self, path):
         path = path.replace('"', "")
-        arr = path.split("\\")
-        exe = arr[len(arr) - 1]
-        pa = path[0:len(path) - len(exe) - 1]
-        arr1 = exe.split(",")
-        exe = arr1[0]
-        b = None
-        try:
-            chdir(pa)
-            b = popen('"{}"'.format(exe))
-        except Exception as e:
-            b.close()
+        if (re.search(r'lnk', path) != None):
+            win32api.ShellExecute(0, 'open',path, '', '', 1)
+        else:
+            arr = path.split("\\")
+            exe = arr[len(arr) - 1]
+            pa = path[0:len(path) - len(exe) - 1]
+            arr1 = exe.split(",")
+            exe = arr1[0]
+            b = None
+            try:
+                chdir(pa)
+                b = popen('"{}"'.format(exe))
+            except Exception as e:
+                b.close()
 
     def openServe(self):
         system('start /B services.msc')
