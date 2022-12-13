@@ -57,7 +57,7 @@
   // 增加选择网址弹出选项
   window.addEventListener('mouseup', () => {
     let url = window.getSelection().toString().trim()
-    let s = /^http/.test(url)
+    let s = /^http(s)?:\/\//.test(url)
     let t = /^(?=^.{3,255}$)[a-zA-Z0-9][-a-zA-Z0-9]{0,62}(\.[a-zA-Z0-9][-a-zA-Z0-9]{0,62})+$/.test(url);
     if (s || t) {
       const body = document.body
