@@ -58,7 +58,7 @@
   window.addEventListener('mouseup', () => {
     let url = window.getSelection().toString().trim()
     let s = /^http/.test(url)
-    let t = /^www.*/.test(url)
+    let t = /^(?=^.{3,255}$)[a-zA-Z0-9][-a-zA-Z0-9]{0,62}(\.[a-zA-Z0-9][-a-zA-Z0-9]{0,62})+$/.test(url);
     if (s || t) {
       const body = document.body
       const pop = document.createElement('div')
@@ -77,7 +77,7 @@
       buttons.appendChild(button3)
       button1.addEventListener('click', () => {
         if (t) {
-          url = "http://" + url
+          url = 'http://' + url
         }
         window.open(url)
         pop.remove()
