@@ -88,7 +88,7 @@ function getSongUrl(id) {
 /* 获取歌词 */
 async function getSongLyric(id) {
   try {
-    let ajax = await fetch(`https://music.cyrilstudio.top/lyric?id=${id}`)
+    let ajax = await fetch(`https://netease-cloud-music-njd5bd96c-jiankang-li.vercel.app/lyric?id=${id}`)
     let result = await ajax.json()
     let lyric = result.lrc.lyric
     // console.log(lyric);
