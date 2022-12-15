@@ -23,15 +23,15 @@
     position: absolute;
     z-index: 9999;
     background:#70a1ff;
-    border-radius: 1rem;
+    border-radius: 16px;
     width: max-content;
     height:max-content;
-    padding:0.3rem;
+    padding:4.8px;
     display:none;
   }
 
   .sbtn {
-    padding: 0.3em 0.5em;
+    padding: 4.8px 8px;
     border: 0;
     cursor: pointer;
     margin-left:0;
