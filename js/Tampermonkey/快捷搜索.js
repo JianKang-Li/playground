@@ -51,7 +51,7 @@
   const body = document.querySelector("body")
   let flag = 0
   let keyword = ''
-  let btns = ['百度', 'github', '微博', '掘金', 'CSDN', 'stackoverflow']
+  let btns = ['复制', '百度', 'github', '微博', '掘金', 'CSDN', 'stackoverflow']
   let searchUrl = ['https://www.baidu.com/s?wd=', 'https://github.com/search?q=',
     'https://s.weibo.com/weibo?q=', 'https://juejin.cn/search?query=',
     'https://so.csdn.net/so/search?q=', 'https://stackoverflow.com/search?q=']
@@ -63,8 +63,24 @@
     button.innerText = btn
     buttons.appendChild(button)
     button.addEventListener('click', () => {
-      window.open(searchUrl[index] + keyword)
-
+      if (index === 0) {
+        let theClipboard = navigator.clipboard;
+        if (theClipboard) {
+          let promise = theClipboard.writeText(keyword)
+        } else {
+          // 兼容不支持clipboard
+          let copyInput = document.createElement('input');//创建input元素
+          document.body.appendChild(copyInput);//向页面底部追加输入框
+          copyInput.setAttribute('value', keyword);//添加属性，将url赋值给input元素的value属性
+          copyInput.select();//选择input元素
+          document.execCommand("Copy");//执行复制命令
+          copyInput.remove();//删除动态创建的节点
+        }
+        buttons.style.display = 'none'
+        flag = 0
+      } else {
+        window.open(searchUrl[index - 1] + keyword)
+      }
     })
   })
 
