@@ -75,6 +75,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
         self.renamebtn.clicked.connect(self.rename)
         self.path = None
         self.replace.clicked.connect(self.rep)
+        self.screenshots.clicked.connect(self.shots)
 
     def rep(self):
         if (self.Text.toPlainText() != '' and self.replaceText.text() != ""):
@@ -190,6 +191,9 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
     def openCmd(self):
         system('start cmd')
 
+    def shots(self):
+        system('start snippingtool')
+
     def execCmd(self):
         try:
             app = re.compile(self.search.text(), re.I)
@@ -206,7 +210,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     myWin = MyMainWindow()
-    myWin.setWindowTitle('工具箱')
+    myWin.setWindowTitle('miniTools')
     myWin.setWindowIcon(QIcon("./favicon.ico"))
     myWin.show()
     app.setQuitOnLastWindowClosed(False)
