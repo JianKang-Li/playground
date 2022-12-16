@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         dy
 // @namespace    http://tampermonkey.net/
-// @version      0.2.4
+// @version      0.2.5
 // @description  抖音网页视频链接下载!
 // @author       jk小帅
 // @match        https://www.douyin.com/*
@@ -15,12 +15,12 @@
 
   const button1 = document.createElement('button')
   button1.setAttribute('id', 'dy0')
-  button1.setAttribute('style', 'padding:0.3rem 0.5rem;background-color:#161722;color:#ffff;outline:none;position: fixed;left:2rem;bottom:9.5rem;z-index:99999')
+  button1.setAttribute('style', 'cursor: pointer;padding:0.3rem 0.5rem;background-color:#161722;color:#ffff;outline:none;position: fixed;left:2rem;bottom:9.5rem;z-index:99999')
   button1.innerText = '视频下载'
 
   const button2 = document.createElement('button')
   button2.setAttribute('id', 'dy1')
-  button2.setAttribute('style', 'padding:0.3rem 0.5rem;background-color:#161722;color:#ffff;outline:none;position: fixed;left:2rem;bottom:6rem;z-index:99999')
+  button2.setAttribute('style', 'cursor: pointer;padding:0.3rem 0.5rem;background-color:#161722;color:#ffff;outline:none;position: fixed;left:2rem;bottom:6rem;z-index:99999')
   button2.innerText = '图片下载\n(需开启弹出式权限)'
 
   window.onload = () => {
@@ -35,14 +35,37 @@
     dy1.addEventListener('click', function () {
       const videos = document.querySelectorAll('video')
       const len = videos.length
-      let video = len === 1 ? videos[0] : len === 3 ? videos[1] : videos[0]
+      let video;
+      let index = 1
+      switch (len) {
+        case 1: {
+          video = videos[0];
+          index = 0
+          break;
+        }
+        case 2: {
+          video = videos[1];
+          index = 1
+          break;
+        }
+        case 3: {
+          video = videos[1];
+          index = 1
+          break;
+        }
+        case 4: {
+          video = videos[3]
+          index = 3
+          break;
+        }
+      }
       video.pause()
       let imgs;
       if (location.href.indexOf("user") !== -1) {
         imgs = document.querySelectorAll('.swiper-container .swiper-wrapper img')
       } else {
         try {
-          imgs = document.querySelectorAll(".swiper-wrapper")[1].getElementsByTagName('img')
+          imgs = document.querySelectorAll(".swiper-wrapper")[index].getElementsByTagName('img')
         } catch {
           alert('没有图片')
           return;
@@ -54,7 +77,7 @@
       imgs.forEach((item) => {
         set.add(item.src)
       })
-      console.log(set);
+      // console.log(set);
       if (set.size === 0) {
         alert("获取图片失败")
         return;
@@ -68,7 +91,25 @@
     dy0.addEventListener('click', function () {
       const videos = document.querySelectorAll('video')
       const len = videos.length
-      let video = len === 1 ? videos[0] : len === 3 ? videos[1] : videos[0]
+      let video;
+      switch (len) {
+        case 1: {
+          video = videos[0];
+          break;
+        }
+        case 2: {
+          video = videos[1];
+          break;
+        }
+        case 3: {
+          video = videos[1];
+          break;
+        }
+        case 4: {
+          video = videos[3]
+          break;
+        }
+      }
       let src = video.firstChild.src;
       if (!src) {
         alert('获取url地址失败')
