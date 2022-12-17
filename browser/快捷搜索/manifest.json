@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
-  "name": "网页链接识别",
+  "name": "快捷搜索",
   "version": "0.0.1",
-  "description": "网页链接识别",
+  "description": "快捷搜索",
   "action": {
     "default_icon": "Ljk.png"
   },
