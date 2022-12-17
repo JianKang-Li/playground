@@ -7,6 +7,11 @@ from tkinter import messagebox
 
 # 打包 pyinstaller -F -w  Countdown.py
 
+def thread_it(func, *time):
+    t = threading.Thread(target=func, args=time)
+    t.start()  # 启动
+
+
 class Tk:
     def __init__(self):
         # 调用Tk()创建主窗口
@@ -41,8 +46,7 @@ class Tk:
         arr = text.split(':')
         self.time = int(arr[0]) * 60 + int(arr[1])
         self.root.update()
-        t = threading.Thread(target=self.QueryWindow(self.time))
-        t.start()
+        thread_it(self.QueryWindow, self.time)
 
 
 if __name__ == '__main__':
