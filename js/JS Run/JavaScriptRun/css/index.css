@@ -1,0 +1,91 @@
+body,
+html {
+	height: 100%;
+}
+
+body {
+	display: flex;
+	align-items: center;
+	justify-content: flex-start;
+	flex-direction: column;
+	margin: 0;
+	padding: 0;
+	background: url("https://api.dujin.org/bing/1920.php");
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-color: black;
+}
+
+header {
+	color: #fff;
+}
+
+.controls {
+	width: 80%;
+	margin-bottom: 2%;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+.container {
+	width: 80%;
+	height: fit-content;
+}
+
+textarea {
+	width: 100%;
+	height: 10rem;
+	font-size: 1rem;
+	padding: 0.3rem;
+	font-weight: bold;
+	resize: none;
+}
+
+textarea:focus {
+	outline: none;
+}
+
+
+.tipContainer {
+	width: 100%;
+	position: fixed;
+	top: 0;
+	left: 0;
+	padding: 1rem 0;
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+	align-items: center;
+}
+
+.tip {
+	margin-top: 0.3rem;
+	width: fit-content;
+	padding: 0.3rem 1rem;
+	background-color: #22E1FF;
+	border-radius: 0.3rem;
+}
+
+.btn {
+	border: none;
+	padding: 0.5rem 1rem;
+	border-radius: 0.3rem;
+	color: #fff;
+	background-color: #22E1FF;
+}
+
+.btn-danger {
+	background-color: #F13A57;
+}
+
+.btn-success {
+	background-color: #47AF52;
+}
+
+@media screen and (max-height:500px) {
+	textarea {
+		height: 7rem;
+	}
+}
