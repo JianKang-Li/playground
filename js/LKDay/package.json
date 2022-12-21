@@ -2,7 +2,7 @@
   "name": "lkday",
   "version": "0.0.1",
   "description": "简单的Dayjs",
-  "main": "index.js",
+  "main": "dist/dayjs",
   "scripts": {
     "dev": "cross-env NODE_ENV=development webpack serve",
     "build": "cross-env NODE_ENV=production webpack"

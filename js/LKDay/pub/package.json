@@ -1,0 +1,15 @@
+{
+  "name": "lkday",
+  "version": "0.0.1",
+  "description": "简单的Dayjs",
+  "main": "LDay.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "day",
+    "time"
+  ],
+  "author": "ljk",
+  "license": "ISC"
+}
