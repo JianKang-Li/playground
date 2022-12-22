@@ -32,3 +32,12 @@
 
 + toArray
 转换成数组
+
+## 浏览器使用
+
+```html
+<script src="https://cdn.jsdelivr.net/npm/lday@0.0.1-beta/LDay.js"></script>
+<script>
+    console.log(LDay());
+  </script>
+```
