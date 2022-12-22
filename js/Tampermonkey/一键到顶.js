@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         一键到顶
 // @namespace    http://tampermonkey.net/
-// @version      0.1.25
+// @version      0.1.26
 // @description  页面到顶
 // @author       ljk
 
@@ -24,6 +24,8 @@
 // @match      *.uniapp.dcloud.net.cn/*
 
 // @match      *biquys.com/*
+
+// @exclude    *player.bilibili*
 // @grant        none
 // @license      GPL
 // ==/UserScript==
