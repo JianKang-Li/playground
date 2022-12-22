@@ -1,7 +1,7 @@
 {
-  "name": "lkday",
-  "version": "0.0.1",
-  "description": "简单的Dayjs",
+  "name": "lday",
+  "version": "0.0.1-beta",
+  "description": "简化的自定义时间库",
   "main": "LDay.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
