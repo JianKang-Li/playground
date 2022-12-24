@@ -67,7 +67,7 @@
         buttons.style.display = 'none'
         flag = 0
       } else if (index === 0) {
-        window.open(keyword)
+        window.open("//" + keyword)
       }
       else {
         window.open(searchUrl[index - 2] + keyword)
