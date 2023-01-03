@@ -19,25 +19,31 @@ class Tk:
         # 设置窗口大小:宽x高,注,此处不能为 "*",必须使用 "x",设置位置用'+'
         self.curWidth = self.root.winfo_screenwidth()
         self.curHeight = self.root.winfo_screenheight()
-        self.root.geometry('390x100+%d+%d' % ((self.curWidth - 390) / 2, (self.curHeight - 100) / 2))
+        self.root.geometry('390x150+%d+%d' % ((self.curWidth - 390) / 2, (self.curHeight - 100) / 2))
         # 事件绑定，增加控件
         self.setup()
 
     def setup(self):
         self.btnStart = tk.Button(self.root, command=self.selectStart)
-        self.btnStart['text'] = '原始文件夹'
+        self.btnStart['text'] = '源文件夹'
         self.btnStart.grid(row=1, column=0, pady='5px', padx='15px')
         self.btnEnd = tk.Button(self.root, command=self.selectEnd)
-        self.btnEnd['text'] = '备份到'
+        self.btnEnd['text'] = '目标文件夹'
         self.btnEnd.grid(row=1, column=1, pady='5px', padx='15px')
         self.btnBackup = tk.Button(self.root, command=self.thread_it)
         self.btnBackup['text'] = '备份'
-        self.btnBackup.grid(row=1, column=2, padx='15px', pady='5px')
+        self.btnBackup.grid(row=1, column=2, padx='10px', pady='5px')
         self.autoBackup = tk.Button(self.root, command=self.autoBackup)
         self.autoBackup['text'] = '加入自动备份'
-        self.autoBackup.grid(row=1, column=3, padx='15px', pady='5px')
-        self.text = tk.Entry(self.root, width=40)
+        self.autoBackup.grid(row=1, column=3, padx='10px', pady='5px')
+        self.text = tk.Entry(self.root, width=50)
         self.text.grid(row=2, columnspan=4, pady='2px', padx='5px')
+        self.Shear = tk.Button(self.root, command=self.shearFile)
+        self.Shear['text'] = '剪切'
+        self.Shear.grid(row=3, column=0, padx='10px', pady='5px')
+        self.addShear = tk.Button(self.root, command=self.addShearFile)
+        self.addShear['text'] = '加入自动剪切'
+        self.addShear.grid(row=3, column=1, padx='5px', pady='5px')
         self.startPath = ''
         self.end = ''
         try:
@@ -59,10 +65,7 @@ class Tk:
         self.text.insert('end', self.end)
 
     def Backup(self):
-        try:
-            self.file = open('auto.txt', 'r', encoding='utf-8')
-        except:
-            self.file = None
+        self.file = open('auto.txt', 'r', encoding='utf-8')
         if ((self.startPath != '' and self.end != '') or self.file != None):
             if (self.startPath != '' and self.end != '' and self.text.get() != ''):
                 files = os.path.exists(self.end)
@@ -86,11 +89,14 @@ class Tk:
                         start = arr[0]
                         end = arr[1]
                         files = os.path.exists(end)
+                        path = os.path.exists(end[0:2])
                         if (files):
                             shutil.rmtree(end)
                             shutil.copytree(start, end)
-                        else:
+                        elif path:
                             shutil.copytree(start, end)
+                        else:
+                            pass
                 messagebox.showinfo('成功', '自动备份成功')
         else:
             messagebox.showwarning('警告', '请选择需要备份的文件夹和备份到哪个文件夹')
@@ -111,6 +117,51 @@ class Tk:
                 self.file = open('auto.txt', 'a+', encoding='utf-8')
             else:
                 messagebox.showwarning('警告', '请选择需要备份的文件夹和备份到哪个文件夹')
+
+    def shear(self):
+        if (self.startPath and self.end and self.text.get() != ''):
+            fileList = os.listdir(self.startPath)
+            for item in fileList:
+                arr = item.split('.')
+                if len(arr) >= 2:
+                    startPath = self.startPath + "/" + item
+                    endPath = self.endPath + "/" + item
+                    shutil.move(startPath, endPath)
+        else:
+            f = open('shear.txt', 'r', encoding='utf-8')
+            works = f.read().split('\n')
+            f.close()
+            for work in works:
+                if (work != ''):
+                    wks = work.split(' ')
+                    start = wks[0]
+                    end = wks[1]
+                    fileList = os.listdir(start)
+                    path = os.path.exists(end[0:2])
+                    if path:
+                        for item in fileList:
+                            arr = item.split('.')
+                            if len(arr) >= 2:
+                                startPath = start + "/" + item
+                                endPath = end + "/" + item
+                                shutil.move(startPath, endPath)
+        messagebox.showinfo('成功', '剪切成功')
+        self.Shear['text'] = '剪切'
+
+    def shearFile(self):
+        self.Shear['text'] = '剪切中'
+        self.root.update()
+        t = Thread(target=self.shear)
+        t.start()  # 启动
+
+    def addShearFile(self):
+        if (self.startPath and self.end):
+            file = open('shear.txt', 'a+', encoding='utf-8')
+            file.write(self.startPath + " " + self.endPath + "\n")
+            messagebox.showinfo('成功', '加入自动剪切成功')
+            file.close()
+        else:
+            messagebox.showwarning('警告', '请选择需要剪切的文件夹和剪切到哪个文件夹')
 
 
 if __name__ == '__main__':
