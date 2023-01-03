@@ -1,12 +1,13 @@
 # -*- coding:utf-8 -*-
 import os
 import shutil
+from threading import Thread
 import tkinter as tk
 import tkinter.filedialog
 from tkinter import messagebox
 
 
-# 打包 pyinstaller -F -w  自动备份.py
+# 打包 pyinstaller -F -w  -i favicon.ico 自动备份.py
 
 
 class Tk:
@@ -29,7 +30,7 @@ class Tk:
         self.btnEnd = tk.Button(self.root, command=self.selectEnd)
         self.btnEnd['text'] = '备份到'
         self.btnEnd.grid(row=1, column=1, pady='5px', padx='15px')
-        self.btnBackup = tk.Button(self.root, command=self.Backup)
+        self.btnBackup = tk.Button(self.root, command=self.thread_it)
         self.btnBackup['text'] = '备份'
         self.btnBackup.grid(row=1, column=2, padx='15px', pady='5px')
         self.autoBackup = tk.Button(self.root, command=self.autoBackup)
@@ -40,7 +41,7 @@ class Tk:
         self.startPath = ''
         self.end = ''
         try:
-            self.file = open('auto.txt', 'r+', encoding='utf-8')
+            self.file = open('auto.txt', 'a', encoding='utf-8')
         except:
             self.file = None
 
@@ -59,7 +60,7 @@ class Tk:
 
     def Backup(self):
         try:
-            self.file = open('auto.txt', 'r+', encoding='utf-8')
+            self.file = open('auto.txt', 'r', encoding='utf-8')
         except:
             self.file = None
         if ((self.startPath != '' and self.end != '') or self.file != None):
@@ -93,19 +94,23 @@ class Tk:
                 messagebox.showinfo('成功', '自动备份成功')
         else:
             messagebox.showwarning('警告', '请选择需要备份的文件夹和备份到哪个文件夹')
+        self.btnBackup['text'] = '备份'
+
+    def thread_it(self):
+        self.btnBackup['text'] = '备份中'
+        self.root.update()
+        t = Thread(target=self.Backup)
+        t.start()  # 启动
 
     def autoBackup(self):
         if (self.file):
             if (self.startPath and self.end):
                 self.file.write(self.startPath + " " + self.end + "\n")
                 messagebox.showinfo('成功', '加入成功')
+                self.file.close()
+                self.file = open('auto.txt', 'a+', encoding='utf-8')
             else:
                 messagebox.showwarning('警告', '请选择需要备份的文件夹和备份到哪个文件夹')
-        else:
-            result = messagebox.askokcancel('提示', '未找到自动备份文件是否创建')
-            if (result):
-                self.file = open('auto.txt', 'a+', encoding='utf-8')
-                messagebox.showinfo('成功', '创建auto.txt成功')
 
 
 if __name__ == '__main__':
