@@ -86,6 +86,16 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
                 result = text.replace('\n', word)
             elif (word == "\\n"):
                 result = text.replace(reps, "\n")
+            elif (reps == '{start}'):
+                arr = text.split('\n')
+                result = ''
+                for i in arr:
+                    result = result + word + i + "\n"
+            elif (reps == '{end}'):
+                arr = text.split('\n')
+                result = ''
+                for i in arr:
+                    result = result + i + word + "\n"
             else:
                 result = text.replace(reps, word)
             self.Text.setPlainText(result)
@@ -159,7 +169,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
     def openSoft(self, path):
         path = path.replace('"', "")
         if (re.search(r'lnk', path) != None):
-            win32api.ShellExecute(0, 'open',path, '', '', 1)
+            win32api.ShellExecute(0, 'open', path, '', '', 1)
         else:
             arr = path.split("\\")
             exe = arr[len(arr) - 1]
