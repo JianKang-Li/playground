@@ -1,13 +1,23 @@
 // ==UserScript==
 // @name         dy
 // @namespace    http://tampermonkey.net/
-// @version      0.2.6
+// @version      0.2.7
 // @description  抖音网页视频链接下载!
 // @author       jk小帅
 // @match        https://www.douyin.com/*
 // @grant        none
 // @license GPL
 // ==/UserScript==
+
+// 如果失败可以先点赞在点赞页面下载
+/* 
+已测试支持的界面
++ 关注
++ 推荐
++ 搜索
++ 喜欢
++ 视频主个人主页
+*/
 
 // 抖音视频下载
 (function () {
@@ -32,71 +42,6 @@
     const dy0 = document.querySelector("#dy0")
     const dy1 = document.querySelector('#dy1')
 
-    dy1.addEventListener('click', function () {
-      const videos = document.querySelectorAll('video')
-      const len = videos.length
-      let video;
-      let index = 1
-      switch (len) {
-        case 1: {
-          video = videos[0];
-          index = 0
-          break;
-        }
-        case 2: {
-          video = videos[1];
-          index = 1
-          break;
-        }
-        case 3: {
-          video = videos[1];
-          index = 1
-          break;
-        }
-        case 4: {
-          video = videos[3]
-          index = 3
-          break;
-        }
-      }
-      video.pause()
-      let imgs;
-      if (location.href.indexOf("user") !== -1) {
-        imgs = document.querySelectorAll('.swiper-container .swiper-wrapper img')
-      } else {
-        try {
-          imgs = document.querySelectorAll(".swiper-container.focusPanel .swiper-wrapper")
-          switch (imgs.length) {
-            case 1: {
-              imgs = imgs[0].getElementsByTagName('img')
-              break;
-            }
-            case 2: {
-              imgs = imgs[1].getElementsByTagName('img')
-              break;
-            }
-          }
-        } catch {
-          alert('没有图片')
-          return;
-        }
-      }
-      let set = new Set()
-      imgs = Array.from(imgs)
-      imgs.forEach((item) => {
-        set.add(item.src)
-      })
-      // console.log(set);
-      if (set.size === 0) {
-        alert("获取图片失败")
-        return;
-      } else {
-        set.forEach((img) => {
-          window.open(img)
-        })
-      }
-    })
-
     dy0.addEventListener('click', function () {
       const videos = document.querySelectorAll('video')
       const len = videos.length
@@ -107,7 +52,7 @@
           break;
         }
         case 2: {
-          video = videos[1];
+          video = videos[0];
           break;
         }
         case 3: {
@@ -137,6 +82,75 @@
             window.URL.revokeObjectURL(objectUrl);
             a.remove();
           })
+      }
+    })
+
+
+    dy1.addEventListener('click', function () {
+      const videos = document.querySelectorAll('video')
+      const len = videos.length
+      let video;
+      let index = 1
+      switch (len) {
+        case 1: {
+          video = videos[0];
+          index = 0
+          break;
+        }
+        case 2: {
+          video = videos[0];
+          index = 0
+          break;
+        }
+        case 3: {
+          video = videos[1];
+          index = 1
+          break;
+        }
+        case 4: {
+          video = videos[3]
+          index = 3
+          break;
+        }
+      }
+      video.pause()
+      let imgs;
+      if (location.href.indexOf("user") !== -1) {
+        imgs = document.querySelectorAll('.swiper-container .swiper-wrapper img')
+      } else {
+        try {
+          imgs = document.querySelectorAll(".swiper-container.focusPanel .swiper-wrapper")
+          switch (imgs.length) {
+            case 1: {
+              imgs = imgs[0].getElementsByTagName('img')
+              break;
+            }
+            case 2: {
+              imgs = imgs[1].getElementsByTagName('img')
+              break;
+            }
+            default:
+              imgs = document.querySelector('video').parentElement.parentElement.getElementsByTagName('img')
+              break;
+          }
+        } catch {
+          alert('没有图片')
+          return;
+        }
+      }
+      let set = new Set()
+      imgs = Array.from(imgs)
+      imgs.forEach((item) => {
+        set.add(item.src)
+      })
+      // console.log(set);
+      if (set.size === 0) {
+        alert("获取图片失败")
+        return;
+      } else {
+        set.forEach((img) => {
+          window.open(img)
+        })
       }
     })
   }
