@@ -38,8 +38,8 @@
   const body = document.querySelector("body")
   let flag = 0
   let keyword = ''
-  let btns = ['打开', '复制', '百度', 'github', '抖音', '微博', '掘金', 'CSDN', 'stackoverflow']
-  let searchUrl = ['https://www.baidu.com/s?wd=', 'https://github.com/search?q=',
+  let btns = ['打开', '复制', '百度', '百度开发', 'github', '抖音', '微博', '掘金', 'CSDN', 'stackoverflow']
+  let searchUrl = ['https://www.baidu.com/s?wd=', 'https://kaifa.baidu.com/searchPage?wd=', 'https://github.com/search?q=',
     'https://www.douyin.com/search/', 'https://s.weibo.com/weibo?q=',
     'https://juejin.cn/search?query=', 'https://so.csdn.net/so/search?q=',
     'https://stackoverflow.com/search?q=']
