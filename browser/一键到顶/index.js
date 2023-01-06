@@ -40,6 +40,6 @@
   ljk.addEventListener("click", function () {
     window.scrollTo({ top: 0, left: 0, behavior: "smooth" })
     const main = document.querySelector('main')
-    main.scrollTo({ top: 0, left: 0, behavior: "smooth" })
+    main && main.scrollTo({ top: 0, left: 0, behavior: "smooth" })
   });
 })();
