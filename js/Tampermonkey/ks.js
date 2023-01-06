@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         ks
 // @namespace    http://tampermonkey.net/
-// @version      0.0.1
+// @version      0.0.2
 // @description  快手网页视频链接下载!
 // @author       jk小帅
 // @match        https://www.kuaishou.com/*
@@ -27,7 +27,7 @@
 
   const button2 = document.createElement('button')
   button2.setAttribute('id', 'ks1')
-  button2.setAttribute('style', 'cursor: pointer;padding:3px 5px;background-color:#161722;color:#ffff;outline:none;position: fixed;left:35px;bottom:2rem;z-index:99999')
+  button2.setAttribute('style', 'display:none;cursor: pointer;padding:3px 5px;background-color:#161722;color:#ffff;outline:none;position: fixed;left:35px;bottom:2rem;z-index:99999')
   button2.innerText = '图片下载\n(需开启弹出式权限)'
 
   window.onload = () => {
