@@ -22,6 +22,7 @@
 // @match      *.cnblogs.com/*
 // @match      *.youtube.com/*
 // @match      *.uniapp.dcloud.net.cn/*
+// @match      *.kuaishou.com/profile/*
 
 // @match      *biquys.com/*
 
@@ -44,7 +45,7 @@
     border-radius: 50%;
     position: fixed;
     left: 1em;
-    bottom: 6em;
+    bottom: 4em;
     z-index: 9999;
     display:flex;
     align-items: center;
