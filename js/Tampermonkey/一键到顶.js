@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         一键到顶
 // @namespace    http://tampermonkey.net/
-// @version      0.1.26
+// @version      0.1.27
 // @description  页面到顶
 // @author       ljk
 
