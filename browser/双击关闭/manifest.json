@@ -1,0 +1,24 @@
+{
+  "manifest_version": 3,
+  "name": "双击关闭",
+  "version": "0.0.1",
+  "description": "双击关闭",
+  "action": {
+    "default_icon": "Ljk.png"
+  },
+  "icons": {
+    "128": "Ljk.png",
+    "48": "Ljk.png",
+    "16": "Ljk.png"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*/*"
+      ],
+      "js": [
+        "index.js"
+      ]
+    }
+  ]
+}
