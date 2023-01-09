@@ -9,12 +9,12 @@
     justify-content: center;
     position: absolute;
     z-index: 9999;
-    background:#70a1ff;
+    background:rgba(22,15,22,0.8);
     border-radius: 16px;
     width: max-content;
     height:max-content;
-    padding:4.8px;
     display:none;
+    padding:4.8px;
   }
 
   .sbtn {
@@ -23,7 +23,7 @@
     cursor: pointer;
     margin-left:0;
     color:#fff;
-    background:#70a1ff;
+    background:transparent;
     width:100%;
   }
 
