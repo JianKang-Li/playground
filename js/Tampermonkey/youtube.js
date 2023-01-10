@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Youtube优化
 // @namespace    http://tampermonkey.net/
-// @version      0.0.6
+// @version      0.0.7
 // @description  youtube优化
 // @author       ljk
 
