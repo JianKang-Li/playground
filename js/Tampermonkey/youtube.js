@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Youtube优化
 // @namespace    http://tampermonkey.net/
-// @version      0.0.7
+// @version      0.0.8
 // @description  youtube优化
 // @author       ljk
 
@@ -35,7 +35,7 @@
       return false
     }
 
-    const exclude = ['#sections > ytd-guide-section-renderer:nth-child(1)', "ytd-masthead", "#items > ytd-guide-collapsible-entry-renderer", "#content > ytd-mini-guide-renderer"]
+    const exclude = ['#sections > ytd-guide-section-renderer:nth-child(1)', "ytd-masthead", "#items > ytd-guide-collapsible-entry-renderer", "#content > ytd-mini-guide-renderer", 'section._aamu._ae3_._ae40._ae41._ae48']
     let excludes = []
     for (let i = 0; i < exclude.length; i++) {
       let items = selectV(exclude[i])
