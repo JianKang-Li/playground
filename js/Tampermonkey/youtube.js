@@ -1,12 +1,12 @@
 // ==UserScript==
 // @name         Youtube优化
 // @namespace    http://tampermonkey.net/
-// @version      0.0.5
+// @version      0.0.6
 // @description  youtube优化
 // @author       ljk
 
 // @match      *.youtube.com/*
-// @match      *.instagram.com//*
+// @match      *.instagram.com/*
 
 // @grant        none
 // @license      GPL
