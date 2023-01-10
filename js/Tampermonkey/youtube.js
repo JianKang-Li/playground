@@ -6,6 +6,7 @@
 // @author       ljk
 
 // @match      *.youtube.com/*
+// @match      *.instagram.com//*
 
 // @grant        none
 // @license      GPL
