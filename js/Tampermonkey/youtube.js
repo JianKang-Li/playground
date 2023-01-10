@@ -28,7 +28,7 @@
 
     function Open(e, href) {
       const video = document.querySelector('video')
-      video.pause()
+      video && video.pause()
       e.preventDefault();
       e.stopPropagation()
       window.open(href)
@@ -104,9 +104,11 @@
 
     window.addEventListener('scroll', () => {
       dekidnap()
-      let actions = document.querySelector("#actions")
-      if (!document.querySelector('#lkdown') && /watch\?/.test(window.location.href)) {
-        actions.insertBefore(button, actions.firstChild)
+      if (/\*\.youtube\.com\//.test(window.location.href)) {
+        let actions = document.querySelector("#actions")
+        if (!document.querySelector('#lkdown') && /watch\?/.test(window.location.href)) {
+          actions.insertBefore(button, actions.firstChild)
+        }
       }
     })
   }
