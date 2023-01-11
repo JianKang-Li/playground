@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Youtube优化
 // @namespace    http://tampermonkey.net/
-// @version      0.0.9
+// @version      0.1.0
 // @description  youtube优化
 // @author       ljk
 
@@ -105,7 +105,7 @@
 
     window.addEventListener('scroll', () => {
       dekidnap()
-      if (/\*\.youtube\.com\//.test(window.location.href)) {
+      if (/youtube\.com\/watch*/.test(window.location.href)) {
         let actions = document.querySelector("#actions")
         if (!document.querySelector('#lkdown') && /watch\?/.test(window.location.href)) {
           actions.insertBefore(button, actions.firstChild)
