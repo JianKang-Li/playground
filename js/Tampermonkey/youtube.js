@@ -36,7 +36,7 @@
     }
 
     const exclude = ['#sections > ytd-guide-section-renderer:nth-child(1)', "ytd-masthead", "#items > ytd-guide-collapsible-entry-renderer", "#content > ytd-mini-guide-renderer",
-      'section._aamu._ae3_._ae40._ae41._ae48', ".x9f619.xjbqb8w.x78zum5.x168nmei.x13lgxp2.x5pf9jr.xo71vjh"]
+      'section._aamu._ae3_._ae40._ae41._ae48', ".x9f619.xjbqb8w.x78zum5.x168nmei.x13lgxp2.x5pf9jr.xo71vjh", '._aabd._aa8k._aanf']
     let excludes = []
     for (let i = 0; i < exclude.length; i++) {
       let items = selectV(exclude[i])
