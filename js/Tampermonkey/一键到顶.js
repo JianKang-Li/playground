@@ -23,6 +23,7 @@
 // @match      *.youtube.com/*
 // @match      *.uniapp.dcloud.net.cn/*
 // @match      *.kuaishou.com/profile/*
+// @match      *.instagram.com/*
 
 // @match      *biquys.com/*
 
