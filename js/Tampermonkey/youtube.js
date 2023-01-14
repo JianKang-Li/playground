@@ -55,6 +55,18 @@
 
   }
 
+
+  function toast(message) {
+    const body = document.querySelector('body')
+    const span = document.createElement('span')
+    span.style = 'position: fixed;bottom: 10px;right: 10px;background-color: #ccc;padding: 4.8px 10px;border-radius: 4.8px;z-index:9999'
+    span.innerText = message
+    body.appendChild(span)
+    setTimeout(() => {
+      span.remove()
+    }, 1000)
+  }
+
   function debounce(fn, delay) {
     let timer = null
     return function (...args) {
@@ -67,7 +79,7 @@
 
   window.onload = function () {
     // 初始劫持
-    kidnap()
+    // kidnap()
     // 等待加载完成劫持
     setTimeout(() => {
       kidnap()
@@ -111,6 +123,7 @@
           actions.insertBefore(button, actions.firstChild)
         }
       }
+      toast('已完成优化')
     })
   }
 })();
