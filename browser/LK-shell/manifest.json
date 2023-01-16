@@ -1,0 +1,31 @@
+{
+  "manifest_version": 3,
+  "name": "LK-Shell",
+  "version": "0.0.1",
+  "description": "自定义导航",
+  "action": {
+    "default_icon": "Ljk.png"
+  },
+  "icons": {
+    "128": "Ljk.png",
+    "48": "Ljk.png",
+    "16": "Ljk.png"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*/*"
+      ],
+      "exclude_matches": [
+        "*://127.0.0.1:*/*",
+        "*://localhost:*/*"
+      ],
+      "js": [
+        "background.js"
+      ]
+    }
+  ],
+  "chrome_url_overrides": {
+    "newtab": "./index.html"
+  }
+}
