@@ -20,11 +20,14 @@
     const body = document.body
     const container = document.createElement('div')
     container.id = 'show'
-    container.style = "border-radius: 10px;justify-content: space-around;background-color:#fff;position: fixed;top: 90px;left: 60px;display: none;align-items: center;flex-wrap: wrap;width: 400px;height: 200px;overflow-y: scroll;z-index:100;"
+    container.style = "border-radius: 10px;justify-content: space-around;background-color:#fff;position: fixed;top: 90px;left: 60px;display: none;align-items: center;flex-wrap: wrap;width: 600px;height: 200px;overflow-y: scroll;z-index:100;"
     for (let key of imgs) {
       const img = document.createElement('img')
       img.src = key.src
-      img.style = 'width:90px;height:150px;object-fit:contain'
+      img.style = 'width:120px;height:200px;object-fit:contain;cursor: pointer;'
+      img.addEventListener('click', () => {
+        window.open(img.src)
+      })
       container.appendChild(img)
     }
     btn.addEventListener('click', () => {
