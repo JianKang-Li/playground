@@ -23,6 +23,7 @@
     container.style = "border-radius: 10px;justify-content: space-around;background-color:#fff;position: fixed;top: 90px;left: 60px;display: none;align-items: center;flex-wrap: wrap;width: 600px;height: 200px;overflow-y: scroll;z-index:100;"
 
     function getImgs() {
+      container.innerHTML = ''
       let imgs = new Set(Array.from(document.querySelectorAll('img')))
       let videos = new Set(Array.from(document.querySelectorAll('video')))
       for (let key of imgs) {
