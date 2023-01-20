@@ -1,5 +1,5 @@
 const container = document.createElement('div')
-container.style = 'text-align: center;z-index:100;position: fixed;top: 150px;left: 15px;display: flex;align-items: center;justify-content: space-around;flex-wrap: wrap;width: fit-content;display: flex;'
+container.style = 'background:#ccc;color:#fff;border-radius: 5px;text-align: center;z-index:9999;position: fixed;top: 85px;left: 65px;display: flex;align-items: center;justify-content: space-around;flex-wrap: wrap;width: fit-content;display: flex;'
 const body = document.body
 let playbackRate = 1
 
@@ -8,7 +8,7 @@ left.innerText = '-'
 const rate = document.createElement('span')
 rate.innerText = playbackRate
 rate.id = 'rate'
-rate.style = "user-select: none;background:#ccc;color:#fff;padding: 4px 10px;"
+rate.style = "user-select: none;padding: 4px 10px;"
 const right = document.createElement('button')
 right.innerText = "+"
 container.appendChild(left)
@@ -23,7 +23,7 @@ left.addEventListener('click', () => {
   setRate(playbackRate)
 })
 
-left.style = 'border: none;background-color: #ccc;color: #fff;padding: 5px 10px;cursor: pointer;border-radius: 5px 0 0 5px;'
+left.style = 'border: none;padding: 5px 10px;cursor: pointer;'
 
 right.addEventListener('click', () => {
   const rate = document.querySelector('#rate')
@@ -36,7 +36,7 @@ window.addEventListener('wheel', () => {
   setRate(playbackRate)
 })
 
-right.style = 'border: none;background-color: #ccc;color: #fff;padding: 5px 10px;cursor: pointer;border-radius: 0 5px 5px 0;'
+right.style = 'border: none;padding: 5px 10px;cursor: pointer;'
 
 function setRate(playbackRate) {
   document.querySelectorAll("video").forEach((item) => {
