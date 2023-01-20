@@ -23,7 +23,7 @@ left.addEventListener('click', () => {
   setRate(playbackRate)
 })
 
-left.style = 'border: none;padding: 5px 10px;cursor: pointer;'
+left.style = 'border: none;padding: 5px 10px;cursor: pointer;background:#ccc;color:#fff;'
 
 right.addEventListener('click', () => {
   const rate = document.querySelector('#rate')
@@ -36,7 +36,7 @@ window.addEventListener('wheel', () => {
   setRate(playbackRate)
 })
 
-right.style = 'border: none;padding: 5px 10px;cursor: pointer;'
+right.style = 'border: none;padding: 5px 10px;cursor: pointer;background:#ccc;color:#fff;'
 
 function setRate(playbackRate) {
   document.querySelectorAll("video").forEach((item) => {
