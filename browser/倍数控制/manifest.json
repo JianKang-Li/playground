@@ -1,0 +1,28 @@
+{
+  "manifest_version": 3,
+  "name": "视频速度控制",
+  "version": "0.0.1",
+  "description": "视频速度控制",
+  "action": {
+    "default_icon": "speed.png"
+  },
+  "icons": {
+    "128": "speed.png",
+    "48": "speed.png",
+    "16": "speed.png"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*/*"
+      ],
+      "exclude_matches": [
+        "*://127.0.0.1:*/*",
+        "*://localhost:*/*"
+      ],
+      "js": [
+        "index.js"
+      ]
+    }
+  ]
+}
