@@ -1,5 +1,5 @@
 const container = document.createElement('div')
-container.style = 'background:#ccc;color:#fff;border-radius: 5px;text-align: center;z-index:9999;position: fixed;top: 85px;left: 65px;display: flex;align-items: center;justify-content: space-around;flex-wrap: wrap;width: fit-content;display: flex;'
+container.style = 'background:#ccc;color:#fff;border-radius: 5px;text-align: center;z-index:9999;position: fixed;top: 20px;left: 10px;display: flex;align-items: center;justify-content: space-around;flex-wrap: wrap;width: fit-content;display: flex;'
 const body = document.body
 let playbackRate = 1
 
