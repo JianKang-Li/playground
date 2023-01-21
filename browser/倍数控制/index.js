@@ -8,7 +8,13 @@ left.innerText = '-'
 const rate = document.createElement('span')
 rate.innerText = playbackRate
 rate.id = 'rate'
-rate.style = "user-select: none;padding: 4px 10px;"
+rate.style = "user-select: none;padding: 4px 10px;cursor:pointer;"
+rate.addEventListener('click', function () {
+  playbackRate = 1
+  this.innerText = playbackRate
+  setRate(playbackRate)
+})
+
 const right = document.createElement('button')
 right.innerText = "+"
 container.appendChild(left)
