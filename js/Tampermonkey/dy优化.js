@@ -40,6 +40,8 @@ data-state="normal" data-index="8"
       }
     }
     const btn = document.querySelector('#upB')
+    const btn1 = document.querySelector('#cleanB')
+
     if (!btn) {
       add()
     }
@@ -47,6 +49,29 @@ data-state="normal" data-index="8"
       // console.log(typeof btn.classList);
       if (btn && btn.classList.value.split(' ').includes('xg-switch-checked')) {
         upB.click()
+      }
+      if (btn1 && btn1.classList.value.split(' ').includes('xg-switch-checked')) {
+        hiddes.forEach((hidde) => {
+          const item = document.querySelector(hidde)
+          item && (item.style.visibility = "hidden")
+        })
+        hiddels.forEach((hidde) => {
+          const items = document.querySelectorAll(hidde)
+          items && (Array.from(items).forEach((item) => {
+            item.style.visibility = "hidden"
+          }))
+        })
+      } else {
+        hiddes.forEach((hidde) => {
+          const item = document.querySelector(hidde)
+          item && (item.style.visibility = "visible")
+        })
+        hiddels.forEach((hidde) => {
+          const items = document.querySelectorAll(hidde)
+          items && (Array.from(items).forEach((item) => {
+            item.style.visibility = "visible"
+          }))
+        })
       }
     })
   }
