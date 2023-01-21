@@ -84,12 +84,12 @@ data-state="normal" data-index="8"
 
         hiddes.forEach((hidde) => {
           const item = document.querySelector(hidde)
-          item.style.visibility = "hidden"
+          item && (item.style.visibility = "hidden")
         })
       } else {
         hiddes.forEach((hidde) => {
           const item = document.querySelector(hidde)
-          item.style.visibility = "visible"
+          item && (item.style.visibility = "visible")
         })
       }
     })
