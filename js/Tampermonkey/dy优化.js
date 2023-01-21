@@ -14,7 +14,7 @@ data-state="normal" data-index="8"
 */
 (function () {
   'use strict';
-  const hiddes = ['.OFZHdvpl', '.account', '.under-title-tag', "#dy0", '#dy1', "#speedControl", ".lPytbapz.XClSex3D.NBmn3s18.mnN5bEWt", ".xgplayer-playswitch.JHxtTxhQ"]
+  const hiddes = ['.OFZHdvpl', '.account', '.MN8dFKun.Xg7imLcG.wNX5IKkc', "#dy0", '#dy1', "#speedControl", ".lPytbapz.XClSex3D.NBmn3s18.mnN5bEWt", ".xgplayer-playswitch.JHxtTxhQ"]
   const hiddels = ["#video-info-wrap > div.video-info-detail > div.title > div > div > span > span > span>a",]
   function up() {
     const upB = document.querySelector('div[data-e2e=video-switch-prev-arrow]')
