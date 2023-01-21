@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         抖音优化
 // @namespace    http://tampermonkey.net/
-// @version      0.1
+// @version      1.0.0
 // @description  try to take over the world!
 // @author       You
 // @match        https://www.douyin.com/*
@@ -14,7 +14,8 @@ data-state="normal" data-index="8"
 */
 (function () {
   'use strict';
-  const hiddes = ['.OFZHdvpl', '#video-info-wrap', "#dy0", '#dy1', "#speedControl", ".lPytbapz.XClSex3D.NBmn3s18.mnN5bEWt"]
+  const hiddes = ['.OFZHdvpl', '.account', '.under-title-tag', "#dy0", '#dy1', "#speedControl", ".lPytbapz.XClSex3D.NBmn3s18.mnN5bEWt", ".xgplayer-playswitch.JHxtTxhQ"]
+  const hiddels = ["#video-info-wrap > div.video-info-detail > div.title > div > div > span > span > span>a",]
   function up() {
     const upB = document.querySelector('div[data-e2e=video-switch-prev-arrow]')
     const videos = document.querySelectorAll('video')
@@ -81,15 +82,26 @@ data-state="normal" data-index="8"
       const btn = document.querySelector('#cleanB')
       btn.classList.toggle('xg-switch-checked')
       if (btn.classList.value.split(' ').includes('xg-switch-checked')) {
-
         hiddes.forEach((hidde) => {
           const item = document.querySelector(hidde)
           item && (item.style.visibility = "hidden")
+        })
+        hiddels.forEach((hidde) => {
+          const items = document.querySelectorAll(hidde)
+          items && (Array.from(items).forEach((item) => {
+            item.style.visibility = "hidden"
+          }))
         })
       } else {
         hiddes.forEach((hidde) => {
           const item = document.querySelector(hidde)
           item && (item.style.visibility = "visible")
+        })
+        hiddels.forEach((hidde) => {
+          const items = document.querySelectorAll(hidde)
+          items && (Array.from(items).forEach((item) => {
+            item.style.visibility = "visible"
+          }))
         })
       }
     })
