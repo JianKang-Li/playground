@@ -1,6 +1,7 @@
 const container = document.createElement('div')
 container.style = 'background:#ccc;color:#fff;border-radius: 5px;text-align: center;z-index:9999;position: fixed;top: 20px;left: 10px;display: flex;align-items: center;justify-content: space-around;flex-wrap: wrap;width: fit-content;display: flex;'
 const body = document.body
+container.id = 'speedControl'
 let playbackRate = 1
 
 const left = document.createElement('button')

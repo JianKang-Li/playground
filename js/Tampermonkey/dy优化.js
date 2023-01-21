@@ -14,7 +14,7 @@ data-state="normal" data-index="8"
 */
 (function () {
   'use strict';
-
+  const hiddes = ['.OFZHdvpl', '#video-info-wrap', "#dy0", '#dy1', "#speedControl", ".lPytbapz.XClSex3D.NBmn3s18.mnN5bEWt"]
   function up() {
     const upB = document.querySelector('div[data-e2e=video-switch-prev-arrow]')
     const videos = document.querySelectorAll('video')
@@ -54,8 +54,8 @@ data-state="normal" data-index="8"
     const container = document.querySelector('xg-right-grid')
     const sbtn = document.createElement('xg-icon')
     sbtn.innerHTML = `<div class="xgplayer-icon">
-    <div class="xgplayer-setting-label"><button id='upB' aria-checked="true" class="xg-switch" aria-labelledby="xg-switch-pip"
-        type="button"><span class="xg-switch-inner"></span></button><span class="xgplayer-setting-title">上滑</span>
+    <div class="xgplayer-up-label" style="align-items: center;display: flex;justify-content: center;"><button id='upB' aria-checked="true" class="xg-switch" aria-labelledby="xg-switch-pip"
+        type="button"><span class="xg-switch-inner"></span></button><span class="xgplayer-up-title">上滑</span>
     </div>
   </div>
   <div class="xgTips"><span>自动上滑</span></div>`
@@ -66,6 +66,32 @@ data-state="normal" data-index="8"
       const btn = document.querySelector('#upB')
       btn.classList.toggle('xg-switch-checked')
       up()
+    })
+    const sbtn1 = document.createElement('xg-icon')
+    sbtn1.innerHTML = `<div class="xgplayer-icon">
+    <div class="xgplayer-clean-label" style="align-items: center;display: flex;justify-content: center;"><button id='cleanB' aria-checked="true" class="xg-switch" aria-labelledby="xg-switch-pip"
+        type="button"><span class="xg-switch-inner"></span></button><span class="xgplayer-clean-title">超清</span>
+    </div>
+  </div>
+  <div class="xgTips"><span>超清</span></div>`
+    sbtn1.id = 'clean'
+    sbtn1.setAttribute('class', 'xgplayer-immersive-switch-setting immersive-switch')
+    container && container.appendChild(sbtn1)
+    sbtn1.addEventListener('click', function () {
+      const btn = document.querySelector('#cleanB')
+      btn.classList.toggle('xg-switch-checked')
+      if (btn.classList.value.split(' ').includes('xg-switch-checked')) {
+
+        hiddes.forEach((hidde) => {
+          const item = document.querySelector(hidde)
+          item.style.visibility = "hidden"
+        })
+      } else {
+        hiddes.forEach((hidde) => {
+          const item = document.querySelector(hidde)
+          item.style.visibility = "visible"
+        })
+      }
     })
   }
   function done() {
