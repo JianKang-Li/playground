@@ -14,8 +14,8 @@ data-state="normal" data-index="8"
 */
 (function () {
   'use strict';
-  const hiddes = ['.OFZHdvpl', '.account', '.MN8dFKun.Xg7imLcG.wNX5IKkc', "#dy0", '#dy1', "#speedControl", ".lPytbapz.XClSex3D.NBmn3s18.mnN5bEWt", ".xgplayer-playswitch.JHxtTxhQ"]
-  const hiddels = ["#video-info-wrap > div.video-info-detail > div.title > div > div > span > span > span>a",]
+  const hiddes = ['.OFZHdvpl', '.account', '.MN8dFKun.Xg7imLcG.wNX5IKkc', "#video-info-wrap > div.video-info-detail > div.under-title-tag > div > div", "#dy0", '#dy1', "#speedControl", ".lPytbapz.XClSex3D.NBmn3s18.mnN5bEWt", ".xgplayer-playswitch.JHxtTxhQ"]
+  const hiddels = ["#video-info-wrap > div.video-info-detail > div.title > div > div > span > span > span > a"]
   function up() {
     const upB = document.querySelector('div[data-e2e=video-switch-prev-arrow]')
     const videos = document.querySelectorAll('video')
@@ -49,29 +49,29 @@ data-state="normal" data-index="8"
       // console.log(typeof btn.classList);
       if (btn && btn.classList.value.split(' ').includes('xg-switch-checked')) {
         upB.click()
-      }
-      if (btn1 && btn1.classList.value.split(' ').includes('xg-switch-checked')) {
-        hiddes.forEach((hidde) => {
-          const item = document.querySelector(hidde)
-          item && (item.style.visibility = "hidden")
-        })
-        hiddels.forEach((hidde) => {
-          const items = document.querySelectorAll(hidde)
-          items && (Array.from(items).forEach((item) => {
-            item.style.visibility = "hidden"
-          }))
-        })
-      } else {
-        hiddes.forEach((hidde) => {
-          const item = document.querySelector(hidde)
-          item && (item.style.visibility = "visible")
-        })
-        hiddels.forEach((hidde) => {
-          const items = document.querySelectorAll(hidde)
-          items && (Array.from(items).forEach((item) => {
-            item.style.visibility = "visible"
-          }))
-        })
+        if (btn1 && btn1.classList.value.split(' ').includes('xg-switch-checked')) {
+          hiddes.forEach((hidde) => {
+            const item = document.querySelector(hidde)
+            item && (item.style.visibility = "hidden")
+          })
+          hiddels.forEach((hidde) => {
+            const items = document.querySelectorAll(hidde)
+            items && (Array.from(items).forEach((item) => {
+              item.style.visibility = "hidden"
+            }))
+          })
+        } else {
+          hiddes.forEach((hidde) => {
+            const item = document.querySelector(hidde)
+            item && (item.style.visibility = "visible")
+          })
+          hiddels.forEach((hidde) => {
+            const items = document.querySelectorAll(hidde)
+            items && (Array.from(items).forEach((item) => {
+              item.style.visibility = "visible"
+            }))
+          })
+        }
       }
     })
   }
