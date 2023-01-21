@@ -9,11 +9,9 @@
 // @grant        none
 // ==/UserScript==
 
-/*
-data-state="normal" data-index="8"
-*/
 (function () {
   'use strict';
+  let first = false
   const hiddes = ['.OFZHdvpl', '.account', '.MN8dFKun.Xg7imLcG.wNX5IKkc', "#video-info-wrap > div.video-info-detail > div.under-title-tag > div > div", "#dy0", '#dy1', "#speedControl", ".lPytbapz.XClSex3D.NBmn3s18.mnN5bEWt", ".xgplayer-playswitch.JHxtTxhQ"]
   const hiddels = ["#video-info-wrap > div.video-info-detail > div.title > div > div > span > span > span > a"]
   function cleanPlus() {
@@ -44,8 +42,7 @@ data-state="normal" data-index="8"
   }
 
 
-  function up() {
-    const upB = document.querySelector('div[data-e2e=video-switch-prev-arrow]')
+  function getVideo() {
     const videos = document.querySelectorAll('video')
     const len = videos.length
     let video;
@@ -67,16 +64,22 @@ data-state="normal" data-index="8"
         break;
       }
     }
+    return video
+  }
+
+  function up() {
+    const upB = document.querySelector('div[data-e2e=video-switch-prev-arrow]')
+    const video = getVideo()
     const btn = document.querySelector('#upB')
 
     if (!btn) {
       add()
     }
+
     video && video.addEventListener('ended', () => {
       // console.log(typeof btn.classList);
       if (btn && btn.classList.value.split(' ').includes('xg-switch-checked')) {
         upB.click()
-        cleanPlus()
       }
     })
   }
