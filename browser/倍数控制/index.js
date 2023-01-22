@@ -9,6 +9,7 @@ left.innerText = '-'
 const rate = document.createElement('span')
 rate.innerText = playbackRate
 rate.id = 'rate'
+rate.title = '点击还原'
 rate.style = "user-select: none;padding: 4px 10px;cursor:pointer;"
 rate.addEventListener('click', function () {
   playbackRate = 1
