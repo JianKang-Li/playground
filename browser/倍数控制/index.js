@@ -13,7 +13,7 @@ rate.style = "user-select: none;padding: 4px 10px;cursor:pointer;"
 rate.addEventListener('click', function () {
   playbackRate = 1
   this.innerText = playbackRate
-  setRate(playbackRate)
+  setRate()
 })
 
 const right = document.createElement('button')
@@ -27,7 +27,7 @@ left.addEventListener('click', () => {
   const rate = document.querySelector('#rate')
   playbackRate = Number((playbackRate - 0.1).toFixed(1))
   rate.innerText = playbackRate
-  setRate(playbackRate)
+  setRate()
 })
 
 left.style = 'border: none;padding: 5px 10px;cursor: pointer;background:#ccc;color:#fff;border-radius: 5px;'
@@ -36,17 +36,25 @@ right.addEventListener('click', () => {
   const rate = document.querySelector('#rate')
   playbackRate = Number((playbackRate + 0.1).toFixed(1))
   rate.innerText = playbackRate
-  setRate(playbackRate)
+  setRate()
 })
 
 window.addEventListener('wheel', () => {
-  setRate(playbackRate)
+  setRate()
 })
+
+window.addEventListener('keydown', () => {
+  setRate()
+})
+
 
 right.style = 'border: none;padding: 5px 10px;cursor: pointer;background:#ccc;color:#fff;border-radius: 5px;'
 
-function setRate(playbackRate) {
+function setRate() {
   document.querySelectorAll("video").forEach((item) => {
     item.playbackRate = playbackRate;
+    item.addEventListener('ended', () => {
+      setRate(playbackRate)
+    })
   });
 }
