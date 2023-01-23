@@ -53,5 +53,23 @@
     })
     body.appendChild(container)
     body.appendChild(btn)
+
+    if (window.location.href.includes('https://meirentu.cc/pic/')) {
+      const btn1 = document.createElement('button')
+      btn1.innerText = '下一页'
+      btn1.style = "cursor: pointer;position: fixed;top: 125px;left: 10px;border: none;border-radius: 5px;background-color: #ccc;color: #fff;z-index:900;padding: 5px 10px;"
+      btn1.addEventListener('click', () => {
+        let href = window.location.href
+        let arr = href.split('-')
+        let num = arr.length === 2 ? parseInt(arr[1]) : 1
+        let next = num + 1
+        if (next === 2) {
+          window.location.href = arr[0].slice(0, arr[0].length - 5) + "-" + next + ".html"
+        } else {
+          window.location.href = arr[0] + "-" + next + ".html"
+        }
+      })
+      body.appendChild(btn1)
+    }
   }
 })();
