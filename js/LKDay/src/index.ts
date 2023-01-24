@@ -7,8 +7,8 @@ dayjs.extend(toArray);
 
 let date1 = Lday();
 let date2 = dayjs();
-console.log("dayjs", date2.add(23, "M").get("M"));
-console.log("LDay", date1.add(23, "M").get("M"));
+console.log("dayjs", date2.subtract(2, "M").format());
+console.log("LDay", date1.subtract(2, "M").format());
 console.log("dayjs", date2.toArray());
 console.log("LDay", date1.toArray());
 console.log(date1);

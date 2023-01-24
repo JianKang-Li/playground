@@ -85,8 +85,8 @@ class Day {
     let nums;
     const keys = ["y", "year", "M", "month"];
     let flag = keys.includes(key);
-    function addT(num: number) {
-      let res = t + num;
+    function addT(numT: number) {
+      let res = t + numT;
       return res;
     }
     switch (key) {
@@ -96,10 +96,10 @@ class Day {
         break;
       case "M":
       case "month":
-        M = M + num;
+        M = M - 1 + num;
         if (M > 12) {
           Y = Y + Math.floor(M / 12);
-          M = M % 12;
+          M = (M % 12) + 1;
         }
         break;
       case "d":
