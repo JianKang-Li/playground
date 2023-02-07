@@ -112,5 +112,18 @@ const pre = document.querySelector("#pre")
 
 btn.addEventListener("click", () => {
     trans();
-    color.value = pre.value
+    value = pre.value.trim()
+    switch (value.length) {
+        case 4: {
+            color.value = rgbToHex(transRgb(value))
+            break;
+        }
+        case 7: {
+            color.value = value
+            break;
+        }
+        default: {
+            color.value = rgbToHex(value)
+        }
+    }
 });
