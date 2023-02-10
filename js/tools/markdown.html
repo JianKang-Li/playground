@@ -107,7 +107,7 @@
       // console.log(vnodes);
       function createEle(vnode) {
         let ele = document.createElement(vnode.tag)
-        ele.innerText = vnode.text
+        ele.innerHTML = vnode.text
         return ele
       }
 
@@ -122,57 +122,72 @@
 
     // 正则匹配
     function matchs(text) {
-      const title = /^#+\s(\d|\w)*/g
-      const li = /^[\+-]\s(\d|\w)*/g
-      const hr = /^(\+\+\+|---|===)/g
-      const b = /\*\*(\d|\w)*\*\*/g
-      const i = /\*(\d|\w)*\*/g
-      const mark = /==(\d|\w)*==/g
-
+      const rules = {
+        title: /^#+\s(\d|\w)*/g,
+        li: /^[\+-]\s(\d|\w)*/g,
+        hr: /^(\+\+\+|---|===)/g,
+      }
+      // const b= /\*\*(\d|\w)*\*\*/g
+      // const i= /\*(\d|\w)*\*/g
+      // const mark= /==(\d|\w)*==/g
 
       function reset() {
-        title.lastIndex = 0
-        li.lastIndex = 0
-        hr.lastIndex = 0
-        b.lastIndex = 0
-        i.lastIndex = 0
-        mark.lastIndex = 0
+        for (let i in rules) {
+          rules[i].lastIndex = 0
+        }
       }
+
       // console.log(title.exec(text));
       let lines = text.split('\n')
       let vnodes = []
       for (let line of lines) {
         const vnode = {}
         if (line.trim()) {
-          // 标题
-          if (title.test(line)) {
-            reset()
-            let str = line.split(' ')
-            vnode.text = str[1]
-            if (str.length > 2) {
-              for (let i = 2; i < str.length; i++) {
-                vnode.text += ` ${str[i]}`
+          reset()
+          let flag = false
+          for (let rule in rules) {
+            if (rules[rule].test(line)) {
+              flag = true
+              switch (rule) {
+                case 'title': {
+                  let str = line.split(' ')
+                  vnode.text = str[1]
+                  if (str.length > 2) {
+                    for (let i = 2; i < str.length; i++) {
+                      vnode.text += ` ${str[i]}`
+                    }
+                  }
+                  vnode.tag = `h${str[0].length}`
+                  vnodes.push(vnode)
+                  break;
+                }
+                case "li": {
+                  let str = line.split(' ')
+                  vnode.text = str[1]
+                  if (str.length > 2) {
+                    for (let i = 2; i < str.length; i++) {
+                      vnode.text += ` ${str[i]}`
+                    }
+                  }
+                  vnode.tag = `li`
+                  vnodes.push(vnode)
+                  break;
+                }
+                case 'hr': {
+                  vnode.text = ''
+                  vnode.tag = `hr`
+                  vnodes.push(vnode)
+                  break;
+                }
+                default: {
+                  vnode.text = line
+                  vnode.tag = 'p'
+                  vnodes.push(vnode)
+                }
               }
             }
-            vnode.tag = `h${str[0].length}`
-            vnodes.push(vnode)
-          } else if (li.test(line)) {
-            reset()
-            let str = line.split(' ')
-            vnode.text = str[1]
-            if (str.length > 2) {
-              for (let i = 2; i < str.length; i++) {
-                vnode.text += ` ${str[i]}`
-              }
-            }
-            vnode.tag = `li`
-            vnodes.push(vnode)
-          } else if (hr.test(line)) {
-            reset()
-            vnode.text = ''
-            vnode.tag = `hr`
-            vnodes.push(vnode)
-          } else {
+          }
+          if (!flag) {
             vnode.text = line
             vnode.tag = 'p'
             vnodes.push(vnode)
