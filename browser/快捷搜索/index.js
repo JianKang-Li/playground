@@ -3,7 +3,7 @@
 
   const style = document.createElement("style")
   style.innerHTML = `
-  .sbtns {
+  .sbtns1 {
     flex-direction: column;
     align-items: center;
     justify-content: center;
@@ -16,23 +16,9 @@
     display:none;
     padding:4.8px;
   }
-
-  .sbtn {
-    padding: 4.8px 8px;
-    border: 0;
-    cursor: pointer;
-    margin-left:0;
-    color:#fff;
-    background:transparent;
-    width:100%;
-  }
-
-  .sbtn:focus {
-    outline: none;
-  }
 `
   const buttons = document.createElement("div")
-  buttons.className = "sbtns"
+  buttons.className = "sbtns1"
   buttons.setAttribute("contentwbable", false)
 
   const body = document.querySelector("body")
@@ -48,7 +34,8 @@
 
   btns.forEach((btn, index) => {
     const button = document.createElement('button')
-    button.className = 'sbtn'
+    button.className = 'sbtn1'
+    button.style = 'padding:4.8px8px;border:0;cursor:pointer;margin-left:0;color:#fff;background:transparent;width:100%;'
     button.innerText = btn
     buttons.appendChild(button)
     button.addEventListener('click', () => {
@@ -83,7 +70,7 @@
 
   function pop(e) {
     keyword = window.getSelection().toString()
-    const buttons = document.querySelector('.sbtns')
+    const buttons = document.querySelector('.sbtns1')
     if (keyword.trim()) {
       up = keyword
     }
