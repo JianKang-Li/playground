@@ -1,0 +1,3 @@
+export default debase64(text){
+  return window.atob(text)
+}
