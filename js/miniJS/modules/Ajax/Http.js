@@ -49,6 +49,9 @@ export default class Http {
       if (param) {
         let str = new URLSearchParams(param).toString()
         url += "?" + str
+        url += "&_t=" + Date.now()
+      } else {
+        url += "?_time=" + Date.now()
       }
       let promise = this.dispatch(url, { method: 'GET' })
       return promise
@@ -72,6 +75,7 @@ export default class Http {
           _data = JSON.stringify(data)
         }
       }
+      url += `${url}?_t=${Date.now()}`
       return this.dispatch(url, { headers, body: _data, method: "POST" })
     } catch (e) {
       this.interceptors.request.errors.map((fn) => {

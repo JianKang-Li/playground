@@ -52,6 +52,9 @@ export default class XHR {
       if (param) {
         let str = new URLSearchParams(param).toString()
         _url += "?" + str
+        _url += "&_t=" + Date.now()
+      } else {
+        _url += "?_time=" + Date.now()
       }
       return this.dispatch(_url, 'GET')
     } catch (e) {
@@ -67,6 +70,7 @@ export default class XHR {
       if (headers) {
         this.setHeaders(headers)
       }
+      url += `${url}?_t=${Date.now()}`
       return this.dispatch(url, "POST", data)
     } catch (e) {
       this.interceptors.request.errors.map((fn) => {
