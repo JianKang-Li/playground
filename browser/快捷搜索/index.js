@@ -35,7 +35,7 @@
   btns.forEach((btn, index) => {
     const button = document.createElement('button')
     button.className = 'sbtn1'
-    button.style = 'padding:4.8px 8px;border:0;cursor:pointer;margin-left:0;color:#fff;background:transparent;width:100%;'
+    button.style = 'padding:4.8px 8px;border:0;cursor:pointer;margin-left:0;color:#fff;background:transparent;width:100%;height:fit-context;'
     button.innerText = btn
     buttons.appendChild(button)
     button.addEventListener('click', () => {
