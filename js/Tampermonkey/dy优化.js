@@ -158,6 +158,7 @@
       const videos = document.querySelectorAll('video')
       const len = videos.length
       let video;
+      let index = 0
       switch (len) {
         case 1: {
           video = videos[0];
@@ -168,10 +169,12 @@
           break;
         }
         case 3: {
+          index = 1
           video = videos[1];
           break;
         }
         case 4: {
+          index = 2
           video = videos[3]
           break;
         }
@@ -182,7 +185,9 @@
       } else {
         video.pause();
         const date = new Date()
-        let filename = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}_${date.getHours()}_${date.getMinutes()}_${date.getSeconds()}`
+        let author = document.querySelectorAll('#video-info-wrap > div.video-info-detail > div.account > div.account-name > span > span > span > span > span > span > span')[index].innerText
+        author = author.slice(1, author.length)
+        let filename = `${author}-${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}_${date.getHours()}_${date.getMinutes()}_${date.getSeconds()}`
         fetch(src)
           .then(res => res.blob())
           .then(blob => {
