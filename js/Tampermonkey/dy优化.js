@@ -187,7 +187,7 @@
         const date = new Date()
         let author = document.querySelectorAll('#video-info-wrap > div.video-info-detail > div.account > div.account-name > span > span > span > span > span > span > span')[index].innerText
         author = author.slice(1, author.length)
-        let filename = `${author}-${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}_${date.getHours()}_${date.getMinutes()}_${date.getSeconds()}`
+        let filename = `${author}-${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}_${date.getHours()}_${date.getMinutes()}_${date.getSeconds()}.mp4`
         fetch(src)
           .then(res => res.blob())
           .then(blob => {
