@@ -1,0 +1,26 @@
+{
+  "manifest_version": 3,
+  "name": "ColorPick",
+  "version": "0.0.1",
+  "description": "颜色获取",
+  "action": {
+    "default_icon": "Ljk.png",
+    "default_title": "ColorPick",
+		"default_popup": "popup.html"
+  },
+  "icons": {
+    "128": "Ljk.png",
+    "48": "Ljk.png",
+    "16": "Ljk.png"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*/*"
+      ],
+      "js": [
+        "background.js"
+      ]
+    }
+  ]
+}

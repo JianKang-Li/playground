@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>颜色获取</title>
+  <style>
+    #colorPick {
+      border: none;
+      padding: 0;
+      height: 40px;
+      width: 40px;
+      background-color: transparent;
+      cursor: pointer;
+    }
+
+    label.title {
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+    }
+
+    .input {
+      border: 1px solid #ddd;
+      display: block;
+      border-radius: 5px;
+      padding: 0.3rem 0.5rem;
+    }
+
+    .input:focus {
+      outline: none;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="tab-pane active" id="color">
+    <div class="ToolItem">
+      <label for="colorPick" class="title"><span>颜色选择:</span>
+        <input type="color" id="colorPick" value="#409EFE">
+        <input type="text" class="input" id="colorValue" value="#409EFE">
+      </label>
+    </div>
+  </div>
+
+  <script src="./popup.js"></script>
+</body>
+
+</html>
