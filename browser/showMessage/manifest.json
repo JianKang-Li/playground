@@ -4,7 +4,8 @@
   "version": "0.0.1",
   "description": "showMessage",
   "action": {
-    "default_icon": "Ljk.png"
+    "default_icon": "Ljk.png",
+    "default_popup": "popup.html"
   },
   "icons": {
     "128": "Ljk.png",
