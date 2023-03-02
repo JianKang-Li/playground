@@ -7,6 +7,8 @@ document.body.addEventListener('click',(e)=>{
   const ele=e.target
   const styles=window.getComputedStyle(ele)
   let text=`
+  目标：${e.target.nodeName}
+  类：${e.target.classList}
   宽度：${styles.width}
   高度：${styles.height}
   颜色：${styles.color}
