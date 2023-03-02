@@ -1,0 +1,24 @@
+{
+  "manifest_version": 3,
+  "name": "showMessage",
+  "version": "0.0.1",
+  "description": "showMessage",
+  "action": {
+    "default_icon": "Ljk.png"
+  },
+  "icons": {
+    "128": "Ljk.png",
+    "48": "Ljk.png",
+    "16": "Ljk.png"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*/*"
+      ],
+      "js": [
+        "content.js"
+      ]
+    }
+  ]
+}
