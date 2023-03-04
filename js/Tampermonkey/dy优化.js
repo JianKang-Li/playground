@@ -185,7 +185,7 @@
       } else {
         video.pause();
         const date = new Date()
-        let author = document.querySelectorAll('#video-info-wrap > div.video-info-detail > div.account > div.account-name > span > span > span > span > span > span > span')[index].innerText
+        let author = document.querySelectorAll('div.account-name > span > span > span > span > span > span > span')[index]?.innerText || document.querySelectorAll(' div.account-name > span > span > span > span > span > span > span')[index]?.innerText || ''
         author = author.slice(1, author.length)
         let filename = `${author}-${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}_${date.getHours()}_${date.getMinutes()}_${date.getSeconds()}.mp4`
         fetch(src)
@@ -233,10 +233,10 @@
       video.pause()
       let imgs;
       if (location.href.indexOf("user") !== -1) {
-        imgs = document.querySelectorAll('.swiper-container .swiper-wrapper img')
+        imgs = document.querySelectorAll('.dySwiperSlide img')
       } else {
         try {
-          imgs = document.querySelectorAll(".swiper-container.focusPanel .swiper-wrapper")
+          imgs = document.querySelectorAll(".playerContainer .focusPanel")
           switch (imgs.length) {
             case 1: {
               imgs = imgs[0].getElementsByTagName('img')
@@ -247,7 +247,7 @@
               break;
             }
             default:
-              imgs = document.querySelector('video').parentElement.parentElement.getElementsByTagName('img')
+              imgs = video.parentElement.parentElement.getElementsByTagName('img')
               break;
           }
         } catch {

@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         dy
 // @namespace    http://tampermonkey.net/
-// @version      0.2.7
+// @version      0.2.8
 // @description  抖音网页视频链接下载!
 // @author       jk小帅
 // @match        https://www.douyin.com/*
@@ -10,7 +10,7 @@
 // ==/UserScript==
 
 // 如果失败可以先点赞在点赞页面下载
-/* 
+/*
 已测试支持的界面
 + 关注
 + 推荐
@@ -116,10 +116,10 @@
       video.pause()
       let imgs;
       if (location.href.indexOf("user") !== -1) {
-        imgs = document.querySelectorAll('.swiper-container .swiper-wrapper img')
+        imgs = document.querySelectorAll('.dySwiperSlide img')
       } else {
         try {
-          imgs = document.querySelectorAll(".swiper-container.focusPanel .swiper-wrapper")
+          imgs = document.querySelectorAll(".playerContainer .focusPanel")
           switch (imgs.length) {
             case 1: {
               imgs = imgs[0].getElementsByTagName('img')
@@ -130,7 +130,7 @@
               break;
             }
             default:
-              imgs = document.querySelector('video').parentElement.parentElement.getElementsByTagName('img')
+              imgs = imgs = video.parentElement.parentElement.getElementsByTagName('img')
               break;
           }
         } catch {
