@@ -179,10 +179,14 @@
           break;
         }
       }
-      let src = video.firstChild.src;
+      let src = video.firstChild.src || video.src;
       if (!src) {
         alert('获取url地址失败')
-      } else {
+      }
+      else if (/^blob/.test(src)) {
+        alert('当前视频地址为blob地址')
+      }
+      else {
         video.pause();
         const date = new Date()
         let author = document.querySelectorAll('div.account-name > span > span > span > span > span > span > span')[index]?.innerText || document.querySelectorAll(' div.account-name > span > span > span > span > span > span > span')[index]?.innerText || ''
