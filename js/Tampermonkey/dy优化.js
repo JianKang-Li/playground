@@ -179,7 +179,8 @@
           break;
         }
       }
-      let src = video.firstChild.src || video.src;
+      console.log({ video, index })
+      let src = video?.firstChild.src || video?.src || null;
       if (!src) {
         alert('获取url地址失败')
       }
