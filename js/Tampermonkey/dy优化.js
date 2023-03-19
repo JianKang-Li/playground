@@ -165,7 +165,7 @@
           break;
         }
         case 2: {
-          video = videos[0];
+          video = videos[1];
           break;
         }
         case 3: {
@@ -180,7 +180,7 @@
         }
       }
       console.log({ video, index })
-      let src = video?.firstChild.src || video?.src || null;
+      let src = video?.firstChild?.src || video?.src || null;
       if (!src) {
         alert('获取url地址失败')
       }
