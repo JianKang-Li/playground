@@ -1,22 +1,26 @@
-const resize = {
-  // 指令的名称
-  mounted(el, binding) {
-    // el为绑定的元素，binding为绑定给指令的对象
-    let width = "",
-      height = "";
-    function isReize() {
-      const style = document.defaultView.getComputedStyle(el);
-      if (width !== style.width || height !== style.height) {
-        binding.value(); // 关键
-      }
-      width = style.width;
-      height = style.height;
+const map = new WeakMap()
+const ob = new ResizeObserver((entries) => {
+  for (const entry of entries) {
+    const handler = map.get(entry.target)
+    if (handler) {
+      handler()
     }
-    el.__vueSetInterval__ = setInterval(isReize, 500);
-  },
-  beforeUnmount(el) {
-    clearInterval(el.__vueSetInterval__);
-  },
-}
+  }
+})
 
-export default resize
+export default {
+  mounted(el, binding) {
+    ob.observe(el)
+    map.set(el, binding.value)
+  },
+  unmounted(el) {
+    ob.unobserve(el)
+  },
+  bind(el, binding) {
+    ob.observe(el)
+    map.set(el, binding.value)
+  },
+  unbind(el) {
+    ob.unobserve(el)
+  }
+}
