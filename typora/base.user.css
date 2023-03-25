@@ -1,9 +1,14 @@
 /* blue主题 */
 .file-list-item.active {
-  background-color: rgba(13, 110, 253, 1);
+  background-color: #007fff;
   color: #fff;
 }
 
 a {
   color: #409EFE;
+  text-decoration: none;
+}
+
+li::marker {
+  color: #3d8bfd;
 }
