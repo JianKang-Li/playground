@@ -1,4 +1,8 @@
 // 浏览器类型
+/**
+* @return {String} 浏览器类型
+* 
+**/
 export default function browserType() {
   const explorer = window.navigator.userAgent.toLowerCase()
   // console.log(explorer);

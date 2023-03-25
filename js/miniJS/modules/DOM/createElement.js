@@ -1,4 +1,9 @@
 // 创建元素
+/**
+* @param {String} type 元素标签
+* @param {Object} props 属性 
+* @param {String|Object} children 元素子元素
+**/
 export default function createElement(type, props, children) {
   let el;
   if (type === 'text') {

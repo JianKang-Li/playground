@@ -20,6 +20,11 @@ export default class Http {
     }
   }
 
+  /**
+  * @param {String} url 请求地址
+  * @param {Object} data 请求参数
+  * 
+  **/
   dispatch(url, data) {
     return new Promise(async (resolve, reject) => {
       this.controller = new AbortController()
@@ -44,6 +49,11 @@ export default class Http {
     })
   }
 
+  /**
+  * @param {String} url 请求地址
+  * @param {String|Array<String>} param get请求参数
+  * 
+  **/
   get(url, param) {
     try {
       if (param) {
@@ -62,6 +72,12 @@ export default class Http {
     }
   }
 
+  /**
+  * @param {String} url 请求地址
+  * @param {Object} data 请求参数
+  * @param {Object} headers 请求头
+  * 
+  **/
   post(url, data, headers) {
     try {
       if (headers === undefined) {
@@ -84,6 +100,10 @@ export default class Http {
     }
   }
 
+  /**
+  * 取消请求
+  * 
+  **/
   httpAbort() {
     this.controller.abort()
   }

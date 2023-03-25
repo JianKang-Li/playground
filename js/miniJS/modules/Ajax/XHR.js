@@ -45,6 +45,11 @@ export default class XHR {
     })
   }
 
+  /**
+   * @param {String} url 请求地址
+   * @param {String|Array<String>} param get请求参数
+   * 
+   **/
   get(url, param) {
     try {
       this.xhr = new XMLHttpRequest();
@@ -64,6 +69,12 @@ export default class XHR {
     }
   }
 
+  /**
+  * @param {String} url 请求地址
+  * @param {Object} data 请求参数
+  * @param {Object} headers 请求头
+  * 
+  **/
   post(url, data, headers) {
     try {
       this.xhr = new XMLHttpRequest();
@@ -85,6 +96,10 @@ export default class XHR {
     }
   }
 
+  /**
+  * 取消请求
+  * 
+  **/
   abort() {
     this.xhr.abort()
     if (this.xhr.status === 0) {

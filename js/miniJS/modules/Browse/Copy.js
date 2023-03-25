@@ -1,4 +1,8 @@
 // 复制
+/**
+* @param {String} text 需要复制到截切板的字符串
+* 
+**/
 export default function Copy(text) {
   let theClipboard = navigator.clipboard;
 

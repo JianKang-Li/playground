@@ -1,4 +1,9 @@
 // 最大并发数
+/**
+* @param {Array} urls 请求地址数组
+* @param {Number} maxNum 同时请求的最大数量
+* @return {Array} 请求结果数组
+**/
 export default function concurRequest(urls, maxNum) {
   return new Promise((resolve) => {
     if (urls.length === 0) {

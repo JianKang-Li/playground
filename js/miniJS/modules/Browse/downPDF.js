@@ -1,4 +1,8 @@
 // 打印PDF
+/**
+* @param {Element} 需要打印的容器元素
+* 
+**/
 export default function downPDF(container) {
   const style = document.createElement('style')
   style.innerHTML = `@media print {

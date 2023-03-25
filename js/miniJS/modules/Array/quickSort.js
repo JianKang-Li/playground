@@ -1,4 +1,9 @@
 // 快速排序
+/**
+* @param {Array} arr 需要排序的数组
+* @return {Array} 排序完成的数组
+* 
+**/
 export default function quickSort(arr) {
   if (!Array.isArray(arr)) return;
   if (arr.length <= 1) return arr;

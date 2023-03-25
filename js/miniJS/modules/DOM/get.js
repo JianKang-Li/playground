@@ -1,4 +1,9 @@
 // 获取dom元素,通过css选择器选择
+/**
+* @param {String} option css选择器
+* @return {Array|Element} 获取到的元素
+* 
+**/
 export default function get(option) {
   let doms = document.querySelectorAll(option)
   if (doms.length <= 1) {

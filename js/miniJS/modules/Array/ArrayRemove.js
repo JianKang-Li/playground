@@ -1,4 +1,9 @@
 // 移除
+/**
+* @param {Array} arr 需要移除的原数组
+* @param {Number|String|Object|Function} fn 需要移除的元素或判断方法
+* 
+**/
 export default function ArrayRemove(arr, fn) {
   if ((typeof fn == "number") || (typeof fn == "string") || (typeof fn == "object")) {
     arr.forEach((item, index) => {
