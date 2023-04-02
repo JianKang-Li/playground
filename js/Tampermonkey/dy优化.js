@@ -165,7 +165,7 @@
           break;
         }
         case 2: {
-          video = videos[1];
+          video = videos[0];
           break;
         }
         case 3: {
