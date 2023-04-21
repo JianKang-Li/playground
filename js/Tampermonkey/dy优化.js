@@ -140,12 +140,12 @@
     // 下载功能
     const button1 = document.createElement('button')
     button1.setAttribute('id', 'dy0')
-    button1.setAttribute('style', 'cursor: pointer;padding:0.3rem 0.5rem;background-color:#161722;color:#ffff;outline:none;position: fixed;left:2rem;bottom:9.5rem;z-index:99999')
+    button1.setAttribute('style', 'cursor: pointer;padding:0.3rem 0.5rem;background-color:#161722;color:#ffff;outline:none;position: fixed;left:2rem;bottom:13.5rem;z-index:99999')
     button1.innerText = '视频下载'
 
     const button2 = document.createElement('button')
     button2.setAttribute('id', 'dy1')
-    button2.setAttribute('style', 'cursor: pointer;padding:0.3rem 0.5rem;background-color:#161722;color:#ffff;outline:none;position: fixed;left:2rem;bottom:6rem;z-index:99999')
+    button2.setAttribute('style', 'cursor: pointer;padding:0.3rem 0.5rem;background-color:#161722;color:#ffff;outline:none;position: fixed;left:2rem;bottom:10rem;z-index:99999')
     button2.innerText = '图片下载\n(需开启弹出式权限)'
     const body = document.querySelector('body')
     body.appendChild(button1)
