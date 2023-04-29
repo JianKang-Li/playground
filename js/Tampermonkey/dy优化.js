@@ -161,10 +161,12 @@
       let index = 0
       switch (len) {
         case 1: {
+          index = 0
           video = videos[0];
           break;
         }
         case 2: {
+          index = 0
           video = videos[0];
           break;
         }
