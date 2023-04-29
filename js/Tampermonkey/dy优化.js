@@ -181,7 +181,6 @@
           break;
         }
       }
-      console.log({ video, index })
       let src = video?.firstChild?.src || video?.src || null;
       if (!src) {
         alert('获取url地址失败')
@@ -192,6 +191,7 @@
       else {
         video.pause();
         const date = new Date()
+        console.log(video, index)
         let author = document.querySelectorAll('div.account-name > span > span > span > span > span > span > span')[index]?.innerText || document.querySelectorAll(' div.account-name > span > span > span > span > span > span > span')[index]?.innerText
           || document.querySelector("#relatedVideoCard > div > div.uKuFKJ0b.IXOrpi3W > div > div > div.FJDQuKlF.MHDJgSQA.sktxdhWs > div.AVi4_ejO > div > a > div.h2xNBxgs.author-card-user-name > span:nth-child(2) > span > span > span > span > span").innerText || ''
         author = author.slice(1, author.length)
