@@ -193,7 +193,7 @@
         const date = new Date()
         console.log(video, index)
         let author = document.querySelectorAll('div.account-name > span > span > span > span > span > span > span')[index]?.innerText || document.querySelectorAll(' div.account-name > span > span > span > span > span > span > span')[index]?.innerText
-          || document.querySelector("#relatedVideoCard > div > div.uKuFKJ0b.IXOrpi3W > div > div > div.FJDQuKlF.MHDJgSQA.sktxdhWs > div.AVi4_ejO > div > a > div.h2xNBxgs.author-card-user-name > span:nth-child(2) > span > span > span > span > span").innerText || ''
+          || document.querySelector("#relatedVideoCard > div > div.uKuFKJ0b.IXOrpi3W > div > div > div.FJDQuKlF.MHDJgSQA.sktxdhWs > div.AVi4_ejO > div > a > div.h2xNBxgs.author-card-user-name > span:nth-child(2) > span > span > span > span > span")?.innerText || ''
         author = author.slice(1, author.length)
         let filename = `${author}-${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}_${date.getHours()}_${date.getMinutes()}_${date.getSeconds()}.mp4`
         fetch(src)
