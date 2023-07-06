@@ -44,6 +44,7 @@
     if (container) {
       container.appendChild(button)
     } else {
+      button.style.position = 'fixed'
       body.appendChild(button)
     }
   }
