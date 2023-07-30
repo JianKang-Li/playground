@@ -155,7 +155,8 @@
     const dy1 = document.querySelector('#dy1')
 
     dy0.addEventListener('click', function () {
-      const videos = document.querySelectorAll('video')
+      const videos = document.querySelectorAll('video:not(.UFQuOSb4)')
+      console.log(videos)
       const len = videos.length
       let video;
       let index = 0
@@ -263,6 +264,7 @@
           return;
         }
       }
+      console.log(imgs)
       let set = new Set()
       imgs = Array.from(imgs)
       imgs.forEach((item) => {
