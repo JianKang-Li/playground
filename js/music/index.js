@@ -190,6 +190,11 @@ function PlaySong() {
   lyricText = CurrentSong.lyric
   if (flag) {
     myAudio.play()
+    setTimeout(()=>{
+      if(Number.isNaN(myAudio.duration)) {
+        nextSong()
+      }
+    }, 1000)
   }
 
 }
