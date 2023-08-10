@@ -174,6 +174,28 @@ function prevSong() {
   PlaySong()
 }
 
+
+function getSession() {
+  if ('mediaSession' in navigator) {
+    let  ms = navigator.mediaSession
+  
+    ms.setActionHandler('play', function () {
+      myAudio.play()
+    });
+    ms.setActionHandler('nexttrack', function ()  {
+      nextSong()
+    });
+    ms.setActionHandler('previoustrack', function () {
+      prevSong()
+    });
+    ms.setActionHandler('pause', function() { 
+      myAudio.pause()
+    });
+
+    window.ms = ms
+  }
+}
+
 function PlaySong() {
   let CurrentSong = songs[Current]
   // let CurrentSong = CS
@@ -188,6 +210,21 @@ function PlaySong() {
   alarm.style["background"] = `url(${pic}) no-repeat center center`
   alarm.style["background-size"] = `cover`
   lyricText = CurrentSong.lyric
+  const list = [96, 128, 256, 384, 512]
+  const arr = []
+  list.forEach(item => {
+    arr.push({
+      src: CurrentSong.picurl,
+      sizes: `${item}x${item}`,
+      type: 'image/png'
+    })
+  })
+  window.ms.metadata = new MediaMetadata({
+    title: CurrentSong.name,
+    artist: CurrentSong.artistsname,
+    album: '每天都要开心哟😉!',
+    artwork: arr
+  });
   if (flag) {
     myAudio.play()
     setTimeout(()=>{
@@ -235,6 +272,7 @@ barContainer.addEventListener('click', (e) => {
   update(currentTime, myAudio.duration)
 })
 
+getSession()
 
 window.addEventListener('unhandledrejection', function (event) {
   let txt = ''
