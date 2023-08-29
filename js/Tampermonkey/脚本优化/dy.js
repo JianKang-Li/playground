@@ -268,6 +268,12 @@ class DIY {
     dy.body.appendChild(videoButton)
     dy.body.appendChild(imgButton)
 
+    // 替换历史记录查看
+    const history = document.querySelector('#douyin-header header  ul.pMBwmxGS > ul:nth-child(4)>a')
+    let temp = history.href
+    history.href = `${temp}?showTab=record`
+    history.target = '_blank'
+
     console.log('脚本运行成功')
   }
 })();
