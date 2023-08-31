@@ -1,6 +1,6 @@
 class Validate {
   constructor() {
-    // window._v = this;
+    window._v = this;
   }
 
   is_Email(email) {
