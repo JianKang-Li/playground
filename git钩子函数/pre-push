@@ -1,10 +1,15 @@
 #!/usr/bin/bash
 echo 'hello'
-check_results=`yarn lint` 
-echo "over with: $check_results"
-# if [ "$1" == 0 ]
-# then   
+cd html
+yarn lint
+pid=$!
+result=$?
+wait $pid
+echo "over with: $result"
+# if [ "$result" == 0 ]
+# then
 #   exit 0  #参数正确，退出状态为0
-# else   
+# else
 #   exit 1  #参数错误，退出状态1
 # fi
+exit 1
