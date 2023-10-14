@@ -79,10 +79,11 @@ class DIY {
         'z-index': 9999,
         top: '2rem',
         right: '1rem',
-        color: '#fff',
-        background: '#aaa',
+        color: '#000',
+        background: '#fff',
         padding: '0.5rem',
-        'border-radius': '1rem',
+        'border-radius': '8px',
+        'box-shadow': '0 4px 12px 0 rgba(0, 0, 0, 0.05)',
         "font-size": '14px'
       }
     }, '<span>脚本加载完成</span>')
