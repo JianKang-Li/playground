@@ -1,0 +1,26 @@
+{
+  "manifest_version": 3,
+  "name": "Fished",
+  "version": "0.0.1",
+  "description": "打工人摸鱼",
+  "action": {
+    "default_icon": "Fish.png",
+    "default_title": "Fished",
+    "default_popup": "popup.html"
+  },
+  "icons": {
+    "128": "Fish.png",
+    "48": "Fish.png",
+    "16": "Fish.png"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*/*"
+      ],
+      "js": [
+        "background.js"
+      ]
+    }
+  ]
+}
