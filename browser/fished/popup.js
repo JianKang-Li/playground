@@ -1,5 +1,6 @@
 const messageUrl = 'https://api.vvhan.com/api/60s?type=json'
 const body = document.body
+const messageDom = document.querySelector('.message')
 
 function createDom(type) {
   return document.createElement(type)
@@ -21,7 +22,7 @@ async function Message() {
     dom.appendChild(li)
   }
 
-  body.appendChild(dom)
+  messageDom.appendChild(dom)
 }
 
 window.addEventListener('load', async () => {
