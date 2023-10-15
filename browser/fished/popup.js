@@ -1,30 +1,53 @@
+// 定义URL地址
 const messageUrl = 'https://api.vvhan.com/api/60s?type=json'
+const todayUrl = 'https://apis.jxcxin.cn/api/lishi?format=json'
+const famousUrl = 'https://xiaoapi.cn/API/yiyan.php'
+
 const body = document.body
 const messageDom = document.querySelector('.message')
+const todayDom = document.querySelector('.today')
+const famousDom = document.querySelector('.famous')
 
 function createDom(type) {
   return document.createElement(type)
 }
 
-async function Get(url) {
+async function Get(url, text) {
   return fetch(url).then(async (res) => {
-    return await res.json()
+    return text ? await res.text() : res.json()
   })
 }
 
-async function Message() {
-  const message = await Get(messageUrl)
+async function Factory(param) {
+  const message = await Get(param.url, param.text)
   const dom = createDom('ul')
+  const data = message[param.path]
 
-  for (let item of message.data) {
+  console.log(data)
+
+  if (Array.isArray(data)) {
+    for (let item of data) {
+      const li = createDom('li')
+      li.innerHTML = `<span>${item}</span>`
+      dom.appendChild(li)
+    }
+  } else if (typeof data === 'object') {
+    for (let item in data) {
+      const li = createDom('li')
+      li.innerHTML = `<span>${item}</span>`
+      dom.appendChild(li)
+    }
+  } else {
     const li = createDom('li')
-    li.innerHTML = `<span>${item}</span>`
+    li.innerHTML = `<span>${message}</span>`
     dom.appendChild(li)
   }
 
-  messageDom.appendChild(dom)
+  param.container.appendChild(dom)
 }
 
 window.addEventListener('load', async () => {
-  await Message()
+  await Factory({ url: messageUrl, container: messageDom, path: 'data' })
+  await Factory({ url: todayUrl, container: todayDom, path: 'content' })
+  await Factory({ url: famousUrl, container: famousDom, text: true })
 })
