@@ -2,11 +2,13 @@
 const messageUrl = 'https://api.vvhan.com/api/60s?type=json'
 const todayUrl = 'https://apis.jxcxin.cn/api/lishi?format=json'
 const famousUrl = 'https://xiaoapi.cn/API/yiyan.php'
+const weiboUrl = 'http://api.aykeji.cn/test/wb.php'
 
 const body = document.body
 const messageDom = document.querySelector('.message')
 const todayDom = document.querySelector('.today')
 const famousDom = document.querySelector('.famous')
+const weiboDom = document.querySelector('.weibo')
 
 function createDom(type) {
   return document.createElement(type)
@@ -21,7 +23,7 @@ async function Get(url, text) {
 async function Factory(param) {
   const message = await Get(param.url, param.text)
   const dom = createDom('ul')
-  const data = message[param.path]
+  const data = param.path ? message[param.path] : message
 
   console.log(data)
 
@@ -34,7 +36,7 @@ async function Factory(param) {
   } else if (typeof data === 'object') {
     for (let item in data) {
       const li = createDom('li')
-      li.innerHTML = `<span>${item}</span>`
+      li.innerHTML = `<span>${item}: ${data[item]}</span>`
       dom.appendChild(li)
     }
   } else {
@@ -50,4 +52,5 @@ window.addEventListener('load', async () => {
   await Factory({ url: messageUrl, container: messageDom, path: 'data' })
   await Factory({ url: todayUrl, container: todayDom, path: 'content' })
   await Factory({ url: famousUrl, container: famousDom, text: true })
+  await Factory({ url: weiboUrl, container: weiboDom })
 })
