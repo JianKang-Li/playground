@@ -1,8 +1,9 @@
 // 定义URL地址
-const messageUrl = 'https://api.vvhan.com/api/60s?type=json'
-const todayUrl = 'https://apis.jxcxin.cn/api/lishi?format=json'
-const famousUrl = 'https://xiaoapi.cn/API/yiyan.php'
-const weiboUrl = 'http://api.aykeji.cn/test/wb.php'
+const time = new Date().getTime()
+const messageUrl = `https://api.vvhan.com/api/60s?type=json&t=${time}`
+const todayUrl = `https://apis.jxcxin.cn/api/lishi?format=json&t=${time}`
+const famousUrl = `https://xiaoapi.cn/API/yiyan.php?t=${time}`
+const weiboUrl = `http://api.aykeji.cn/test/wb.php?t=${time}`
 
 const body = document.body
 const messageDom = document.querySelector('.message')
