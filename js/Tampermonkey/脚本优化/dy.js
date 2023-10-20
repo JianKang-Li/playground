@@ -118,7 +118,15 @@ class DIY {
   'use strict';
 
   window.onload = function () {
-    this.hiddes = ['.OFZHdvpl', '.account', '.MN8dFKun.Xg7imLcG.wNX5IKkc', "#video-info-wrap > div.video-info-detail > div.under-title-tag > div > div", "#dy0", '#dy1', "#speedControl", ".lPytbapz.XClSex3D.NBmn3s18.mnN5bEWt", ".xgplayer-playswitch.JHxtTxhQ"]
+    const hiddes = ['.OFZHdvpl', '.account', '.MN8dFKun.Xg7imLcG.wNX5IKkc', "#video-info-wrap > div.video-info-detail > div.under-title-tag > div > div", "#dy0", '#dy1', "#speedControl", ".lPytbapz.XClSex3D.NBmn3s18.mnN5bEWt", ".xgplayer-playswitch.JHxtTxhQ"]
+    const UserImgSelectors = ['#slideMode > div.JrMwkvQy.playerContainer.YFEqUSvt.WQ9IVUcw > div.zK9etl_2.slider-video > div > div.oLQoaUK3.rJkNu_iK.focusPanel > div img',
+      '#sliderVideo> div.JrMwkvQy.playerContainer.YFEqUSvt.dLCldFlr > div.zK9etl_2.slider-video > div > div.oLQoaUK3.rJkNu_iK.focusPanel img']
+    const VideoSelector = 'video:not(.UFQuOSb4)'
+    const normalImgSelector = '.playerContainer .focusPanel'
+    const authorSelector = ['div.account-name > span > span > span > span > span > span > span',
+      'div.account-name > span > span > span > span > span > span > span',
+      '#relatedVideoCard > div > div.uKuFKJ0b.IXOrpi3W > div > div > div.FJDQuKlF.MHDJgSQA.sktxdhWs > div.AVi4_ejO > div > a > div.h2xNBxgs.author-card-user-name > span:nth-child(2) > span > span > span > span > span']
+    const historySelector = '#douyin-header header  ul.pMBwmxGS > ul:nth-child(4)>a'
     const dy = new DIY()
 
     const videoButton = dy.createDom('button', {
@@ -137,36 +145,22 @@ class DIY {
     }, '视频下载')
 
     videoButton.addEventListener('click', function () {
-      const videos = document.querySelectorAll('video:not(.UFQuOSb4)')
+      const videos = document.querySelectorAll(VideoSelector)
       const len = videos.length
       let video;
       let index = 0
-      switch (len) {
-        case 1: {
-          index = 0
-          video = videos[0];
-          break;
-        }
-        case 2: {
-          index = 0
-          video = videos[0];
-          break;
-        }
-        case 3: {
-          index = 1
-          video = videos[1];
-          break;
-        }
-        case 4: {
-          index = 3
-          video = videos[3]
-          break;
-        }
+      const rules = {
+        1: 0,
+        2: 0,
+        3: 1,
+        4: 3
       }
+      video = videos[rules[len]]
+      index = rules[len]
       let src = video?.firstChild?.src || video?.src || null;
       const date = new Date()
-      let author = document.querySelectorAll('div.account-name > span > span > span > span > span > span > span')[index]?.innerText || document.querySelectorAll(' div.account-name > span > span > span > span > span > span > span')[index]?.innerText
-        || document.querySelector("#relatedVideoCard > div > div.uKuFKJ0b.IXOrpi3W > div > div > div.FJDQuKlF.MHDJgSQA.sktxdhWs > div.AVi4_ejO > div > a > div.h2xNBxgs.author-card-user-name > span:nth-child(2) > span > span > span > span > span")?.innerText || ''
+      let author = document.querySelectorAll(authorSelector[0])[index]?.innerText || document.querySelectorAll(authorSelector[1])[index]?.innerText
+        || document.querySelector(authorSelector[2])?.innerText || ''
       author = author.slice(1, author.length)
       const filename = `${author}-${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}_${date.getHours()}_${date.getMinutes()}_${date.getSeconds()}.mp4`
       if (!src) {
@@ -202,35 +196,22 @@ class DIY {
       const len = videos.length
       let video;
       let index = 1
-      switch (len) {
-        case 1: {
-          video = videos[0];
-          index = 0
-          break;
-        }
-        case 2: {
-          video = videos[0];
-          index = 0
-          break;
-        }
-        case 3: {
-          video = videos[1];
-          index = 1
-          break;
-        }
-        case 4: {
-          video = videos[3]
-          index = 3
-          break;
-        }
+      const rules = {
+        1: 0,
+        2: 0,
+        3: 1,
+        4: 3
       }
+      video = videos[rules[len]]
+      index = rules[len]
       video.pause()
       let imgs;
       if (location.href.indexOf("user") !== -1) {
-        imgs = document.querySelectorAll('.dySwiperSlide img')
+        const container = UserImgSelectors.find(container => document.querySelector(container))
+        imgs = document.querySelectorAll(container)
       } else {
         try {
-          imgs = document.querySelectorAll(".playerContainer .focusPanel")
+          imgs = document.querySelectorAll(normalImgSelector)
           switch (imgs.length) {
             case 1: {
               imgs = imgs[0].getElementsByTagName('img')
@@ -245,7 +226,7 @@ class DIY {
               break;
           }
         } catch {
-          alert('没有图片')
+          dy.notice('没有图片')
           return;
         }
       }
@@ -257,7 +238,7 @@ class DIY {
       })
       // console.log(set);
       if (set.size === 0) {
-        alert("获取图片失败")
+        dy.notice("获取图片失败")
         return;
       } else {
         set.forEach((img) => {
@@ -270,7 +251,7 @@ class DIY {
     dy.body.appendChild(imgButton)
 
     // 替换历史记录查看
-    const history = document.querySelector('#douyin-header header  ul.pMBwmxGS > ul:nth-child(4)>a')
+    const history = document.querySelector(historySelector)
     let temp = history.href
     history.href = `${temp}?showTab=record`
     history.target = '_blank'
