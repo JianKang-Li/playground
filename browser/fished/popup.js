@@ -23,11 +23,14 @@ async function Get(url, text) {
 
 async function Factory(param) {
   const message = await Get(param.url, param.text)
-  const dom = createDom('ul')
   const data = param.path ? message[param.path] : message
+  if (param.preFuc) {
+    param.preFuc(data, param)
+    return
+  }
 
   console.log(data)
-
+  const dom = createDom('ul')
   if (Array.isArray(data)) {
     for (let item of data) {
       const li = createDom('li')
@@ -49,9 +52,19 @@ async function Factory(param) {
   param.container.appendChild(dom)
 }
 
+function addLink(arr, param) {
+  const dom = createDom('ul')
+  for (const key in arr) {
+    const li = createDom('li')
+    li.innerHTML = `<a href="https://s.weibo.com/weibo?q=${arr[key]}" target="_blank">${key}: ${arr[key]}</a>`
+    dom.appendChild(li)
+  }
+  param.container.appendChild(dom)
+}
+
 window.addEventListener('load', async () => {
   await Factory({ url: messageUrl, container: messageDom, path: 'data' })
   await Factory({ url: todayUrl, container: todayDom, path: 'content' })
   await Factory({ url: famousUrl, container: famousDom, text: true })
-  await Factory({ url: weiboUrl, container: weiboDom })
+  await Factory({ url: weiboUrl, container: weiboDom, preFuc: addLink })
 })
