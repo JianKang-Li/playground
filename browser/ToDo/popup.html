@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ToDo</title>
+  <style>
+    html,
+    body {
+      padding: 0;
+      margin: 0;
+    }
+
+    .container {
+      min-width: 250px;
+      max-height: 200px;
+      overflow-y: scroll;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+    }
+
+    ul {
+      list-style: none;
+      margin-block-start: 0;
+      margin-inline-start: 0;
+      padding-inline-start: 0;
+    }
+
+    a {
+      color: #000;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div><input type="text" id="todo"><button onclick="add()">添加</button></div>
+    <div id="todos"></div>
+  </div>
+  <script src="./popup.js"></script>
+</body>
+
+</html>

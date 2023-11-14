@@ -1,0 +1,26 @@
+{
+  "manifest_version": 3,
+  "name": "ToDo",
+  "version": "0.0.1",
+  "description": "ToDo",
+  "action": {
+    "default_icon": "ToDo.png",
+    "default_title": "ToDo",
+    "default_popup": "popup.html"
+  },
+  "icons": {
+    "128": "ToDo.png",
+    "48": "ToDo.png",
+    "16": "ToDo.png"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*/*"
+      ],
+      "js": [
+        "background.js"
+      ]
+    }
+  ]
+}
