@@ -11,6 +11,7 @@
     body {
       padding: 0;
       margin: 0;
+      font-size: 16px;
     }
 
     .container {
@@ -29,16 +30,47 @@
       padding-inline-start: 0;
     }
 
-    a {
-      color: #000;
+    .delete::after {
+      content: 'x';
+      font-style: normal;
+    }
+
+    .delete {
+      cursor: pointer;
+    }
+
+    .addArea {
+      position: fixed;
+      top: 0;
+    }
+
+    #todos {
+      margin-top: 30px;
+    }
+
+    #todo {
+      padding: 2px 5px;
+    }
+
+    #todo:focus {
+      outline: none;
+    }
+
+    #addBtn {
+      background-color: rgb(27, 107, 172);
+      border: 1px solid #eee;
+      color: #fff;
+      padding: 5px;
+      border-radius: 5px;
     }
   </style>
 </head>
 
 <body>
   <div class="container">
-    <div><input type="text" id="todo"><button onclick="add()">添加</button></div>
+    <div class="addArea"><input type="text" id="todo"><button id="addBtn">添加</button></div>
     <div id="todos"></div>
+    <div><button id="clean">清空</button></div>
   </div>
   <script src="./popup.js"></script>
 </body>
