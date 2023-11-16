@@ -76,6 +76,7 @@ function add() {
     todos[key] = false
     local.set({ 'todo': todos }, () => {
       render()
+      input.value = ''
     })
   })
 }
