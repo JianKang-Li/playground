@@ -24,8 +24,6 @@ function render() {
 
         if (todos[key]) {
           li.checked = true
-        } else {
-          li.checked = false
         }
       })
       addEvent()
