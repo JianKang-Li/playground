@@ -13,14 +13,14 @@ function render() {
       const ul = document.createElement('ul')
 
       ul.setAttribute('class', 'lists')
-      Object.keys(todos).forEach(key => {
+      Object.keys(todos).forEach((key, index) => {
         const li = document.createElement('li')
-        li.innerHTML = `<input type="checkbox" data-key="${key}" id="li_${key}"/><span>${key}</span>&nbsp;&nbsp;&nbsp;&nbsp;<i class="delete" data-key="${key}"/>`
+        li.innerHTML = `<input type="checkbox" data-key="${key}" id="li_${index}"/><span>${key}</span>&nbsp;&nbsp;&nbsp;&nbsp;<i class="delete" data-key="${key}"/>`
         ul.appendChild(li)
       })
       container.appendChild(ul)
-      Object.keys(todos).forEach(key => {
-        const li = document.querySelector(`#li_${key}`)
+      Object.keys(todos).forEach((key, index) => {
+        const li = document.querySelector(`#li_${index}`)
 
         if (todos[key]) {
           li.checked = true
