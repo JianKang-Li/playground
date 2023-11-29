@@ -87,3 +87,9 @@ clean.addEventListener('click', () => {
 window.addEventListener('load', () => {
   render()
 })
+
+window.addEventListener('keyup', (e) => {
+  if (e.key === 'Enter') {
+    add()
+  }
+})
