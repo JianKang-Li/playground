@@ -119,13 +119,13 @@ class DIY {
 
   window.onload = function () {
     const hiddes = ['.OFZHdvpl', '.account', '.MN8dFKun.Xg7imLcG.wNX5IKkc', "#video-info-wrap > div.video-info-detail > div.under-title-tag > div > div", "#dy0", '#dy1', "#speedControl", ".lPytbapz.XClSex3D.NBmn3s18.mnN5bEWt", ".xgplayer-playswitch.JHxtTxhQ"]
-    const UserImgSelectors = ['#slideMode > div.JrMwkvQy.playerContainer.YFEqUSvt.WQ9IVUcw > div.zK9etl_2.slider-video > div > div.oLQoaUK3.rJkNu_iK.focusPanel > div img',
-      '#sliderVideo> div.JrMwkvQy.playerContainer.YFEqUSvt.dLCldFlr > div.zK9etl_2.slider-video > div > div.oLQoaUK3.rJkNu_iK.focusPanel img']
+    const UserImgSelectors = ['#sliderVideo > div.UsWJJZhB.playerContainer.hide-animation-if-not-suport-gpu.jjWFxVjy.dOluRUuw > div.O8onIiBq.slider-video > div > div.aCa1L065.rLhjZIAa.focusPanel > div img']
     const VideoSelector = 'video:not(.UFQuOSb4)'
     const normalImgSelector = '.playerContainer .focusPanel'
     const authorSelector = ['div.account-name > span > span > span > span > span > span > span',
       'div.account-name > span > span > span > span > span > span > span',
       '#relatedVideoCard > div > div.uKuFKJ0b.IXOrpi3W > div > div > div.FJDQuKlF.MHDJgSQA.sktxdhWs > div.AVi4_ejO > div > a > div.h2xNBxgs.author-card-user-name > span:nth-child(2) > span > span > span > span > span']
+    const createTime = '#video-info-wrap > div.video-info-detail > div.account > div.video-create-time'
     const historySelector = '#douyin-header header  ul.pMBwmxGS > ul:nth-child(4)>a'
     const dy = new DIY()
 
@@ -162,7 +162,8 @@ class DIY {
       let author = document.querySelectorAll(authorSelector[0])[index]?.innerText || document.querySelectorAll(authorSelector[1])[index]?.innerText
         || document.querySelector(authorSelector[2])?.innerText || ''
       author = author.slice(1, author.length)
-      const filename = `${author}-${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}_${date.getHours()}_${date.getMinutes()}_${date.getSeconds()}.mp4`
+      const time = document.querySelector(createTime)?.innerText.slice(2) || `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}_${date.getHours()}_${date.getMinutes()}_${date.getSeconds()}`
+      const filename = `${author}-${time}.mp4`
       if (!src) {
         dy.notice('获取url地址失败')
       }
