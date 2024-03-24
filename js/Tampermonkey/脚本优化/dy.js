@@ -122,11 +122,10 @@ class DIY {
     const UserImgSelectors = ['#sliderVideo > div.UsWJJZhB.playerContainer.hide-animation-if-not-suport-gpu.jjWFxVjy.dOluRUuw > div.O8onIiBq.slider-video > div > div.aCa1L065.rLhjZIAa.focusPanel > div img']
     const VideoSelector = 'video:not(.UFQuOSb4)'
     const normalImgSelector = '.playerContainer .focusPanel'
-    const authorSelector = ['div.account-name > span > span > span > span > span > span > span',
+    const authorSelector = [
       'div.account-name > span > span > span > span > span > span > span',
       '#relatedVideoCard > div > div.uKuFKJ0b.IXOrpi3W > div > div > div.FJDQuKlF.MHDJgSQA.sktxdhWs > div.AVi4_ejO > div > a > div.h2xNBxgs.author-card-user-name > span:nth-child(2) > span > span > span > span > span']
     const createTime = '#video-info-wrap > div.video-info-detail > div.account > div.video-create-time'
-    const historySelector = '#douyin-header header  ul.pMBwmxGS > ul:nth-child(4)>a'
     const dy = new DIY()
 
     const videoButton = dy.createDom('button', {
@@ -164,6 +163,7 @@ class DIY {
       author = author.slice(1, author.length)
       const time = document.querySelector(createTime)?.innerText.slice(2) || `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}_${date.getHours()}_${date.getMinutes()}_${date.getSeconds()}`
       const filename = `${author}-${time}.mp4`
+      console.log("视频", author, src)
       if (!src) {
         dy.notice('获取url地址失败')
       }
@@ -237,7 +237,7 @@ class DIY {
       imgs.forEach((item) => {
         set.add(item.src)
       })
-      // console.log(set);
+      console.log('图片', set)
       if (set.size === 0) {
         dy.notice("获取图片失败")
         return;
@@ -250,12 +250,6 @@ class DIY {
 
     dy.body.appendChild(videoButton)
     dy.body.appendChild(imgButton)
-
-    // 替换历史记录查看
-    const history = document.querySelector(historySelector)
-    let temp = history.href
-    history.href = `${temp}?showTab=record`
-    history.target = '_blank'
 
     console.log('脚本运行成功')
   }
