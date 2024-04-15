@@ -6,10 +6,21 @@ const searchbar = document.querySelector('.searchbar')
 let LKWebShell = {
   bg: '#000',
   fontSize: "1rem",
-  bookmarks: {}
+  bookmarks: {},
+  defaultSource: 'google',
+  openInNew: false,
+  search_source: {
+    baidu: "http://baidu.com/s?wd=",
+    baidukf: "https://kaifa.baidu.com/searchPage?wd=",
+    npm: "https://www.npmjs.com/search?q=",
+    juejin: "https://juejin.cn/search?query=",
+    github: "https://github.com/search?q=",
+    bing: "https://www.bing.com/search?q=",
+    google: "https://www.google.com/search?q=",
+  }
 }
 
-// 操作localstorage
+// 操作localStorage
 class Local {
   set(key, value) {
     return localStorage.setItem(key, value)
@@ -25,23 +36,18 @@ class Local {
 }
 
 const local = new Local()
-
-// 搜索源
-const search_source = {
-  baidu: "http://baidu.com/s?wd=",
-  baidukf: "https://kaifa.baidu.com/searchPage?wd=",
-  npm: "https://www.npmjs.com/search?q=",
-  juejin: "https://juejin.cn/search?query=",
-  github: "https://github.com/search?q=",
-  bing: "https://www.bing.com/search?q=",
-  google: "https://www.google.com/search?q=",
-}
-
+const search_source = LKWebShell.search_source
 // 搜索实现
-function search(source, key) {
-  let sourceUrl = search_source[source]
+function search(key, source) {
+  let sourceUrl = search_source[source] || search_source[LKWebShell.defaultSource]
+  const href = `${sourceUrl}${key}`
+
   if (sourceUrl) {
-    window.open(`${sourceUrl}${key}`)
+    if (LKWebShell['openInNew']) {
+      window.open(href)
+    } else {
+      window.location.href = href
+    }
   } else {
     print(`Can't identify the search source at ${source}`, 'red')
   }

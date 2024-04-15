@@ -1,49 +1,16 @@
-// 存储已输入指令
-const commandStack = []
-
-// 记录当前指令下标
-let commandIndex = 0
-
-// 解析指令
-function Analysis() {
-  const value = input.value.trim()
-  commandStack.push(value)
-  commandIndex++
-  let params = value.split(" ").filter((value) => {
-    return value != ''
-  })
-  let command = params[0].toLowerCase()
-  params.shift()
-  if (commands[command]) {
-    commands[command].run(params)
-  } else {
-    print(`没有${command}指令，请输入help查看支持的命令`, 'red')
-  }
-}
-
-// 参数判断
-function paramsJu(num, args) {
-  return args.length === num
-}
-
-function ParamsWarn(command, params) {
-  print(`${command} needs ${params} params`, 'red')
-}
-
-// 定义指令
 const commands = {
   search: {
-    description: "用于搜索，第一个参数为搜索源，第二个参数为搜索关键词",
+    description: "用于搜索，第一个参数为关键词，第二个参数为搜索源",
     detail: `search source keyword`,
     run: function () {
       if (paramsJu(2, arguments[0])) {
         let type = arguments[0][0]
         let key = arguments[0][1]
-        search(type, key)
+        search(key, type)
         print("Successful!", 'green')
       } else if (paramsJu(1, arguments[0])) {
         let key = arguments[0][0]
-        search('baidu', key)
+        search(key)
         print("Successful!", 'green')
       }
       else {
