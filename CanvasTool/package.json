@@ -2,13 +2,13 @@
   "name": "canvastool",
   "version": "1.0.0",
   "description": "",
+  "author": "",
+  "license": "ISC",
   "main": "index.js",
   "scripts": {
     "dev": "cross-env NODE_ENV=development webpack serve",
     "build": "cross-env NODE_ENV=production webpack"
   },
-  "author": "",
-  "license": "ISC",
   "devDependencies": {
     "cross-env": "^7.0.3",
     "html-webpack-plugin": "^5.5.0",

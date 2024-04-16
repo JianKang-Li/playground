@@ -1,4 +1,4 @@
-function notify({message='Tip', position='right'}) {
+function notify({ message = 'Tip', position = 'right' }) {
   const body = document.body
   const span = document.createElement('span')
   span.style = `position: fixed;
@@ -10,7 +10,7 @@ function notify({message='Tip', position='right'}) {
   z-index:9999;
   box-shadow': '0 4px 12px 0 rgba(0, 0, 0, 0.05);
   `
-  span.innerText = message
+  span.textContent = message
   body.appendChild(span)
   setTimeout(() => {
     span.remove()

@@ -10,41 +10,42 @@
 // ==/UserScript==
 
 (function () {
-  'use strict';
-  const replaceJpegWithJpg = false;
+  'use strict'
+  const replaceJpegWithJpg = false
   window.onload = function () {
     function getArticleNode(target) {
-      while (target.tagName !== 'ARTICLE') {
+      while (target.tagName !== 'ARTICLE')
         target = target.parentNode
-      }
+
       return target
     }
     function down(urls, filename) {
-      let arrs = urls.split(',')
-      let url = arrs[0].split(' ')[0]
+      const arrs = urls.split(',')
+      const url = arrs[0].split(' ')[0]
       downloadResource(url, filename)
     }
 
     function forceDownload(blob, filename, extension) {
       // ref: https://stackoverflow.com/questions/49474775/chrome-65-blocks-cross-origin-a-download-client-side-workaround-to-force-down
-      var a = document.createElement('a');
-      if (replaceJpegWithJpg) extension = extension.replace('jpeg', 'jpg')
-      a.download = filename + '.' + extension;
-      a.href = blob;
+      const a = document.createElement('a')
+      if (replaceJpegWithJpg)
+        extension = extension.replace('jpeg', 'jpg')
+      a.download = `${filename}.${extension}`
+      a.href = blob
       // For Firefox https://stackoverflow.com/a/32226068
-      document.body.appendChild(a);
-      a.click();
-      a.remove();
+      document.body.appendChild(a)
+      a.click()
+      a.remove()
     }
 
     // Current blob size limit is around 500MB for browsers
     function downloadResource(url, filename) {
-      console.log("lhk", url, filename);
+      console.log('lhk', url, filename)
       if (url.startsWith('blob:')) {
-        forceDownload(url, filename, 'mp4');
-        return;
+        forceDownload(url, filename, 'mp4')
+        return
       }
-      console.log(`Dowloading ${url}`);
+      console.log(`Dowloading ${url}`)
       // ref: https://stackoverflow.com/questions/49474775/chrome-65-blocks-cross-origin-a-download-client-side-workaround-to-force-down
       fetch(url, {
         headers: new Headers({
@@ -53,32 +54,32 @@
         mode: 'cors',
       })
         .then(response => response.blob())
-        .then(blob => {
-          const extension = blob.type.split('/').pop();
-          let blobUrl = window.URL.createObjectURL(blob);
-          forceDownload(blobUrl, filename, extension);
+        .then((blob) => {
+          const extension = blob.type.split('/').pop()
+          const blobUrl = window.URL.createObjectURL(blob)
+          forceDownload(blobUrl, filename, extension)
         })
-        .catch(e => console.error(e));
+        .catch(e => console.error(e))
     }
 
     function DateFormat() {
       const date = new Date()
-      let day = date.getFullYear() + date.getMonth() + 1 + date.getDate()
-      let time = date.getHours() + date.getMinutes() + date.getSeconds()
-      return day + "_" + time
+      const day = date.getFullYear() + date.getMonth() + 1 + date.getDate()
+      const time = date.getHours() + date.getMinutes() + date.getSeconds()
+      return `${day}_${time}`
     }
 
-
     function download() {
-      const imgs = document.querySelectorAll("._aagw")
+      const imgs = document.querySelectorAll('._aagw')
       imgs.forEach((item) => {
-        if (item.downready === '1') return;
+        if (item.downready === '1')
+          return
         item.addEventListener('click', (e) => {
           e.preventDefault()
-          let article = getArticleNode(e.target)
-          let up = article.getElementsByTagName('header')[0].getElementsByTagName('span')[0].firstChild.innerText
-          let date = DateFormat()
-          let filename = up + date
+          const article = getArticleNode(e.target)
+          const up = article.getElementsByTagName('header')[0].getElementsByTagName('span')[0].firstChild.textContent
+          const date = DateFormat()
+          const filename = up + date
           down(item.parentNode.getElementsByTagName('img')[0].srcset, filename)
         })
         item.downready = '1'
@@ -93,4 +94,4 @@
       download()
     })
   }
-})();
+})()

@@ -9,16 +9,15 @@ function Analysis() {
   const value = input.value.trim()
   commandStack.push(value)
   commandIndex++
-  let params = value.split(" ").filter((value) => {
-    return value != ''
+  const params = value.split(' ').filter((value) => {
+    return value !== ''
   })
-  let command = params[0].toLowerCase()
+  const command = params[0].toLowerCase()
   params.shift()
-  if (commands[command]) {
+  if (commands[command])
     commands[command].run(params)
-  } else {
+  else
     print(`没有${command}指令，请输入help查看支持的命令`, 'red')
-  }
 }
 
 // 参数判断

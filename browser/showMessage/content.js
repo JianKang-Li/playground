@@ -4,11 +4,11 @@ div.style = 'display:none;position:fixed;top:0;right:0;width:250px;height:250px;
 div.innerHTML = `<div id='showMessage' style="padding:10px;">没有选择元素</div><button id='cancelBtn' style='border:none;background-color:#eee;padding:5px 20px;border-radius:5px;margin-top:10px;'>隐藏</button>`
 document.body.appendChild(div)
 const pop = document.querySelector('#stylepop')
-function update(e){
-    const ele = e.target
-    const styles = window.getComputedStyle(ele)
-    const div = document.querySelector('#showMessage')
-    div.innerHTML = `
+function update(e) {
+  const ele = e.target
+  const styles = window.getComputedStyle(ele)
+  const div = document.querySelector('#showMessage')
+  div.innerHTML = `
     <p style='line-height:1;margin:0;padding:0;'>目标：${e.target.nodeName}</p>
     <p style='line-height:1;margin:0;padding:0;'>类：${e.target.classList}</p>
     <p style='line-height:1;margin:0;padding:0;'>宽度：${styles.width}</p>
@@ -21,22 +21,21 @@ function update(e){
     <p style='line-height:1;margin:0;padding:0;'>字号：${styles.fontSize}</p>
     `
 }
-document.body.addEventListener('click',update)
+document.body.addEventListener('click', update)
 
-if (pop.style.display === 'none') {
+if (pop.style.display === 'none')
   pop.style.display = 'block'
-}
 
 const cancel = document.querySelector('#cancelBtn')
 cancel.onclick = (e) => {
   e.stopPropagation()
   pop.style.display = 'none'
-  document.body.removeEventListener('click',update)
+  document.body.removeEventListener('click', update)
 }
 
-chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
-  if(request==='open'){
-    pop.style.display='block'
-    document.body.addEventListener('click',update)
+chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+  if (request === 'open') {
+    pop.style.display = 'block'
+    document.body.addEventListener('click', update)
   }
-});
+})

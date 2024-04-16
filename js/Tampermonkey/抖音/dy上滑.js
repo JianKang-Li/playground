@@ -13,39 +13,38 @@
 data-state="normal" data-index="8"
 */
 (function () {
-  'use strict';
+  'use strict'
   function up() {
     const upB = document.querySelector('div[data-e2e=video-switch-prev-arrow]')
     const videos = document.querySelectorAll('video')
     const len = videos.length
-    let video;
+    let video
     switch (len) {
       case 1: {
-        video = videos[0];
-        break;
+        video = videos[0]
+        break
       }
       case 2: {
-        video = videos[0];
-        break;
+        video = videos[0]
+        break
       }
       case 3: {
-        video = videos[1];
-        break;
+        video = videos[1]
+        break
       }
       case 4: {
         video = videos[3]
-        break;
+        break
       }
     }
     const btn = document.querySelector('#upB')
-    if (!btn) {
+    if (!btn)
       add()
-    }
+
     video && video.addEventListener('ended', () => {
       // console.log(typeof btn.classList);
-      if (btn && btn.classList.value.split(' ').includes('xg-switch-checked')) {
+      if (btn && btn.classList.value.split(' ').includes('xg-switch-checked'))
         upB.click()
-      }
     })
   }
 
@@ -61,7 +60,7 @@ data-state="normal" data-index="8"
     sbtn.id = 'up'
     sbtn.setAttribute('class', 'xgplayer-immersive-switch-setting immersive-switch')
     container && container.appendChild(sbtn)
-    sbtn.addEventListener('click', function () {
+    sbtn.addEventListener('click', () => {
       const btn = document.querySelector('#upB')
       btn.classList.toggle('xg-switch-checked')
       up()
@@ -70,19 +69,14 @@ data-state="normal" data-index="8"
   function done() {
     const con = document.querySelector('xg-video-container')
     const btn = document.querySelector('#upB')
-    if (con && !btn) {
+    if (con && !btn)
       add()
-    }
-    else {
-      return
-    }
   }
   window.onload = function () {
-    let observer = new MutationObserver(done);
-    const targetNode = document.querySelector('body');
+    const observer = new MutationObserver(done)
+    const targetNode = document.querySelector('body')
     // 观察器的配置（需要观察什么变动）
-    const config = { attributes: true, childList: true, subtree: true };
-    observer.observe(targetNode, config);
+    const config = { attributes: true, childList: true, subtree: true }
+    observer.observe(targetNode, config)
   }
-
-})();
+})()

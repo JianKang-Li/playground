@@ -5,7 +5,7 @@ const todayUrl = `https://apis.jxcxin.cn/api/lishi?format=json&t=${time}`
 const famousUrl = `https://xiaoapi.cn/API/yiyan.php?t=${time}`
 const weiboUrl = `http://api.aykeji.cn/test/wb.php?t=${time}`
 
-const body = document.body
+// const body = document.body
 const messageDom = document.querySelector('.message')
 const todayDom = document.querySelector('.today')
 const famousDom = document.querySelector('.famous')
@@ -29,21 +29,23 @@ async function Factory(param) {
     return
   }
 
-  console.log(data)
+  console.warn(data)
   const dom = createDom('ul')
   if (Array.isArray(data)) {
-    for (let item of data) {
+    for (const item of data) {
       const li = createDom('li')
       li.innerHTML = `<span>${item}</span>`
       dom.appendChild(li)
     }
-  } else if (typeof data === 'object') {
-    for (let item in data) {
+  }
+  else if (typeof data === 'object') {
+    for (const item in data) {
       const li = createDom('li')
       li.innerHTML = `<span>${item}: ${data[item]}</span>`
       dom.appendChild(li)
     }
-  } else {
+  }
+  else {
     const li = createDom('li')
     li.innerHTML = `<span>${message}</span>`
     dom.appendChild(li)

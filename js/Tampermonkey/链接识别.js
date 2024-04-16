@@ -13,9 +13,9 @@
 // ==/UserScript==
 
 (function () {
-  "use strict";
+  'use strict'
 
-  const style = document.createElement("style")
+  const style = document.createElement('style')
   style.innerHTML = `
   .poptext {
     width: 15rem;
@@ -63,51 +63,51 @@
   }
 `
 
-  const body = document.querySelector("body")
+  const body = document.querySelector('body')
 
   body.appendChild(style)
-
 
   // 增加选择网址弹出选项
   window.addEventListener('mouseup', () => {
     let url = window.getSelection().toString().trim()
-    let s = /^http(s)?:\/\//.test(url)
-    let t = /^(?=^.{3,255}$)[a-zA-Z0-9][-a-zA-Z0-9]{0,62}(\.[a-zA-Z0-9][-a-zA-Z0-9]{0,62})+$/.test(url);
+    const s = /^http(s)?:\/\//.test(url)
+    const t = /^(?=^.{3,255}$)[a-zA-Z0-9][-a-zA-Z0-9]{0,62}(\.[a-zA-Z0-9][-a-zA-Z0-9]{0,62})+$/.test(url)
     if (s || t) {
       const body = document.body
       const pop = document.createElement('div')
       pop.className = 'poptext'
-      pop.innerText = `发现链接地址${url}`
+      pop.textContent = `发现链接地址${url}`
       const button1 = document.createElement('button')
-      button1.innerText = '打开'
+      button1.textContent = '打开'
       const button2 = document.createElement('button')
-      button2.innerText = '复制'
+      button2.textContent = '复制'
       const button3 = document.createElement('button')
       button3.className = 'qx'
-      button3.innerText = '取消'
+      button3.textContent = '取消'
       const buttons = document.createElement('div')
       buttons.appendChild(button1)
       buttons.appendChild(button2)
       buttons.appendChild(button3)
       button1.addEventListener('click', () => {
-        if (t) {
-          url = "http://" + url
-        }
+        if (t)
+          url = `http://${url}`
+
         window.open(url)
         pop.remove()
       })
       button2.addEventListener('click', () => {
-        let theClipboard = navigator.clipboard;
+        const theClipboard = navigator.clipboard
         if (theClipboard) {
-          let promise = theClipboard.writeText(url)
-        } else {
+          const promise = theClipboard.writeText(url)
+        }
+        else {
           // 兼容不支持clipboard
-          let copyInput = document.createElement('input');//创建input元素
-          document.body.appendChild(copyInput);//向页面底部追加输入框
-          copyInput.setAttribute('value', url);//添加属性，将url赋值给input元素的value属性
-          copyInput.select();//选择input元素
-          document.execCommand("Copy");//执行复制命令
-          copyInput.remove();//删除动态创建的节点
+          const copyInput = document.createElement('input')// 创建input元素
+          document.body.appendChild(copyInput)// 向页面底部追加输入框
+          copyInput.setAttribute('value', url)// 添加属性，将url赋值给input元素的value属性
+          copyInput.select()// 选择input元素
+          document.execCommand('Copy')// 执行复制命令
+          copyInput.remove()// 删除动态创建的节点
         }
         pop.remove()
       })
@@ -119,4 +119,4 @@
       window.getSelection().removeAllRanges()
     }
   })
-})();
+})()

@@ -1,11 +1,11 @@
 // rem转px
 /**
-* @param {Number} rem rem值
-* @return {Number} 对应px值
-* 
-**/
+ * @param {number} rem rem值
+ * @return {number} 对应px值
+ *
+ */
 export default function rem2px(rem) {
-  const docpx = getComputedStyle(document.documentElement)["font-size"]
-  let px = rem * parseInt(docpx)
+  const docpx = getComputedStyle(document.documentElement)['font-size']
+  const px = rem * Number.parseInt(docpx)
   return px
 }

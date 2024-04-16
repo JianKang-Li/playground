@@ -5,7 +5,7 @@ const clean = document.querySelector('#clean')
 const local = chrome.storage.local
 
 function render() {
-  local.get('todo', res => {
+  local.get('todo', (res) => {
     const todos = res.todo
     container.innerHTML = ''
 
@@ -22,9 +22,8 @@ function render() {
       Object.keys(todos).forEach((key, index) => {
         const li = document.querySelector(`#li_${index}`)
 
-        if (todos[key]) {
+        if (todos[key])
           li.checked = true
-        }
       })
       addEvent()
     }
@@ -36,26 +35,27 @@ function addEvent() {
 
   ul.addEventListener('click', (e) => {
     if (!e.target.classList.value.includes('delete')) {
-      const key = e.target.dataset['key']
+      const key = e.target.dataset.key
       const value = e.target.checked
 
-      local.get('todo', res => {
-        let todos = {}
-        Object.keys(res.todo).forEach(item => {
+      local.get('todo', (res) => {
+        const todos = {}
+        Object.keys(res.todo).forEach((item) => {
           todos[item] = res.todo[item]
         })
 
         todos[key] = value
-        local.set({ 'todo': todos })
+        local.set({ todo: todos })
       })
-    } else {
-      const key = e.target.dataset['key']
+    }
+    else {
+      const key = e.target.dataset.key
 
-      local.get('todo', res => {
-        let todos = res.todo
+      local.get('todo', (res) => {
+        const todos = res.todo
 
         delete todos[key]
-        local.set({ 'todo': todos }, () => {
+        local.set({ todo: todos }, () => {
           render()
         })
       })
@@ -64,15 +64,15 @@ function addEvent() {
 }
 
 function add() {
-  local.get('todo', res => {
+  local.get('todo', (res) => {
     const key = input.value
     let todos = res.todo
 
-    if (!todos) {
+    if (!todos)
       todos = {}
-    }
+
     todos[key] = false
-    local.set({ 'todo': todos }, () => {
+    local.set({ todo: todos }, () => {
       render()
       input.value = ''
     })
@@ -89,7 +89,6 @@ window.addEventListener('load', () => {
 })
 
 window.addEventListener('keyup', (e) => {
-  if (e.key === 'Enter') {
+  if (e.key === 'Enter')
     add()
-  }
 })

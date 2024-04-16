@@ -13,14 +13,13 @@
 // ==/UserScript==
 
 (function () {
-  "use strict";
-  window.addEventListener('load', function () {
+  'use strict'
+  window.addEventListener('load', () => {
     const links = document.querySelectorAll('a')
-    links.forEach(link => {
-      if (link.href.startsWith('http')) {
-        link.target = "_blank"
-      }
+    links.forEach((link) => {
+      if (link.href.startsWith('http'))
+        link.target = '_blank'
     })
-    console.log('设置完成')
+    console.warn('设置完成')
   })
-})();
+})()

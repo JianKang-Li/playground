@@ -3,18 +3,20 @@ export default function getViewportOffset() {
   if (window.innerWidth) {
     return {
       w: wind.innerWidth,
-      h: window.innerHeight
+      h: window.innerHeight,
     }
-  } else {
-    if (document.compatMode === "BackCompat") {
+  }
+  else {
+    if (document.compatMode === 'BackCompat') {
       return {
         w: document.body.clientWidth,
-        h: document.body.clientHeight
+        h: document.body.clientHeight,
       }
-    } else {
+    }
+    else {
       return {
         w: document.documentElement.clientWidth,
-        h: document.documentElement.clientHeight
+        h: document.documentElement.clientHeight,
       }
     }
   }

@@ -5,20 +5,20 @@ container.id = 'speedControl'
 let playbackRate = 1
 
 const left = document.createElement('button')
-left.innerText = '-'
+left.textContent = '-'
 const rate = document.createElement('span')
-rate.innerText = playbackRate
+rate.textContent = playbackRate
 rate.id = 'rate'
 rate.title = '点击还原'
-rate.style = "user-select: none;padding: 4px 10px;cursor:pointer;"
+rate.style = 'user-select: none;padding: 4px 10px;cursor:pointer;'
 rate.addEventListener('click', function () {
   playbackRate = 1
-  this.innerText = playbackRate
+  this.textContent = playbackRate
   setRate()
 })
 
 const right = document.createElement('button')
-right.innerText = "+"
+right.textContent = '+'
 container.appendChild(left)
 container.appendChild(rate)
 container.appendChild(right)
@@ -27,7 +27,7 @@ body.appendChild(container)
 left.addEventListener('click', () => {
   const rate = document.querySelector('#rate')
   playbackRate = Number((playbackRate - 0.1).toFixed(1))
-  rate.innerText = playbackRate
+  rate.textContent = playbackRate
   setRate()
 })
 
@@ -36,7 +36,7 @@ left.style = 'border: none;padding: 5px 10px;cursor: pointer;background:#ccc;col
 right.addEventListener('click', () => {
   const rate = document.querySelector('#rate')
   playbackRate = Number((playbackRate + 0.1).toFixed(1))
-  rate.innerText = playbackRate
+  rate.textContent = playbackRate
   setRate()
 })
 
@@ -48,14 +48,13 @@ window.addEventListener('keydown', () => {
   setRate()
 })
 
-
 right.style = 'border: none;padding: 5px 10px;cursor: pointer;background:#ccc;color:#fff;border-radius: 5px;'
 
 function setRate() {
-  document.querySelectorAll("video").forEach((item) => {
-    item.playbackRate = playbackRate;
+  document.querySelectorAll('video').forEach((item) => {
+    item.playbackRate = playbackRate
     item.addEventListener('ended', () => {
       setRate(playbackRate)
     })
-  });
+  })
 }

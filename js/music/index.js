@@ -1,44 +1,43 @@
-const playBut = document.querySelector("#play")
-const myAudio = document.querySelector("#myAudio")
-const controlDom = document.querySelector("#control")
-const infoBar = document.querySelector("#info")
-const barContainer = document.querySelector(".progress-bar")
-const bar = document.querySelector(".bar")
-const song = document.querySelector("#song")
-const name = document.querySelector("#name")
-const alarm = document.querySelector(".alarm")
-const source = document.querySelector("#myAudioSource")
+const playBut = document.querySelector('#play')
+const myAudio = document.querySelector('#myAudio')
+const controlDom = document.querySelector('#control')
+const infoBar = document.querySelector('#info')
+const barContainer = document.querySelector('.progress-bar')
+const bar = document.querySelector('.bar')
+const song = document.querySelector('#song')
+const name = document.querySelector('#name')
+const alarm = document.querySelector('.alarm')
+const source = document.querySelector('#myAudioSource')
 const timeSpan = document.querySelector('#time')
 const play1 = document.querySelector('#play1')
 const play2 = document.querySelector('#play2')
-const lyricDom = document.querySelector("#lyric")
+const lyricDom = document.querySelector('#lyric')
 let lyricText = null
-playBut.addEventListener("click", playF)
-let billboard = "热歌榜"
+playBut.addEventListener('click', playF)
+let billboard = '热歌榜'
 
 let time = null
 const songs = []
 let Current = 0
 
 function playF() {
-  let flag = Array.from(controlDom.classList).some(function (item) {
-    return item === "active"
-  })
+  const flag = Array.from(controlDom.classList).includes('active')
   if (flag) {
-    controlDom.classList.remove("active")
+    controlDom.classList.remove('active')
     // infoBar.classList.remove("active")
-    alarm.classList.remove("active")
+    alarm.classList.remove('active')
     myAudio.pause()
-    play1.style.display = "block"
+    play1.style.display = 'block'
     play2.style.display = 'none'
     clearInterval(time)
-  } else {
-    controlDom.classList.add("active")
+  }
+  else {
+    controlDom.classList.add('active')
     // infoBar.classList.add("active")
-    alarm.classList.add("active")
+    alarm.classList.add('active')
     myAudio.play()
-    play1.style.display = "none"
-    play2.style.display = "block"
+    play1.style.display = 'none'
+    play2.style.display = 'block'
     // 更新bar宽度
     time = setInterval(() => {
       // console.log(wid)
@@ -49,37 +48,36 @@ function playF() {
 
 /* 秒转分:秒 */
 function sec2Min(num) {
-  let m = Math.floor(num / 60)
-  let s = Math.floor(num % 60)
+  const m = Math.floor(num / 60)
+  const s = Math.floor(num % 60)
   return `${m}:${s.toString().padStart(2, '0')}`
 }
 
 /* 更新页面信息 */
 function update(current, duration) {
-  timeSpan.innerText = `${sec2Min(current)}/${sec2Min(duration)}`
-  let wid = current / duration * 100
-  bar.style.width = wid + "%"
-  let arr = Array.from(Object.keys(lyricText))
+  timeSpan.textContent = `${sec2Min(current)}/${sec2Min(duration)}`
+  const wid = current / duration * 100
+  bar.style.width = `${wid}%`
+  const arr = Array.from(Object.keys(lyricText))
   // console.log(lyricText);
   // console.log(current);
   let key = null
   for (let i = 0; i < arr.length; i++) {
     if (arr[i] >= Math.ceil(current)) {
       key = arr[i - 1] || '-1'
-      break;
+      break
     }
   }
   // console.log(key);
-  lyricText['-1'] = `${song.innerText}`
+  lyricText['-1'] = `${song.textContent}`
   // console.log(key);
   key = key || '-1'
-  lyricDom.innerText = " " + lyricText[key]
+  lyricDom.textContent = ` ${lyricText[key]}`
 }
 
-myAudio.addEventListener("ended", function () {
+myAudio.addEventListener('ended', () => {
   nextSong()
 })
-
 
 function getSongUrl(id) {
   return `https://music.163.com/song/media/outer/url?id=${id}.mp3`
@@ -88,18 +86,19 @@ function getSongUrl(id) {
 /* 获取歌词 */
 async function getSongLyric(id) {
   try {
-    let ajax = await fetch(`https://netease-cloud-music-njd5bd96c-jiankang-li.vercel.app/lyric?id=${id}`)
-    let result = await ajax.json()
-    let lyric = result.lrc.lyric
+    const ajax = await fetch(`https://netease-cloud-music-njd5bd96c-jiankang-li.vercel.app/lyric?id=${id}`)
+    const result = await ajax.json()
+    const lyric = result.lrc.lyric
     // console.log(lyric);
     return lyric
-  } catch (e) {
-    console.log("getLyric", e);
+  }
+  catch (e) {
+    console.warn('getLyric', e)
   }
 }
 
 function getID(url) {
-  let id = /id=\d*/.exec(url)[0].split('=')[1]
+  const id = /id=\d*/.exec(url)[0].split('=')[1]
   // console.log(id);
   return id
 }
@@ -107,13 +106,13 @@ function getID(url) {
 /* 获取歌曲 */
 async function getSong() {
   try {
-    let url = `https://api.uomg.com/api/rand.music?sort=${billboard}&format=json`
-    let res = await fetch(url)
-    let result = await res.json()
+    const url = `https://api.uomg.com/api/rand.music?sort=${billboard}&format=json`
+    const res = await fetch(url)
+    const result = await res.json()
     let CS = null
     CS = result.data
-    let oldUrl = CS.url
-    CS.url = oldUrl + '.mp3'
+    const oldUrl = CS.url
+    CS.url = `${oldUrl}.mp3`
     // console.log(result.songs)
     // let songList = result.songs
     // songList.forEach(ele => {
@@ -125,17 +124,17 @@ async function getSong() {
     //   })
     // });
     // 获取歌词
-    let id = getID(oldUrl)
+    const id = getID(oldUrl)
     let lyrictext = await getSongLyric(id)
     lyrictext = lyrictext.trim().split('\n')
-    let lyricObj = {}
+    const lyricObj = {}
     lyrictext.forEach((item) => {
-      let arr = item.split(']')
+      const arr = item.split(']')
       arr[0] = arr[0].replace('[', '')
-      let arr2 = arr[0].split(":")
-      let m = parseInt(arr2[0])
-      let s = parseFloat(arr2[1])
-      let time = m * 60 + s
+      const arr2 = arr[0].split(':')
+      const m = Number.parseInt(arr2[0])
+      const s = Number.parseFloat(arr2[1])
+      const time = m * 60 + s
       lyricObj[time] = arr[1]
     })
     // console.log(lyricObj);
@@ -144,17 +143,19 @@ async function getSong() {
     songs.push(CS)
 
     // console.log(songs)
-  } catch (e) {
-    console.log("getSong1" + e)
+  }
+  catch (e) {
+    console.warn(`getSong1${e}`)
   }
 }
 
 /* 下一首 */
 async function nextSong() {
   if (Current < songs.length - 1) {
-    Current = Current + 1;
+    Current = Current + 1
     PlaySong()
-  } else if (Current === songs.length - 1) {
+  }
+  else if (Current === songs.length - 1) {
     //  alert("到歌单底部了，将自动重头开始")
     //  Current = 0
     await getSong()
@@ -167,116 +168,110 @@ async function nextSong() {
 /* 上一首 */
 function prevSong() {
   if (Current === 0) {
-    alert("已经到歌单头部了哟！")
-    return;
+    alert('已经到歌单头部了哟！')
+    return
   }
-  Current = Current - 1;
+  Current = Current - 1
   PlaySong()
 }
 
-
 function getSession() {
   if ('mediaSession' in navigator) {
-    let  ms = navigator.mediaSession
-  
-    ms.setActionHandler('play', function () {
+    const ms = navigator.mediaSession
+
+    ms.setActionHandler('play', () => {
       myAudio.play()
-    });
-    ms.setActionHandler('nexttrack', function ()  {
+    })
+    ms.setActionHandler('nexttrack', () => {
       nextSong()
-    });
-    ms.setActionHandler('previoustrack', function () {
+    })
+    ms.setActionHandler('previoustrack', () => {
       prevSong()
-    });
-    ms.setActionHandler('pause', function() { 
+    })
+    ms.setActionHandler('pause', () => {
       myAudio.pause()
-    });
+    })
 
     window.ms = ms
   }
 }
 
 function PlaySong() {
-  let CurrentSong = songs[Current]
+  const CurrentSong = songs[Current]
   // let CurrentSong = CS
   // console.log(CS);
-  let pic = CurrentSong.picurl;
-  name.innerText = CurrentSong.artistsname
-  song.innerText = CurrentSong.name
-  let flag = Array.from(controlDom.classList).some(function (item) {
-    return item === "active"
-  })
+  const pic = CurrentSong.picurl
+  name.textContent = CurrentSong.artistsname
+  song.textContent = CurrentSong.name
+  const flag = Array.from(controlDom.classList).includes('active')
   myAudio.src = CurrentSong.url
-  alarm.style["background"] = `url(${pic}) no-repeat center center`
-  alarm.style["background-size"] = `cover`
+  alarm.style.background = `url(${pic}) no-repeat center center`
+  alarm.style['background-size'] = `cover`
   lyricText = CurrentSong.lyric
   const list = [96, 128, 256, 384, 512]
   const arr = []
-  list.forEach(item => {
+  list.forEach((item) => {
     arr.push({
       src: CurrentSong.picurl,
       sizes: `${item}x${item}`,
-      type: 'image/png'
+      type: 'image/png',
     })
   })
   window.ms.metadata = new MediaMetadata({
     title: CurrentSong.name,
     artist: CurrentSong.artistsname,
     album: '每天都要开心哟😉!',
-    artwork: arr
-  });
+    artwork: arr,
+  })
   if (flag) {
     myAudio.play()
-    setTimeout(()=>{
-      if(Number.isNaN(myAudio.duration)) {
+    setTimeout(() => {
+      if (Number.isNaN(myAudio.duration))
         nextSong()
-      }
     }, 1000)
   }
-
 }
 
 // 初始化
-getSong().then(res => {
+getSong().then((res) => {
   PlaySong()
-}, err => {
-  console.log("getSong", err)
+}, (err) => {
+  console.warn('getSong', err)
 })
 
-myAudio.addEventListener('loadeddata', function () {
-  if (myAudio.readyState >= 2) {
+myAudio.addEventListener('loadeddata', () => {
+  if (myAudio.readyState >= 2)
     update(myAudio.currentTime, myAudio.duration)
-  }
-});
+})
 
 // 歌单选择
-const billboards = ["热歌榜", "新歌榜", "飙升榜", "抖音榜", "电音榜"]
+const billboards = ['热歌榜', '新歌榜', '飙升榜', '抖音榜', '电音榜']
 function select(e) {
-  const num = parseInt(e.target.value)
+  const num = Number.parseInt(e.target.value)
   billboard = billboards[num]
   // console.log(billboard);
 }
 
-const radios = document.querySelector(".radios")
+const radios = document.querySelector('.radios')
 radios.addEventListener('click', (e) => {
   select(e)
 })
 
 barContainer.addEventListener('click', (e) => {
   // console.log(e.offsetX);
-  let ewidth = e.offsetX
-  let barwidth = barContainer.getBoundingClientRect().width
-  let percent = (ewidth / barwidth)
-  let currentTime = percent * Math.floor(myAudio.duration)
+  const ewidth = e.offsetX
+  const barwidth = barContainer.getBoundingClientRect().width
+  const percent = (ewidth / barwidth)
+  const currentTime = percent * Math.floor(myAudio.duration)
   myAudio.currentTime = currentTime
   update(currentTime, myAudio.duration)
 })
 
 getSession()
 
-window.addEventListener('unhandledrejection', function (event) {
+window.addEventListener('unhandledrejection', (event) => {
   let txt = ''
-  txt += "原因" + event.reason //获取到catch的err的原因(内容) 与控制台报错一致
-  txt += "promise" + event.promise //获取到未处理的promise对象
-  console.log(txt);
+  txt += `原因${event.reason}` // 获取到catch的err的原因(内容) 与控制台报错一致
+  txt += `promise${event.promise}` // 获取到未处理的promise对象
+  console.warn(txt)
 })

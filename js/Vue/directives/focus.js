@@ -1,12 +1,12 @@
 const focus = {
-  inserted: function (el) {
+  inserted(el) {
     // 聚焦元素
-    el.focus();
+    el.focus()
     // console.log(el)
   },
-  mounted: function (el) {
+  mounted(el) {
     // 聚焦元素
-    el.focus();
+    el.focus()
     // console.log(el)
   },
 }
