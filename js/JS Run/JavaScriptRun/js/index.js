@@ -62,19 +62,25 @@ function removeTab(text, start, end) {
       startNumber = beforeText.length - tabLen
       endNumber = beforeText.length - tabLen
     }
-    newText = lines.join('\n')
-  }
-  else {
-    for (let i = startLineNumber; i < endLineNumber; i++) {
+  } else {
+    endNumber = endBeforeText.length
+    for (let i = startLineNumber; i <= endLineNumber; i++) {
       const oldLine = lines[i]
       lines[i] = remove(lines[i])
 
-      if (oldLine !== lines[startLineNumber]) {
-        startNumber = beforeText.length - tabLen
-        endNumber = beforeText.length - tabLen
+      if (oldLine !== lines[i]) {
+        if (i === startLineNumber) {
+          if (!text.substring(start, end).startsWith(tab)) {
+            startNumber = beforeText.length - tabLen
+          } else {
+            startNumber = start
+          }
+        }
+        endNumber = endNumber - tabLen
       }
     }
   }
+  newText = lines.join('\n')
 
   return [newText, startNumber, endNumber]
 }
@@ -97,6 +103,7 @@ function dealTab(e) {
       [text, newStart, newEnd] = removeTab(text, start, end)
     }
 
+    obj.value= text
     obj.selectionStart = newStart
     obj.selectionEnd = newEnd
     e.preventDefault()
