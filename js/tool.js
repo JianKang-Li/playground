@@ -572,7 +572,7 @@
     }
 
     set(key, value) {
-      if (typeof key != 'string')
+      if (typeof key !== 'string')
         throw new Error('The key must be String')
 
       localStorage.setItem(key, value)
@@ -612,7 +612,7 @@
     }
 
     set(key, value) {
-      if (typeof key != 'string')
+      if (typeof key !== 'string')
         throw new Error('The key must be String')
 
       sessionStorage.setItem(key, value)
@@ -852,7 +852,7 @@
         return target.call(this, args)
       }
     }
-    if (typeof target != 'object')
+    if (typeof target !== 'object')
       return target
     if (map.has(target))
       return map.get(target)
@@ -880,7 +880,7 @@
       re(obj)
     }
     else {
-      if (typeof obj[attr] != 'object') {
+      if (typeof obj[attr] !== 'object') {
         Object.defineProperty(obj, attr, {
           writable: false,
         })
@@ -957,13 +957,13 @@
 
   // 移除
   function ArrayRemove(arr, fn) {
-    if ((typeof fn == 'number') || (typeof fn == 'string') || (typeof fn == 'object')) {
+    if ((typeof fn === 'number') || (typeof fn === 'string') || (typeof fn === 'object')) {
       arr.forEach((item, index) => {
         if (item === fn)
           arr.splice(index, 1)
       })
     }
-    else if (typeof fn == 'function') {
+    else if (typeof fn === 'function') {
       arr.forEach((item, index) => {
         if (fn(item))
           arr.splice(index, 1)

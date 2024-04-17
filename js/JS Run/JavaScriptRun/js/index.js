@@ -103,7 +103,7 @@ function dealTab(e) {
       [text, newStart, newEnd] = removeTab(text, start, end)
     }
 
-    obj.value= text
+    obj.value = text
     obj.selectionStart = newStart
     obj.selectionEnd = newEnd
     e.preventDefault()

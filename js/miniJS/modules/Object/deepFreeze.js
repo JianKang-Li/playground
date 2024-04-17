@@ -13,7 +13,7 @@ export default function deepFreeze(obj, attr, deep = 0) {
     re(obj)
   }
   else {
-    if (typeof obj[attr] != 'object') {
+    if (typeof obj[attr] !== 'object') {
       Object.defineProperty(obj, attr, {
         writable: false,
       })

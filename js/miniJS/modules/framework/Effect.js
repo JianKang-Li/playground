@@ -6,7 +6,7 @@ export default function createEffect(effect) {
   _currentEffect = null
 }
 
-export default function createSignal(value) {
+export function createSignal(value) {
   const effects = new Set()
   function read() {
     // 依赖收集

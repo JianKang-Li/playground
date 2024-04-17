@@ -5,13 +5,13 @@
  *
  */
 export default function ArrayRemove(arr, fn) {
-  if ((typeof fn == 'number') || (typeof fn == 'string') || (typeof fn == 'object')) {
+  if ((typeof fn === 'number') || (typeof fn === 'string') || (typeof fn === 'object')) {
     arr.forEach((item, index) => {
       if (item === fn)
         arr.splice(index, 1)
     })
   }
-  else if (typeof fn == 'function') {
+  else if (typeof fn === 'function') {
     arr.forEach((item, index) => {
       if (fn(item))
         arr.splice(index, 1)

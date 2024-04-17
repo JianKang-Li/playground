@@ -13,7 +13,7 @@ export default class Session {
   }
 
   set(key, value) {
-    if (typeof key != 'string')
+    if (typeof key !== 'string')
       throw new Error('The key must be String')
 
     sessionStorage.setItem(key, value)

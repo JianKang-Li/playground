@@ -13,7 +13,7 @@ export default function dpClone(target, map = new Map()) {
       return target.call(this, args)
     }
   }
-  if (typeof target != 'object')
+  if (typeof target !== 'object')
     return target
   if (map.has(target))
     return map.get(target)

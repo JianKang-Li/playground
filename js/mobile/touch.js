@@ -5,7 +5,7 @@
   }
   Touch.prototype = {
     init(selector) {
-      if (typeof (selector) == 'string') {
+      if (typeof (selector) === 'string') {
         this.elem = doc.querySelector(selector)
         return this
       }
