@@ -1,11 +1,11 @@
 export function singleton(className) {
-  let ins;
+  let ins
   return class {
     constructor(...args) {
-      if (!ins) {
-        ins = new className(...args);
-      }
-      return ins;
+      if (!ins)
+        ins = new className(...args)
+
+      return ins
     }
   }
 }

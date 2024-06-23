@@ -9,8 +9,8 @@
 // @grant        GM_addStyle
 // ==/UserScript==
 
-(function() {
-  'use strict';
+(function () {
+  'use strict'
   const header = document.querySelector('header.AppHeader')
   const height = header.getBoundingClientRect().height
   const style = `
@@ -29,5 +29,5 @@
     }
   `
 
-    GM_addStyle(style)
-})();
+  GM_addStyle(style)
+})()

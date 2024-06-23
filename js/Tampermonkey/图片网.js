@@ -14,12 +14,12 @@
 // ==/UserScript==
 
 (function () {
-  'use strict';
+  'use strict'
 
   function ready() {
     const btn = document.createElement('button')
-    btn.style = "cursor: pointer;position: fixed;top: 95px;left: 10px;border: none;border-radius: 5px;background-color: #ccc;color: #fff;z-index:900;padding: 5px 10px;"
-    btn.innerText = '预览'
+    btn.style = 'cursor: pointer;position: fixed;top: 95px;left: 10px;border: none;border-radius: 5px;background-color: #ccc;color: #fff;z-index:900;padding: 5px 10px;'
+    btn.textContent = '预览'
     const body = document.body
     const container = document.createElement('div')
     container.id = 'show'
@@ -38,7 +38,7 @@
         })
         container.appendChild(img)
       }
-      for (let key of videos) {
+      for (const key of videos) {
         const video = document.createElement('video')
         video.src = key.src
         video.style = 'width:240px;height:400px;object-fit:contain;cursor: pointer;'
@@ -51,7 +51,7 @@
 
     btn.addEventListener('click', () => {
       getImgs()
-      const container = document.querySelector("#show")
+      const container = document.querySelector('#show')
       container.style.display = container.style.display === 'none' ? 'flex' : 'none'
     })
     body.appendChild(container)
@@ -59,18 +59,17 @@
 
     if (window.location.href.includes('https://meirentu.cc/pic/')) {
       const btn1 = document.createElement('button')
-      btn1.innerText = '下一页'
-      btn1.style = "cursor: pointer;position: fixed;top: 125px;left: 10px;border: none;border-radius: 5px;background-color: #ccc;color: #fff;z-index:900;padding: 5px 10px;"
+      btn1.textContent = '下一页'
+      btn1.style = 'cursor: pointer;position: fixed;top: 125px;left: 10px;border: none;border-radius: 5px;background-color: #ccc;color: #fff;z-index:900;padding: 5px 10px;'
       btn1.addEventListener('click', () => {
-        let href = window.location.href
-        let arr = href.split('-')
-        let num = arr.length === 2 ? parseInt(arr[1]) : 1
-        let next = num + 1
-        if (next === 2) {
-          window.location.href = arr[0].slice(0, arr[0].length - 5) + "-" + next + ".html"
-        } else {
-          window.location.href = arr[0] + "-" + next + ".html"
-        }
+        const href = window.location.href
+        const arr = href.split('-')
+        const num = arr.length === 2 ? Number.parseInt(arr[1]) : 1
+        const next = num + 1
+        if (next === 2)
+          window.location.href = `${arr[0].slice(0, arr[0].length - 5)}-${next}.html`
+        else
+          window.location.href = `${arr[0]}-${next}.html`
       })
       body.appendChild(btn1)
     } else if (window.location.href.includes('https://meirentu.cc')) {

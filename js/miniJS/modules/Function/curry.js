@@ -2,7 +2,8 @@
 export default function curry(fn, ...args) {
   if (args.length >= fn.length) {
     return fn(...args)
-  } else {
+  }
+  else {
     return function (..._args) {
       return curry(fn, ..._args, ...args)
     }

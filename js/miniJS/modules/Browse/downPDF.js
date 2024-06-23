@@ -1,8 +1,8 @@
 // 打印PDF
 /**
-* @param {Element} 需要打印的容器元素
-* 
-**/
+ * @param {Element} container 需要打印的容器元素
+ *
+ */
 export default function downPDF(container) {
   const style = document.createElement('style')
   style.innerHTML = `@media print {
@@ -20,7 +20,7 @@ export default function downPDF(container) {
     }`
 
   const div = document.querySelector(container)
-  let old = document.body.innerHTML
+  const old = document.body.innerHTML
   document.body.innerHTML = ''
   document.body.appendChild(style)
   document.body.appendChild(div)

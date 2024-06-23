@@ -8,9 +8,8 @@ class Util {
   }
 
   attrs(el, attributes) {
-    for (const key of Object.keys(attributes)) {
+    for (const key of Object.keys(attributes))
       el.setAttribute(key, attributes[key])
-    }
   }
 
   createEle(type, classes, attrs) {
@@ -23,3 +22,4 @@ class Util {
   }
 }
 
+export default Util

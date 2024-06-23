@@ -10,58 +10,57 @@
 // ==/UserScript==
 
 (function () {
-  'use strict';
-  let first = false
-  const hiddes = ['.OFZHdvpl', '.account', '.MN8dFKun.Xg7imLcG.wNX5IKkc', "#video-info-wrap > div.video-info-detail > div.under-title-tag > div > div", "#dy0", '#dy1', "#speedControl", ".lPytbapz.XClSex3D.NBmn3s18.mnN5bEWt", ".xgplayer-playswitch.JHxtTxhQ"]
-  const hiddels = ["#video-info-wrap > div.video-info-detail > div.title > div > div > span > span > span > a"]
+  'use strict'
+  const hiddes = ['.OFZHdvpl', '.account', '.MN8dFKun.Xg7imLcG.wNX5IKkc', '#video-info-wrap > div.video-info-detail > div.under-title-tag > div > div', '#dy0', '#dy1', '#speedControl', '.lPytbapz.XClSex3D.NBmn3s18.mnN5bEWt', '.xgplayer-playswitch.JHxtTxhQ']
+  const hiddels = ['#video-info-wrap > div.video-info-detail > div.title > div > div > span > span > span > a']
   function cleanPlus() {
     const btn1 = document.querySelector('#cleanB')
     if (btn1 && btn1.classList.value.split(' ').includes('xg-switch-checked')) {
       hiddes.forEach((hidde) => {
         const item = document.querySelector(hidde)
-        item && (item.style.visibility = "hidden")
+        item && (item.style.visibility = 'hidden')
       })
       hiddels.forEach((hidde) => {
         const items = document.querySelectorAll(hidde)
         items && (Array.from(items).forEach((item) => {
-          item.style.visibility = "hidden"
+          item.style.visibility = 'hidden'
         }))
       })
-    } else {
+    }
+    else {
       hiddes.forEach((hidde) => {
         const item = document.querySelector(hidde)
-        item && (item.style.visibility = "visible")
+        item && (item.style.visibility = 'visible')
       })
       hiddels.forEach((hidde) => {
         const items = document.querySelectorAll(hidde)
         items && (Array.from(items).forEach((item) => {
-          item.style.visibility = "visible"
+          item.style.visibility = 'visible'
         }))
       })
     }
   }
 
-
   function getVideo() {
     const videos = document.querySelectorAll('video')
     const len = videos.length
-    let video;
+    let video
     switch (len) {
       case 1: {
-        video = videos[0];
-        break;
+        video = videos[0]
+        break
       }
       case 2: {
-        video = videos[0];
-        break;
+        video = videos[0]
+        break
       }
       case 3: {
-        video = videos[1];
-        break;
+        video = videos[1]
+        break
       }
       case 4: {
         video = videos[3]
-        break;
+        break
       }
     }
     return video
@@ -72,15 +71,13 @@
     const video = getVideo()
     const btn = document.querySelector('#upB')
 
-    if (!btn) {
+    if (!btn)
       add()
-    }
 
     video && video.addEventListener('ended', () => {
       // console.log(typeof btn.classList);
-      if (btn && btn.classList.value.split(' ').includes('xg-switch-checked')) {
+      if (btn && btn.classList.value.split(' ').includes('xg-switch-checked'))
         upB.click()
-      }
     })
   }
 
@@ -96,7 +93,7 @@
     sbtn.id = 'up'
     sbtn.setAttribute('class', 'xgplayer-immersive-switch-setting immersive-switch')
     container && container.appendChild(sbtn)
-    sbtn.addEventListener('click', function () {
+    sbtn.addEventListener('click', () => {
       const btn = document.querySelector('#upB')
       btn.classList.toggle('xg-switch-checked')
       up()
@@ -111,7 +108,7 @@
     sbtn1.id = 'clean'
     sbtn1.setAttribute('class', 'xgplayer-immersive-switch-setting immersive-switch')
     container && container.appendChild(sbtn1)
-    sbtn1.addEventListener('click', function () {
+    sbtn1.addEventListener('click', () => {
       const btn = document.querySelector('#cleanB')
       btn.classList.toggle('xg-switch-checked')
       cleanPlus()
@@ -120,166 +117,162 @@
   function done() {
     const con = document.querySelector('xg-video-container')
     const btn = document.querySelector('#upB')
-    if (con && !btn) {
+    if (con && !btn)
       add()
-    }
-    else {
-      return
-    }
   }
   window.onload = function () {
     // 自动上滑
-    if (window.location.href.indexOf('user') !== -1) {
-      let observer = new MutationObserver(done);
-      const targetNode = document.querySelector('body');
+    if (window.location.href.includes('user')) {
+      const observer = new MutationObserver(done)
+      const targetNode = document.querySelector('body')
       // 观察器的配置（需要观察什么变动）
-      const config = { attributes: true, childList: true, subtree: true };
-      observer.observe(targetNode, config);
+      const config = { attributes: true, childList: true, subtree: true }
+      observer.observe(targetNode, config)
     }
 
     // 下载功能
     const button1 = document.createElement('button')
     button1.setAttribute('id', 'dy0')
     button1.setAttribute('style', 'cursor: pointer;padding:0.3rem 0.5rem;background-color:#161722;color:#ffff;outline:none;position: fixed;left:2rem;bottom:13.5rem;z-index:99999')
-    button1.innerText = '视频下载'
+    button1.textContent = '视频下载'
 
     const button2 = document.createElement('button')
     button2.setAttribute('id', 'dy1')
     button2.setAttribute('style', 'cursor: pointer;padding:0.3rem 0.5rem;background-color:#161722;color:#ffff;outline:none;position: fixed;left:2rem;bottom:10rem;z-index:99999')
-    button2.innerText = '图片下载\n(需开启弹出式权限)'
+    button2.textContent = '图片下载\n(需开启弹出式权限)'
     const body = document.querySelector('body')
     body.appendChild(button1)
     body.appendChild(button2)
 
-    const dy0 = document.querySelector("#dy0")
+    const dy0 = document.querySelector('#dy0')
     const dy1 = document.querySelector('#dy1')
 
-    dy0.addEventListener('click', function () {
+    dy0.addEventListener('click', () => {
       const videos = document.querySelectorAll('video:not(.UFQuOSb4)')
-      console.log(videos)
+      console.warn(videos)
       const len = videos.length
-      let video;
+      let video
       let index = 0
       switch (len) {
         case 1: {
           index = 0
-          video = videos[0];
-          break;
+          video = videos[0]
+          break
         }
         case 2: {
           index = 0
-          video = videos[0];
-          break;
+          video = videos[0]
+          break
         }
         case 3: {
           index = 1
-          video = videos[1];
-          break;
+          video = videos[1]
+          break
         }
         case 4: {
           index = 3
           video = videos[3]
-          break;
+          break
         }
       }
-      let src = video?.firstChild?.src || video?.src || null;
+      const src = video?.firstChild?.src || video?.src || null
       if (!src) {
         alert('获取url地址失败')
       }
-      else if (/^blob/.test(src)) {
+      else if (src.startsWith('blob')) {
         alert('当前视频地址为blob地址')
       }
       else {
-        video.pause();
+        video.pause()
         const date = new Date()
         console.log(video, index)
-        let author = document.querySelectorAll('div.account-name > span > span > span > span > span > span > span')[index]?.innerText || document.querySelectorAll(' div.account-name > span > span > span > span > span > span > span')[index]?.innerText
-          || document.querySelector("#relatedVideoCard > div > div.uKuFKJ0b.IXOrpi3W > div > div > div.FJDQuKlF.MHDJgSQA.sktxdhWs > div.AVi4_ejO > div > a > div.h2xNBxgs.author-card-user-name > span:nth-child(2) > span > span > span > span > span")?.innerText || ''
+        let author = document.querySelectorAll('div.account-name > span > span > span > span > span > span > span')[index]?.textContent || document.querySelectorAll(' div.account-name > span > span > span > span > span > span > span')[index]?.textContent
+          || document.querySelector('#relatedVideoCard > div > div.uKuFKJ0b.IXOrpi3W > div > div > div.FJDQuKlF.MHDJgSQA.sktxdhWs > div.AVi4_ejO > div > a > div.h2xNBxgs.author-card-user-name > span:nth-child(2) > span > span > span > span > span')?.textContent || ''
         author = author.slice(1, author.length)
-        let filename = `${author}-${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}_${date.getHours()}_${date.getMinutes()}_${date.getSeconds()}.mp4`
+        const filename = `${author}-${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}_${date.getHours()}_${date.getMinutes()}_${date.getSeconds()}.mp4`
         fetch(src)
           .then(res => res.blob())
-          .then(blob => {
-            const a = document.createElement("a");
-            const objectUrl = window.URL.createObjectURL(blob);
-            a.download = filename;
-            a.href = objectUrl;
-            a.click();
-            window.URL.revokeObjectURL(objectUrl);
-            a.remove();
+          .then((blob) => {
+            const a = document.createElement('a')
+            const objectUrl = window.URL.createObjectURL(blob)
+            a.download = filename
+            a.href = objectUrl
+            a.click()
+            window.URL.revokeObjectURL(objectUrl)
+            a.remove()
           })
       }
     })
 
-
-    dy1.addEventListener('click', function () {
+    dy1.addEventListener('click', () => {
       const videos = document.querySelectorAll('video')
       const len = videos.length
-      let video;
+      let video
       let index = 1
       switch (len) {
         case 1: {
-          video = videos[0];
+          video = videos[0]
           index = 0
-          break;
+          break
         }
         case 2: {
-          video = videos[0];
+          video = videos[0]
           index = 0
-          break;
+          break
         }
         case 3: {
-          video = videos[1];
+          video = videos[1]
           index = 1
-          break;
+          break
         }
         case 4: {
           video = videos[3]
           index = 3
-          break;
+          break
         }
       }
       video.pause()
-      let imgs;
-      if (location.href.indexOf("user") !== -1) {
+      let imgs
+      if (location.href.includes('user')) {
         imgs = document.querySelectorAll('.dySwiperSlide img')
-      } else {
+      }
+      else {
         try {
-          imgs = document.querySelectorAll(".playerContainer .focusPanel")
+          imgs = document.querySelectorAll('.playerContainer .focusPanel')
           switch (imgs.length) {
             case 1: {
               imgs = imgs[0].getElementsByTagName('img')
-              break;
+              break
             }
             case 2: {
               imgs = imgs[1].getElementsByTagName('img')
-              break;
+              break
             }
             default:
               imgs = video.parentElement.parentElement.getElementsByTagName('img')
-              break;
+              break
           }
-        } catch {
+        }
+        catch {
           alert('没有图片')
-          return;
+          return
         }
       }
-      console.log(imgs)
-      let set = new Set()
+      console.warn(imgs)
+      const set = new Set()
       imgs = Array.from(imgs)
       imgs.forEach((item) => {
         set.add(item.src)
       })
       // console.log(set);
       if (set.size === 0) {
-        alert("获取图片失败")
-        return;
-      } else {
+        alert('获取图片失败')
+      }
+      else {
         set.forEach((img) => {
           window.open(img)
         })
       }
     })
   }
-
-})();
+})()

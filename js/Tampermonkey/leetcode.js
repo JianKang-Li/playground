@@ -10,7 +10,7 @@
 // ==/UserScript==
 
 (function () {
-  'use strict';
+  'use strict'
   window.onload = function () {
     const body = document.body
     // 自定义样式类兼容旧版
@@ -36,13 +36,13 @@
     // 旧版tab容器
     const div = document.querySelector('#question-detail-main-tabs > div.css-1hbqv5m-TabViewHeader.e16udao1')
     // 隐藏元素列表
-    const list = ['.css-1k63xn3-HeaderCn.e1t1fzqp0', "#__next > div > div > div > nav", '#lc-home > div > div.main__1pRE > div.css-wfkj6v-Content.e1aolq224 > div > div.css-1gcn2k5-RightContainer.e1aolq221 > div > div.css-w8jsc9-EditorContainer.ejldciv1 > div > div.container__39KX > div.second-section-container__2cAh > div.css-ontzvu-MockInterviewContainer.e3jm4na1 > div.css-1mu9tzo-WideContainer.e3jm4na3']
+    const list = ['.css-1k63xn3-HeaderCn.e1t1fzqp0', '#__next > div > div > div > nav', '#lc-home > div > div.main__1pRE > div.css-wfkj6v-Content.e1aolq224 > div > div.css-1gcn2k5-RightContainer.e1aolq221 > div > div.css-w8jsc9-EditorContainer.ejldciv1 > div > div.container__39KX > div.second-section-container__2cAh > div.css-ontzvu-MockInterviewContainer.e3jm4na1 > div.css-1mu9tzo-WideContainer.e3jm4na3']
     // 隐藏标志
     let flag = true
 
     // 自定义按钮
     const button = document.createElement('button')
-    button.innerText = 'vscode'
+    button.textContent = 'vscode'
     button.setAttribute('style', `
     z-index: 999;
     padding: 5px 5px;
@@ -63,7 +63,8 @@
         leftContain && leftContain.classList.add('jk-flex-row')
         div && (div.style.width = 'fit-content')
         flag = false
-      } else {
+      }
+      else {
         for (const item of list) {
           const ele = document.querySelector(item)
           ele && (ele.style.display = 'block')
@@ -79,7 +80,8 @@
 
     if (container) {
       container.appendChild(button)
-    } else {
+    }
+    else {
       // 兜底
       button.style.position = 'fixed'
       button.style.top = '10px'
@@ -87,4 +89,4 @@
       body.appendChild(button)
     }
   }
-})();
+})()

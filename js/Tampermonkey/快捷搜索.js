@@ -12,9 +12,9 @@
 // ==/UserScript==
 
 (function () {
-  "use strict";
+  'use strict'
 
-  const style = document.createElement("style")
+  const style = document.createElement('style')
   style.innerHTML = `
   .sbtns {
     flex-direction: column;
@@ -44,42 +44,40 @@
     outline: none;
   }
 `
-  const buttons = document.createElement("div")
-  buttons.className = "sbtns"
-  buttons.setAttribute("contentwbable", false)
+  const buttons = document.createElement('div')
+  buttons.className = 'sbtns'
+  buttons.setAttribute('contentwbable', false)
 
-  const body = document.querySelector("body")
+  const body = document.querySelector('body')
   let flag = 0
   let keyword = ''
-  let btns = ['复制', '百度', 'github', '抖音', '微博', '掘金', 'CSDN', 'stackoverflow']
-  let searchUrl = ['https://www.baidu.com/s?wd=', 'https://github.com/search?q=',
-    'https://www.douyin.com/search/', 'https://s.weibo.com/weibo?q=',
-    'https://juejin.cn/search?query=', 'https://so.csdn.net/so/search?q=',
-    'https://stackoverflow.com/search?q=']
-
+  const btns = ['复制', '百度', 'github', '抖音', '微博', '掘金', 'CSDN', 'stackoverflow']
+  const searchUrl = ['https://www.baidu.com/s?wd=', 'https://github.com/search?q=', 'https://www.douyin.com/search/', 'https://s.weibo.com/weibo?q=', 'https://juejin.cn/search?query=', 'https://so.csdn.net/so/search?q=', 'https://stackoverflow.com/search?q=']
 
   btns.forEach((btn, index) => {
     const button = document.createElement('button')
     button.className = 'sbtn'
-    button.innerText = btn
+    button.textContent = btn
     buttons.appendChild(button)
     button.addEventListener('click', () => {
       if (index === 0) {
-        let theClipboard = navigator.clipboard;
+        const theClipboard = navigator.clipboard
         if (theClipboard) {
-          let promise = theClipboard.writeText(keyword)
-        } else {
+          theClipboard.writeText(keyword)
+        }
+        else {
           // 兼容不支持clipboard
-          let copyInput = document.createElement('input');//创建input元素
-          document.body.appendChild(copyInput);//向页面底部追加输入框
-          copyInput.setAttribute('value', keyword);//添加属性，将url赋值给input元素的value属性
-          copyInput.select();//选择input元素
-          document.execCommand("Copy");//执行复制命令
-          copyInput.remove();//删除动态创建的节点
+          const copyInput = document.createElement('input')// 创建input元素
+          document.body.appendChild(copyInput)// 向页面底部追加输入框
+          copyInput.setAttribute('value', keyword)// 添加属性，将url赋值给input元素的value属性
+          copyInput.select()// 选择input元素
+          document.execCommand('Copy')// 执行复制命令
+          copyInput.remove()// 删除动态创建的节点
         }
         buttons.style.display = 'none'
         flag = 0
-      } else {
+      }
+      else {
         window.open(searchUrl[index - 1] + keyword)
       }
     })
@@ -88,16 +86,17 @@
   function pop(e) {
     keyword = window.getSelection().toString()
     const buttons = document.querySelector('.sbtns')
-    if (keyword.trim() != '') {
+    if (keyword.trim() !== '') {
       if (flag === 0) {
-        let left = e.pageX
-        let top = e.pageY
-        buttons.style.left = left + 'px'
-        buttons.style.top = top + 'px'
+        const left = e.pageX
+        const top = e.pageY
+        buttons.style.left = `${left}px`
+        buttons.style.top = `${top}px`
         buttons.style.display = 'flex'
         flag = 1
       }
-    } else {
+    }
+    else {
       buttons.style.display = 'none'
       flag = 0
     }
@@ -106,4 +105,4 @@
   body.appendChild(style)
   body.appendChild(buttons)
   window.addEventListener('mouseup', pop)
-})();
+})()

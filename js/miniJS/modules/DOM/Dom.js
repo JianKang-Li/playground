@@ -5,8 +5,8 @@ export default class Dom {
   }
 
   addClass(clas) {
-    let classNames = clas.splice(" ")
-    classNames.forEach(item => {
+    const classNames = clas.splice(' ')
+    classNames.forEach((item) => {
       this.dom.classList.add(item)
     })
   }
@@ -16,11 +16,11 @@ export default class Dom {
   }
 
   setText(text) {
-    this.dom.innerText = text
+    this.dom.textContent = text
   }
 
   getText() {
-    return this.dom.innerText || this.dom.innerHTML
+    return this.dom.textContent || this.dom.innerHTML
   }
 
   remove() {

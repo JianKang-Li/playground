@@ -13,12 +13,12 @@
 // ==/UserScript==
 
 (function () {
-  "use strict";
+  'use strict'
 
   /* 实现新标签页打开链接 */
   function kidnap() {
     function selectAll() {
-      return document.querySelectorAll("a")
+      return document.querySelectorAll('a')
     }
 
     function selectV(tag) {
@@ -29,38 +29,35 @@
     function Open(e, href) {
       const video = document.querySelector('video')
       video && video.pause()
-      e.preventDefault();
+      e.preventDefault()
       e.stopPropagation()
       window.open(href)
       return false
     }
 
-    const exclude = ['#sections > ytd-guide-section-renderer:nth-child(1)', "ytd-masthead", "#items > ytd-guide-collapsible-entry-renderer", "#content > ytd-mini-guide-renderer",
-      'section._aamu._ae3_._ae40._ae41._ae48', ".x9f619.xjbqb8w.x78zum5.x168nmei.x13lgxp2.x5pf9jr.xo71vjh", '._aabd._aa8k._aanf', '._ab70']
+    const exclude = ['#sections > ytd-guide-section-renderer:nth-child(1)', 'ytd-masthead', '#items > ytd-guide-collapsible-entry-renderer', '#content > ytd-mini-guide-renderer', 'section._aamu._ae3_._ae40._ae41._ae48', '.x9f619.xjbqb8w.x78zum5.x168nmei.x13lgxp2.x5pf9jr.xo71vjh', '._aabd._aa8k._aanf', '._ab70']
     let excludes = []
     for (let i = 0; i < exclude.length; i++) {
-      let items = selectV(exclude[i])
+      const items = selectV(exclude[i])
       excludes = excludes.concat(items)
     }
 
     const list = Array.from(selectAll()).filter(item => !excludes.includes(item))
 
     list.forEach((item) => {
-      item.setAttribute('target', "_blank")
-      const url = item.getAttribute("href")
+      item.setAttribute('target', '_blank')
+      const url = item.getAttribute('href')
       item.onclick = (e) => {
         Open(e, url)
       }
     })
-
   }
-
 
   function toast(message) {
     const body = document.querySelector('body')
     const span = document.createElement('span')
     span.style = 'position: fixed;bottom: 10px;right: 10px;background-color: #ccc;padding: 4.8px 10px;border-radius: 4.8px;z-index:9999'
-    span.innerText = message
+    span.textContent = message
     body.appendChild(span)
     setTimeout(() => {
       span.remove()
@@ -70,7 +67,7 @@
   function debounce(fn, delay) {
     let timer = null
     return function (...args) {
-      clearTimeout(timer);
+      clearTimeout(timer)
       timer = setTimeout(() => {
         fn.apply(this, args)
       }, delay)
@@ -98,7 +95,7 @@
     cursor: pointer;
     `)
 
-    button.setAttribute('id', "lkdown")
+    button.setAttribute('id', 'lkdown')
     button.onclick = function () {
       const href = window.location.href
       const clip = navigator.clipboard
@@ -106,24 +103,22 @@
       video.pause()
       clip.writeText(href).then((res) => {
         setTimeout(() => {
-          window.open("https://www.y2mate.com/en346/download-youtube")
+          window.open('https://www.y2mate.com/en346/download-youtube')
         }, 300)
-      }, error => {
-        console.log(error);
+      }, (error) => {
+        console.log(error)
       })
-
     }
-    button.innerText = 'Download'
+    button.textContent = 'Download'
 
     window.addEventListener('scroll', () => {
       dekidnap()
       if (/youtube\.com\/watch*/.test(window.location.href)) {
-        let actions = document.querySelector("#actions")
-        if (!document.querySelector('#lkdown') && /watch\?/.test(window.location.href)) {
+        const actions = document.querySelector('#actions')
+        if (!document.querySelector('#lkdown') && /watch\?/.test(window.location.href))
           actions.insertBefore(button, actions.firstChild)
-        }
       }
       toast('已完成优化')
     })
   }
-})();
+})()

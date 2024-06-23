@@ -33,9 +33,9 @@
 // ==/UserScript==
 
 (function () {
-  "use strict";
+  'use strict'
 
-  const style = document.createElement("style")
+  const style = document.createElement('style')
   style.innerHTML = `
 
   .lbtn {
@@ -61,20 +61,20 @@
 `
   const buttons = document.createElement('div')
   buttons.className = 'lbtn'
-  buttons.innerText = `up`
+  buttons.textContent = `up`
   buttons.setAttribute('id', 'ljk')
-  buttons.setAttribute("contenteditable", false)
+  buttons.setAttribute('contenteditable', false)
 
-  const body = document.querySelector("body")
+  const body = document.querySelector('body')
 
   body.appendChild(style)
   body.appendChild(buttons)
 
-  const ljk = document.querySelector("#ljk")
+  const ljk = document.querySelector('#ljk')
 
-  ljk.addEventListener("click", function () {
-    window.scrollTo({ top: 0, left: 0, behavior: "smooth" })
+  ljk.addEventListener('click', () => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' })
     const main = document.querySelector('main')
-    main && main.scrollTo({ top: 0, left: 0, behavior: "smooth" })
-  });
-})();
+    main && main.scrollTo({ top: 0, left: 0, behavior: 'smooth' })
+  })
+})()

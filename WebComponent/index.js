@@ -1,4 +1,3 @@
-
 /*
 常用的生命周期方法如下:
 
@@ -25,25 +24,23 @@ function createComponent(name, html, script = null) {
   class myComponent extends HTMLElement {
     constructor() {
       super()
-      let template = document.createElement('template')
+      const template = document.createElement('template')
       // 创建模板
       template.innerHTML = html
-      if (script) {
+      if (script)
         script()
-      }
+
       // 创建shadow root mode可以是open或者是closed,这定义了shadow root的内部实现是否可以被js访问及修改
-      this._shadowRoot = this.attachShadow({ mode: 'closed' });
-      this._shadowRoot.appendChild(template.content.cloneNode(true));
+      this._shadowRoot = this.attachShadow({ mode: 'closed' })
+      this._shadowRoot.appendChild(template.content.cloneNode(true))
     }
   }
   // 第一个参数为自命名组件名，第二个参数为类对象注册自定义组件，注意命名
-  customElements.define(name, myComponent);
+  customElements.define(name, myComponent)
 }
 
-
-
 // button
-let button = `
+const button = `
 <style>
 button {
   display: inline-block;
@@ -69,9 +66,8 @@ button:active {
 `
 createComponent('lk-btn', button)
 
-
 // input text
-let input = `
+const input = `
 <style>
 input {
   border: 1px solid rgb(232, 234, 237);
@@ -91,9 +87,8 @@ input:focus {
 
 createComponent('lk-input', input)
 
-
 // link icon
-let link = `
+const link = `
 <style>
 div {
   text-decoration: none;
@@ -119,7 +114,7 @@ div:hover {
 createComponent('lk-link', link)
 
 // 开关
-let toggle = `
+const toggle = `
 <style>
 .LK-toggle {
   vertical-align: middle;

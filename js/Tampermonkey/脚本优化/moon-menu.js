@@ -32,9 +32,9 @@ class Moon {
 
     menu.addEventListener('click', () => {
       const items = document.querySelectorAll('.moon-menu-item')
-      items.forEach(item => {
+      items.forEach((item) => {
         item.classList.toggle('active')
-        const index = parseInt(item.dataset.position)
+        const index = Number.parseInt(item.dataset.position)
 
         item.style.top = `${-120 + (index + 1) * 40}px`
         item.style.transform = `translateX(${-20 + -50 * (index % 3)}px)`
@@ -88,9 +88,9 @@ class Moon {
 }
 
 (function () {
-  'use strict';
+  'use strict'
 
   window.onload = () => {
     const menu = new Moon(['video', 'picture'])
   }
-})();
+})()

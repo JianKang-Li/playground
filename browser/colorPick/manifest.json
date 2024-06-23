@@ -6,7 +6,7 @@
   "action": {
     "default_icon": "Ljk.png",
     "default_title": "ColorPick",
-		"default_popup": "popup.html"
+    "default_popup": "popup.html"
   },
   "icons": {
     "128": "Ljk.png",

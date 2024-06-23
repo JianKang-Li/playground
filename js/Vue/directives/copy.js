@@ -8,12 +8,12 @@ const copy = {
         console.log('无复制内容')
         return
       }
-      let theClipboard = navigator.clipboard;
-      let promise = theClipboard.writeText(el.$value)
+      const theClipboard = navigator.clipboard
+      const promise = theClipboard.writeText(el.$value)
       promise.then(() => {
-        console.log("复制成功")
+        console.log('复制成功')
       }, (err) => {
-        console.log("复制失败", err)
+        console.log('复制失败', err)
       })
     }
     // 绑定点击事件
@@ -37,12 +37,12 @@ const copy = {
         console.log('无复制内容')
         return
       }
-      let theClipboard = navigator.clipboard;
-      let promise = theClipboard.writeText(el.$value)
+      const theClipboard = navigator.clipboard
+      const promise = theClipboard.writeText(el.$value)
       promise.then(() => {
-        console.log("复制成功")
+        console.log('复制成功')
       }, (err) => {
-        console.log("复制失败", err)
+        console.log('复制失败', err)
       })
     }
     // 绑定点击事件

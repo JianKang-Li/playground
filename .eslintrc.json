@@ -1,0 +1,19 @@
+{
+  "env": {
+    "browser": true,
+    "node": true
+  },
+  "rules": {
+      // Override our default settings just for this directory
+      "eqeqeq": "warn",
+      "strict": "off",
+      "semi": "off"
+  },
+  "ignorePatterns": ["webpack.config.js","**/autojs/*.js"],
+  "parserOptions": {
+    // Required for certain syntax usages
+    "ecmaVersion": 2020,
+    "sourceType": "module",
+    "allowImportExportEverywhere": true
+  }
+}
