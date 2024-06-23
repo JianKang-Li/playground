@@ -4,12 +4,13 @@
     "node": true
   },
   "rules": {
-      // Override our default settings just for this directory
-      "eqeqeq": "warn",
-      "strict": "off",
-      "semi": "off"
+    // Override our default settings just for this directory
+    "eqeqeq": "warn",
+    "strict": "off",
+    "semi": "off",
+    "eol-last": "error"
   },
-  "ignorePatterns": ["webpack.config.js","**/autojs/*.js"],
+  "ignorePatterns": ["webpack.config.js", "**/autojs/*.js"],
   "parserOptions": {
     // Required for certain syntax usages
     "ecmaVersion": 2020,

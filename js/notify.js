@@ -1,5 +1,5 @@
 function notify({ message = 'Tip', position = 'right', delay = 5 }) {
-  function objToStr (obj) {
+  function objToStr(obj) {
     let text = ''
     Object.keys(obj).forEach(key => {
       text += `${key}: ${obj[key]};`
@@ -17,7 +17,7 @@ function notify({ message = 'Tip', position = 'right', delay = 5 }) {
     'background-color': '#eee',
     padding: '4.8px 10px',
     'border-radius': '4.8px',
-    'z-index':9999,
+    'z-index': 9999,
     'box-shadow': '0 4px 12px 0 rgba(0, 0, 0, 0.05)',
   })
   span.textContent = message

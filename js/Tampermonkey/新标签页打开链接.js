@@ -58,7 +58,6 @@
     links.forEach(link => {
       link.target = "_blank"
     })
-    log("成功", '新标签页打开', 'success')
   }
 
   window.addEventListener('load', function () {
@@ -66,6 +65,7 @@
       for (const key in config.openLinks) {
         if (window.location.href.includes(key)) {
           config.openLinks[key].forEach(x => newTabOpen(x))
+          log("成功", '新标签页打开', 'success')
         }
       }
     }, 1000)
