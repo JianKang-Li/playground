@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         新标签页打开链接
 // @namespace    http://tampermonkey.net/
-// @version      0.0.1
+// @version      0.0.3
 // @description  链接跳转
 // @author       ljk
 // @icon         https://raw.githubusercontent.com/JianKang-Li/playground/main/favicon.ico
@@ -65,7 +65,7 @@
       for (const key in config.openLinks) {
         if (window.location.href.includes(key)) {
           config.openLinks[key].forEach(x => newTabOpen(x))
-          log("成功", '新标签页打开', 'success')
+          log("成功", `新标签页打开-${key}`,'success')
         }
       }
     }, 1000)
