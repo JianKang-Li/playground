@@ -16,7 +16,16 @@
   "use strict";
   const config = {
     openLinks: {
-      'github.com': ['a.Link--primary.Link', 'a.markdown-title', 'a[rel="nofollow"]', '[data-a11y-link-underlines=true] .markdown-body a']
+      'github.com': {
+        needListenScroll: true,
+        links: ['a.Link--primary.Link', 'a.markdown-title', 'a[rel="nofollow"]', '[data-a11y-link-underlines=true] .markdown-body a', 'a.Link', '.search-title a']
+      },
+      'gitlab.scutech.com': {
+        links: ['a.js-prefetch-document', 'a.gfm-issue']
+      },
+      'redmine.scutech.com': {
+        links: ['a.issue', 'a.external', 'td.subject > a', 'a.wiki-page']
+      }
     }
   }
 
@@ -60,14 +69,32 @@
     })
   }
 
+  function needListenScroll() {
+    window.addEventListener('scroll', function () {
+      clearTimeout(timer)
+      timer = setTimeout(() => {
+        for (const key in config.openLinks) {
+          if (window.location.href.includes(key)) {
+            config.openLinks[key].links.forEach(x => newTabOpen(x))
+          }
+        }
+      }, 1000)
+    })
+  }
+
+  let timer = null
+
   window.addEventListener('load', function () {
-    setTimeout(() => {
+    timer = setTimeout(() => {
       for (const key in config.openLinks) {
         if (window.location.href.includes(key)) {
-          config.openLinks[key].forEach(x => newTabOpen(x))
-          log("成功", `新标签页打开-${key}`,'success')
+          config.openLinks[key].links.forEach(x => newTabOpen(x))
+          if (config.openLinks[key].needListenScroll) {
+            needListenScroll()
+          }
+          log("成功", `新标签页打开-${key}`, 'success')
         }
       }
-    }, 1000)
+    }, 500)
   })
 })()
