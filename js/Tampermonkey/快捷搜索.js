@@ -49,7 +49,6 @@
   buttons.setAttribute('contentwbable', false)
 
   const body = document.querySelector('body')
-  let flag = 0
   let keyword = ''
   const btns = ['复制', '百度', 'github', '抖音', '微博', '掘金', 'CSDN', 'stackoverflow']
   const searchUrl = ['https://www.baidu.com/s?wd=', 'https://github.com/search?q=', 'https://www.douyin.com/search/', 'https://s.weibo.com/weibo?q=', 'https://juejin.cn/search?query=', 'https://so.csdn.net/so/search?q=', 'https://stackoverflow.com/search?q=']
@@ -75,7 +74,6 @@
           copyInput.remove()// 删除动态创建的节点
         }
         buttons.style.display = 'none'
-        flag = 0
       }
       else {
         window.open(searchUrl[index - 1] + keyword)
@@ -86,19 +84,41 @@
   function pop(e) {
     keyword = window.getSelection().toString()
     const buttons = document.querySelector('.sbtns')
+
+    console.log("user-select", keyword)
     if (keyword.trim() !== '') {
-      if (flag === 0) {
-        const left = e.pageX
-        const top = e.pageY
-        buttons.style.left = `${left}px`
-        buttons.style.top = `${top}px`
+      if (buttons.style.display === 'none') {
         buttons.style.display = 'flex'
-        flag = 1
+        const width = buttons.clientWidth
+        const height = buttons.clientHeight
+        const targetPosition = { left: e.pageX, top: e.pageY}
+
+        if (
+          height + targetPosition.top >=
+          window.innerHeight + window.scrollY
+        ) {
+          const targetTop = targetPosition.top - height;
+
+          if (targetTop > window.scrollY) {
+            targetPosition.top = targetTop;
+          }
+        }
+
+        if (
+          width + targetPosition.left >=
+          window.innerWidth + window.scrollX
+        ) {
+          const targetWidth = targetPosition.left - width;
+
+          if (targetWidth > window.scrollX) {
+            targetPosition.left = targetWidth;
+          }
+        }
+        buttons.style.left = `${targetPosition.left}px`
+        buttons.style.top = `${targetPosition.top}px`
       }
-    }
-    else {
+    } else {
       buttons.style.display = 'none'
-      flag = 0
     }
   }
 
